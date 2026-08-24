@@ -2405,24 +2405,32 @@ async function runRsvpForm(){
    * Sofort UI aktualisieren.
    */
 
-  statusEl.textContent =
-    "> TRANSMISSION COMPLETE";
+statusEl.textContent =
+  "> TRANSMITTING DATA";
 
 
-  /*
-   * Kurze Pause für Animation.
-   */
+setTimeout(
+  () => {
 
-  setTimeout(
-    () => {
+    statusEl.textContent =
+      "HELLO " +
+      name.toUpperCase() +
+      ". WELCOME TO THE MATRIX.";
 
-      triggerClosingGlitch(
-        startCountdown
-      );
+    setTimeout(
+      () => {
 
-    },
-    400
-  );
+        triggerClosingGlitch(
+          startCountdown
+        );
+
+      },
+      2000
+    );
+
+  },
+  2000
+);
 
 }
 
