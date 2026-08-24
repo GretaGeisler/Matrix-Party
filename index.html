@@ -4,17 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#020403">
+
 <title>Transmission</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
 <style>
+
   :root{
     --green:#15cd96;
     --black:#020403;
-    --font: 'Share Tech Mono', 'Courier New', monospace;
-    --start-font: 'Share Tech Mono', 'Courier New', monospace;
-    --matrix-font-size: 12px;
+    --font:'Share Tech Mono','Courier New',monospace;
+    --start-font:'Share Tech Mono','Courier New',monospace;
+    --matrix-font-size:16px;
   }
 
   *{
@@ -42,7 +45,11 @@
     background:var(--black);
   }
 
-  /* ---------- WHITE SCREEN ---------- */
+
+  /* =========================================================
+     WHITE SCREEN
+     ========================================================= */
+
   #white{
     position:absolute;
     inset:0;
@@ -57,23 +64,29 @@
 
   #white span{
     font-family:var(--start-font);
-    font-size:12px;
+    font-size:9px;
     letter-spacing:.2em;
-    color:#656565;
+    color:#bbb;
     opacity:0;
     animation:fadein 1s ease forwards .9s;
     text-transform:uppercase;
   }
 
   @keyframes fadein{
-    to{opacity:1}
+    to{
+      opacity:1;
+    }
   }
 
   #white.hidden{
     display:none;
   }
 
-  /* ---------- GLITCH OVERLAY ---------- */
+
+  /* =========================================================
+     GLITCH OVERLAY
+     ========================================================= */
+
   #glitch{
     position:absolute;
     inset:0;
@@ -106,36 +119,63 @@
   }
 
   @keyframes glitchflash{
-    0%{background:#fff;}
-    15%{background:#000;}
-    30%{background:#39ff6a;}
-    45%{background:#000;}
-    60%{background:#fff;}
-    75%{background:#000;}
-    100%{background:#000; opacity:0;}
+    0%{
+      background:#fff;
+    }
+
+    15%{
+      background:#000;
+    }
+
+    30%{
+      background:#39ff6a;
+    }
+
+    45%{
+      background:#000;
+    }
+
+    60%{
+      background:#fff;
+    }
+
+    75%{
+      background:#000;
+    }
+
+    100%{
+      background:#000;
+      opacity:0;
+    }
   }
 
   @keyframes slice1{
+
     0%{
       clip-path:inset(10% 0 70% 0);
       transform:translateX(-4%);
     }
+
     20%{
       clip-path:inset(60% 0 5% 0);
       transform:translateX(3%);
     }
+
     40%{
       clip-path:inset(30% 0 40% 0);
       transform:translateX(-6%);
     }
+
     60%{
       clip-path:inset(5% 0 80% 0);
       transform:translateX(2%);
     }
+
     80%{
       clip-path:inset(75% 0 2% 0);
       transform:translateX(-2%);
     }
+
     100%{
       clip-path:inset(0 0 100% 0);
       transform:translateX(0);
@@ -144,22 +184,27 @@
   }
 
   @keyframes slice2{
+
     0%{
       clip-path:inset(80% 0 5% 0);
       transform:translateX(5%);
     }
+
     25%{
       clip-path:inset(20% 0 60% 0);
       transform:translateX(-3%);
     }
+
     50%{
       clip-path:inset(45% 0 20% 0);
       transform:translateX(4%);
     }
+
     75%{
       clip-path:inset(10% 0 75% 0);
       transform:translateX(-5%);
     }
+
     100%{
       clip-path:inset(100% 0 0 0);
       transform:translateX(0);
@@ -167,7 +212,11 @@
     }
   }
 
-  /* ---------- MATRIX SCENE ---------- */
+
+  /* =========================================================
+     MATRIX SCENE
+     ========================================================= */
+
   #matrix{
     position:absolute;
     inset:0;
@@ -190,6 +239,7 @@
   #scrim{
     position:absolute;
     inset:0;
+
     background:
       radial-gradient(
         ellipse at 50% 40%,
@@ -203,13 +253,19 @@
     position:relative;
     z-index:20;
     height:100%;
+
     display:flex;
     flex-direction:column;
     justify-content:center;
+
     padding:7vh 6vw;
+
     color:var(--green);
+
     max-width:520px;
     margin:0 auto;
+
+    transition:padding-bottom .25s ease;
   }
 
   #term{
@@ -231,15 +287,24 @@
   }
 
   @keyframes blink{
-    50%{opacity:0;}
+    50%{
+      opacity:0;
+    }
   }
 
-  /* ---------- PILL CHOICES ---------- */
+
+  /* =========================================================
+     PILL CHOICES
+     ========================================================= */
+
   #choice{
     margin-top:calc(var(--matrix-font-size) * 0.8);
+
     display:none;
     flex-direction:column;
+
     gap:calc(var(--matrix-font-size) * 1.5);
+
     animation:riseIn .6s ease forwards;
   }
 
@@ -248,10 +313,12 @@
   }
 
   @keyframes riseIn{
+
     from{
       opacity:0;
       transform:translateY(10px);
     }
+
     to{
       opacity:1;
       transform:translateY(0);
@@ -262,13 +329,19 @@
     font-family:var(--font);
     font-size:var(--matrix-font-size);
     letter-spacing:.05em;
+
     padding:0;
+
     background:transparent;
     border:none;
+
     color:var(--green);
+
     text-align:left;
     cursor:pointer;
+
     -webkit-appearance:none;
+
     text-transform:uppercase;
   }
 
@@ -280,7 +353,23 @@
     outline:1px dashed var(--green);
   }
 
-  /* ---------- INLINE TERMINAL FORM ---------- */
+
+  /* =========================================================
+     VIRTUAL INPUT
+     ========================================================= */
+
+  .virtual-input{
+    font-family:var(--font);
+    font-size:var(--matrix-font-size);
+    color:var(--green);
+    letter-spacing:.05em;
+  }
+
+
+  /* =========================================================
+     INLINE TERMINAL FORM
+     ========================================================= */
+
   .inline-form{
     display:inline;
   }
@@ -289,15 +378,22 @@
     background:transparent;
     border:none;
     outline:none;
+
     caret-color:transparent;
+
     font-family:var(--font);
     font-size:var(--matrix-font-size);
     letter-spacing:.05em;
+
     color:var(--green);
+
     text-transform:uppercase;
+
     width:12ch;
+
     padding:0;
     margin:0;
+
     vertical-align:text-bottom;
   }
 
@@ -306,33 +402,28 @@
     opacity:.25;
   }
 
-  @media (hover:none) and (pointer:coarse){
-    .inline-input{
-      font-size:12px;
-    }
-  }
 
-  .inline-option{
-    cursor:pointer;
-    margin-right:18px;
-    letter-spacing:.05em;
-  }
-
-  .inline-option:active{
-    opacity:.55;
-  }
+  /* =========================================================
+     SUBMIT
+     ========================================================= */
 
   .inline-submit{
     font-family:var(--font);
     font-size:var(--matrix-font-size);
     letter-spacing:.1em;
+
     background:transparent;
     color:var(--green);
+
     border:1px solid var(--green);
+
     padding:
       calc(var(--matrix-font-size)*0.5)
       calc(var(--matrix-font-size)*0.9);
-    margin-top:calc(var(--matrix-font-size) * 1.5);
+
+    margin-top:
+      calc(var(--matrix-font-size) * 1.5);
+
     cursor:pointer;
     text-transform:uppercase;
   }
@@ -346,13 +437,21 @@
   }
 
   .status-line{
-    margin-top:calc(var(--matrix-font-size) * 0.9);
+    margin-top:
+      calc(var(--matrix-font-size) * 0.9);
+
     font-size:var(--matrix-font-size);
+
     color:var(--green);
+
     opacity:.85;
   }
 
-  /* ---------- COUNTDOWN ---------- */
+
+  /* =========================================================
+     COUNTDOWN
+     ========================================================= */
+
   #countdown{
     display:none;
     text-align:left;
@@ -364,43 +463,206 @@
   }
 
   #countdown .cd-label{
-    font-size:calc(var(--matrix-font-size) * 0.85);
+    font-size:
+      calc(var(--matrix-font-size) * 0.85);
+
     letter-spacing:.1em;
+
     opacity:.8;
+
     margin-bottom:14px;
   }
 
   #countdown .cd-time{
-    font-size:calc(var(--matrix-font-size) * 1.7);
+    font-size:
+      calc(var(--matrix-font-size) * 1.7);
+
     letter-spacing:.04em;
+
     line-height:1.4;
   }
 
+
+  /* =========================================================
+     MATRIX VIRTUAL KEYBOARD
+     ========================================================= */
+
+  .matrix-keyboard{
+
+    position:fixed;
+
+    left:0;
+    right:0;
+    bottom:0;
+
+    z-index:100;
+
+    display:none;
+
+    padding:
+      10px
+      8px
+      calc(8px + env(safe-area-inset-bottom));
+
+    background:rgba(2,4,3,.98);
+
+    border-top:
+      1px solid rgba(21,205,150,.45);
+
+    box-shadow:
+      0 -8px 30px rgba(0,0,0,.65);
+
+    font-family:var(--font);
+
+    text-transform:uppercase;
+  }
+
+  .matrix-keyboard.visible{
+    display:block;
+  }
+
+  .keyboard-label{
+
+    color:var(--green);
+
+    opacity:.45;
+
+    font-size:8px;
+
+    letter-spacing:.12em;
+
+    text-align:center;
+
+    margin-bottom:6px;
+  }
+
+  .keyboard-row{
+
+    display:flex;
+
+    gap:5px;
+
+    margin-bottom:5px;
+  }
+
+  .keyboard-key{
+
+    flex:1;
+
+    min-width:0;
+
+    height:42px;
+
+    padding:0;
+
+    border:
+      1px solid rgba(21,205,150,.45);
+
+    background:#020403;
+
+    color:var(--green);
+
+    font-family:var(--font);
+
+    font-size:15px;
+
+    line-height:1;
+
+    -webkit-appearance:none;
+    appearance:none;
+
+    border-radius:0;
+
+    touch-action:manipulation;
+
+    user-select:none;
+    -webkit-user-select:none;
+  }
+
+  .keyboard-key:active,
+  .keyboard-key.pressed{
+
+    background:var(--green);
+
+    color:#020403;
+
+    box-shadow:
+      0 0 12px rgba(21,205,150,.8);
+  }
+
+  .keyboard-key.wide{
+    flex:1.7;
+  }
+
+  .keyboard-key.space{
+    flex:4;
+  }
+
+  .keyboard-key.enter{
+    flex:1.5;
+  }
+
+
+  /* Wenn virtuelle Tastatur offen ist,
+     wird der Terminalbereich etwas nach oben verschoben. */
+
+  body.keyboard-open #content{
+
+    padding-bottom:
+      300px;
+  }
+
+
+  /* Kleine iPhones */
+
+  @media (max-width:380px){
+
+    .keyboard-key{
+      height:38px;
+      font-size:13px;
+    }
+
+    body.keyboard-open #content{
+
+      padding-bottom:
+        275px;
+    }
+  }
+
+
+  /* =========================================================
+     REDUCED MOTION
+     ========================================================= */
+
   @media (prefers-reduced-motion: reduce){
+
     *{
       animation-duration:.01ms !important;
       animation-iteration-count:1 !important;
     }
   }
 
-  /* ---------- IPHONE SAFE AREA ---------- */
-  @supports (padding: env(safe-area-inset-top)){
-    #app{
-      background:var(--black);
-    }
-  }
 </style>
 </head>
+
 
 <body>
 
 <div id="app">
 
+  <!-- WHITE START SCREEN -->
+
   <div id="white">
     <span>TAP TO CONTINUE</span>
   </div>
 
+
+  <!-- GLITCH -->
+
   <div id="glitch"></div>
+
+
+  <!-- MATRIX -->
 
   <div id="matrix">
 
@@ -412,21 +674,282 @@
 
       <div id="term"></div>
 
+
+      <!-- RED / BLUE -->
+
       <div id="choice">
-        <button class="code-choice-btn" id="opt-red">
+
+        <button
+          class="code-choice-btn"
+          id="opt-red"
+        >
           &gt; RED PILL — JOIN THE MATRIX
         </button>
 
-        <button class="code-choice-btn" id="opt-blue">
+        <button
+          class="code-choice-btn"
+          id="opt-blue"
+        >
           &gt; BLUE PILL — REFUSE THE MATRIX
         </button>
+
       </div>
+
+
+      <!-- COUNTDOWN -->
 
       <div id="countdown"></div>
 
     </div>
+
   </div>
+
 </div>
+
+
+
+<!-- =========================================================
+     MATRIX VIRTUAL KEYBOARD
+     ========================================================= -->
+
+<div
+  id="matrixKeyboard"
+  class="matrix-keyboard"
+>
+
+  <div class="keyboard-label">
+    SECURE INPUT TERMINAL
+  </div>
+
+
+  <!-- ROW 1 -->
+
+  <div class="keyboard-row">
+
+    <button
+      type="button"
+      class="keyboard-key"
+      data-key="Q"
+    >Q</button>
+
+    <button
+      type="button"
+      class="keyboard-key"
+      data-key="W"
+    >W</button>
+
+    <button
+      type="button"
+      class="keyboard-key"
+      data-key="E"
+    >E</button>
+
+    <button
+      type="button"
+      class="keyboard-key"
+      data-key="R"
+    >R</button>
+
+    <button
+      type="button"
+      class="keyboard-key"
+      data-key="T"
+    >T</button>
+
+    <button
+      type="button"
+      class="keyboard-key"
+      data-key="Z"
+    >Z</button>
+
+    <button
+      type="button"
+      class="keyboard-key"
+      data-key="U"
+    >U</button>
+
+    <button
+      type="button"
+      class="keyboard-key"
+      data-key="I"
+    >I</button>
+
+    <button
+      type="button"
+      class="keyboard-key"
+      data-key="O"
+    >O</button>
+
+    <button
+      type="button"
+      class="keyboard-key"
+      data-key="P"
+    >P</button>
+
+  </div>
+
+
+  <!-- ROW 2 -->
+
+  <div class="keyboard-row">
+
+    <button
+      type="button"
+      class="keyboard-key"
+      data-key="A"
+    >A</button>
+
+    <button
+      type="button"
+      class="keyboard-key"
+      data-key="S"
+    >S</button>
+
+    <button
+      type="button"
+      class="keyboard-key"
+      data-key="D"
+    >D</button>
+
+    <button
+      type="button"
+      class="keyboard-key"
+      data-key="F"
+    >F</button>
+
+    <button
+      type="button"
+      class="keyboard-key"
+      data-key="G"
+    >G</button>
+
+    <button
+      type="button"
+      class="keyboard-key"
+      data-key="H"
+    >H</button>
+
+    <button
+      type="button"
+      class="keyboard-key"
+      data-key="J"
+    >J</button>
+
+    <button
+      type="button"
+      class="keyboard-key"
+      data-key="K"
+    >K</button>
+
+    <button
+      type="button"
+      class="keyboard-key"
+      data-key="L"
+    >L</button>
+
+  </div>
+
+
+  <!-- ROW 3 -->
+
+  <div class="keyboard-row">
+
+    <button
+      type="button"
+      class="keyboard-key"
+      data-key="Y"
+    >Y</button>
+
+    <button
+      type="button"
+      class="keyboard-key"
+      data-key="X"
+    >X</button>
+
+    <button
+      type="button"
+      class="keyboard-key"
+      data-key="C"
+    >C</button>
+
+    <button
+      type="button"
+      class="keyboard-key"
+      data-key="V"
+    >V</button>
+
+    <button
+      type="button"
+      class="keyboard-key"
+      data-key="B"
+    >B</button>
+
+    <button
+      type="button"
+      class="keyboard-key"
+      data-key="N"
+    >N</button>
+
+    <button
+      type="button"
+      class="keyboard-key"
+      data-key="M"
+    >M</button>
+
+    <button
+      type="button"
+      class="keyboard-key"
+      data-key="Ä"
+    >Ä</button>
+
+    <button
+      type="button"
+      class="keyboard-key"
+      data-key="Ö"
+    >Ö</button>
+
+    <button
+      type="button"
+      class="keyboard-key"
+      data-key="Ü"
+    >Ü</button>
+
+  </div>
+
+
+  <!-- BOTTOM ROW -->
+
+  <div class="keyboard-row">
+
+    <button
+      type="button"
+      class="keyboard-key wide"
+      data-action="backspace"
+    >
+      ⌫
+    </button>
+
+    <button
+      type="button"
+      class="keyboard-key space"
+      data-key=" "
+    >
+      SPACE
+    </button>
+
+    <button
+      type="button"
+      class="keyboard-key enter"
+      data-action="enter"
+    >
+      ✓
+    </button>
+
+  </div>
+
+</div>
+
+
 
 <script>
 
@@ -439,27 +962,45 @@ const CONFIG = {
   sheetURL:
     "https://script.google.com/macros/s/AKfycbzjcp-if6d8SDPQyPEJu29g7G8PjGXKLR7vq_CTVNqABge0hA6nUiDOn0S8_N9VF5-aEw/exec",
 
-  eventName: "HG_GG_HALLOWEEN",
+  eventName:
+    "HG_GG_HALLOWEEN",
 
-  date: "31.10.2026",
+  date:
+    "31.10.2026",
 
-  time: "19:00",
+  time:
+    "19:00",
 
-  location: "48.122047424316406,11.604446411132812",
+  location:
+    "48.122047424316406,11.604446411132812",
 
-  dresscode: "Science Fiction",
+  dresscode:
+    "Science Fiction",
 
-  startScreenText: "TAP TO CONTINUE",
+
+  /* Startbildschirm */
+
+  startScreenText:
+    "TAP TO CONTINUE",
 
   startScreenFont:
     "'Share Tech Mono', 'Courier New', monospace",
 
-  matrixFontSize: "11px",
 
-  pillPromptDelay: 1600,
+  /* Matrix-Schrift */
+
+  matrixFontSize:
+    "11px",
+
+
+  /* Zeit bis Pill-Frage */
+
+  pillPromptDelay:
+    1600,
 
   pillQuestion:
-    "WILL YOU CHOOSE THE RED PILL OR THE BLUE PILL?",
+    "WILL YOU CHOOSE THE RED PILL OR THE BLUE PILL?"
+
 };
 
 
@@ -477,7 +1018,9 @@ document.documentElement.style.setProperty(
   CONFIG.matrixFontSize
 );
 
-document.querySelector('#white span').textContent =
+document.querySelector(
+  '#white span'
+).textContent =
   CONFIG.startScreenText;
 
 
@@ -496,21 +1039,34 @@ const matrixEl =
 
 let started = false;
 
+
 function startSequence(){
 
-  if(started) return;
+  if(started)
+    return;
 
   started = true;
 
-  glitchEl.classList.add('active');
+
+  glitchEl.classList.add(
+    'active'
+  );
+
 
   setTimeout(()=>{
-    whiteEl.classList.add('hidden');
+
+    whiteEl.classList.add(
+      'hidden'
+    );
+
   },120);
 
+
   setTimeout(()=>{
 
-    matrixEl.classList.add('visible');
+    matrixEl.classList.add(
+      'visible'
+    );
 
     startRain();
 
@@ -518,39 +1074,22 @@ function startSequence(){
 
   },260);
 
+
   setTimeout(()=>{
 
-    glitchEl.classList.remove('active');
+    glitchEl.classList.remove(
+      'active'
+    );
 
   },600);
 }
+
 
 document.body.addEventListener(
   'click',
   startSequence,
   { once:true }
 );
-
-
-/* =========================================================
-   INPUT FOCUS FALLBACK
-   ========================================================= */
-
-document.addEventListener('click',()=>{
-
-  const activeInput =
-    document.querySelector('.inline-input');
-
-  if(
-    activeInput &&
-    document.activeElement !== activeInput
-  ){
-
-    activeInput.focus();
-
-  }
-
-});
 
 
 /* =========================================================
@@ -563,11 +1102,13 @@ const canvas =
 const ctx =
   canvas.getContext('2d');
 
-let columns,
-    drops;
+let columns;
+let drops;
+
 
 const chars =
   "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
 
 function resizeCanvas(){
 
@@ -577,46 +1118,63 @@ function resizeCanvas(){
   canvas.height =
     window.innerHeight;
 
-  const fontSize = 16;
+
+  const fontSize =
+    16;
+
 
   columns =
     Math.floor(
-      canvas.width / fontSize
+      canvas.width /
+      fontSize
     );
+
 
   drops =
     new Array(columns)
       .fill(0)
-      .map(() =>
-        Math.floor(
-          Math.random()*-40
-        )
-      );
+      .map(()=>{
+
+        return Math.floor(
+          Math.random() * -40
+        );
+
+      });
 }
+
 
 window.addEventListener(
   'resize',
   resizeCanvas
 );
 
+
 resizeCanvas();
+
 
 let rainRunning = false;
 
+
 function startRain(){
 
-  if(rainRunning) return;
+  if(rainRunning)
+    return;
 
   rainRunning = true;
 
-  const fontSize = 16;
 
-  const frameDelay = 110;
+  const fontSize =
+    16;
+
+  const frameDelay =
+    110;
+
 
   function draw(){
 
     ctx.fillStyle =
       'rgba(2,4,3,0.16)';
+
 
     ctx.fillRect(
       0,
@@ -625,10 +1183,12 @@ function startRain(){
       canvas.height
     );
 
+
     ctx.font =
       '600 ' +
       fontSize +
       'px "Share Tech Mono", monospace';
+
 
     for(
       let i = 0;
@@ -639,18 +1199,24 @@ function startRain(){
       const text =
         chars[
           Math.floor(
-            Math.random()*chars.length
+            Math.random() *
+            chars.length
           )
         ];
+
 
       const x =
         i * fontSize;
 
+
       const y =
-        drops[i] * fontSize;
+        drops[i] *
+        fontSize;
+
 
       const roll =
         Math.random();
+
 
       if(roll > 0.965){
 
@@ -669,11 +1235,13 @@ function startRain(){
 
       }
 
+
       ctx.fillText(
         text,
         x,
         y
       );
+
 
       if(
         y > canvas.height &&
@@ -684,15 +1252,19 @@ function startRain(){
 
       }
 
+
       drops[i]++;
 
     }
 
+
     setTimeout(
-      () => requestAnimationFrame(draw),
+      ()=>requestAnimationFrame(draw),
       frameDelay
     );
+
   }
+
 
   draw();
 }
@@ -708,57 +1280,77 @@ const termEl =
 const choiceEl =
   document.getElementById('choice');
 
+
 const introLines = [
 
   {
-    text: "> initiating secure channel...",
-    pause:550
+    text:
+      "> initiating secure channel...",
+    pause:
+      550
   },
 
   {
-    text: "> access granted",
-    pause:550
+    text:
+      "> access granted",
+    pause:
+      550
   },
 
   {
-    text: "",
-    pause:250
+    text:
+      "",
+    pause:
+      250
   },
 
   {
-    text: "> EVENT: " +
+    text:
+      "> EVENT: " +
       CONFIG.eventName,
-    pause:120
+    pause:
+      120
   },
 
   {
-    text: "> DATE:  " +
+    text:
+      "> DATE:  " +
       CONFIG.date,
-    pause:120
+    pause:
+      120
   },
 
   {
-    text: "> TIME:  " +
+    text:
+      "> TIME:  " +
       CONFIG.time,
-    pause:120
+    pause:
+      120
   },
 
   {
-    text: "> LOCATION: " +
+    text:
+      "> LOCATION: " +
       CONFIG.location,
-    pause:120
+    pause:
+      120
   },
 
   {
-    text: "> DRESS CODE:  " +
+    text:
+      "> DRESS CODE:  " +
       CONFIG.dresscode,
-    pause:120
+    pause:
+      120
   },
 
   {
-    text: "",
-    pause:200
+    text:
+      "",
+    pause:
+      200
   }
+
 ];
 
 
@@ -776,14 +1368,18 @@ function typeLine(
 
     let i = 0;
 
+
     function step(){
 
-      if(i < line.text.length){
+      if(
+        i < line.text.length
+      ){
 
         span.textContent +=
           line.text[i];
 
         i++;
+
 
         setTimeout(
           step,
@@ -796,14 +1392,19 @@ function typeLine(
           document.createElement('br')
         );
 
+
         setTimeout(
           resolve,
           line.pause || 100
         );
+
       }
+
     }
 
+
     step();
+
   });
 }
 
@@ -811,7 +1412,8 @@ function typeLine(
 function delay(ms){
 
   return new Promise(
-    r => setTimeout(r,ms)
+    resolve =>
+      setTimeout(resolve,ms)
   );
 
 }
@@ -825,7 +1427,11 @@ async function runTerminal(){
   cursor.className =
     'cursor';
 
-  termEl.appendChild(cursor);
+
+  termEl.appendChild(
+    cursor
+  );
+
 
   for(
     const line of introLines
@@ -833,50 +1439,72 @@ async function runTerminal(){
 
     cursor.remove();
 
+
     await typeLine(
       line,
       termEl
     );
 
-    termEl.appendChild(cursor);
+
+    termEl.appendChild(
+      cursor
+    );
 
   }
 
+
   cursor.remove();
+
 
   await delay(
     CONFIG.pillPromptDelay
   );
 
-  termEl.appendChild(cursor);
+
+  termEl.appendChild(
+    cursor
+  );
+
 
   cursor.remove();
 
+
   await typeLine(
     {
-      text:CONFIG.pillQuestion,
-      pause:200
+      text:
+        CONFIG.pillQuestion,
+
+      pause:
+        200
     },
     termEl
   );
 
+
   choiceEl.classList.add(
     'visible'
   );
+
 }
 
 
 /* =========================================================
-   PILL CHOICE
+   RED / BLUE
    ========================================================= */
 
 const optRed =
-  document.getElementById('opt-red');
+  document.getElementById(
+    'opt-red'
+  );
 
 const optBlue =
-  document.getElementById('opt-blue');
+  document.getElementById(
+    'opt-blue'
+  );
 
-let rsvpChoice = null;
+
+let rsvpChoice =
+  null;
 
 
 async function selectPill(
@@ -884,11 +1512,14 @@ async function selectPill(
   label
 ){
 
-  rsvpChoice = choice;
+  rsvpChoice =
+    choice;
+
 
   choiceEl.classList.remove(
     'visible'
   );
+
 
   const cursor =
     document.createElement('span');
@@ -896,136 +1527,147 @@ async function selectPill(
   cursor.className =
     'cursor';
 
+
   if(choice === 'kommt'){
 
-    termEl.appendChild(cursor);
+    termEl.appendChild(
+      cursor
+    );
+
 
     await typeLine(
       {
-        text:"> " + label,
-        pause:250
+        text:
+          "> " + label,
+
+        pause:
+          250
       },
       termEl
     );
 
+
     cursor.remove();
 
-    termEl.appendChild(cursor);
+
+    termEl.appendChild(
+      cursor
+    );
+
 
     await typeLine(
       {
-        text:"> enter your details below",
-        pause:300
+        text:
+          "> enter your details below",
+
+        pause:
+          300
       },
       termEl
     );
 
+
     cursor.remove();
+
 
     await delay(150);
 
+
     runRsvpForm();
+
 
   }else{
 
-    termEl.appendChild(cursor);
+    termEl.appendChild(
+      cursor
+    );
+
 
     await typeLine(
       {
-        text:"> " + label,
-        pause:250
+        text:
+          "> " + label,
+
+        pause:
+          250
       },
       termEl
     );
 
+
     cursor.remove();
 
-    termEl.appendChild(cursor);
+
+    termEl.appendChild(
+      cursor
+    );
+
 
     await typeLine(
       {
         text:
           "> entry logged. maybe next time.",
-        pause:500
+
+        pause:
+          500
       },
       termEl
     );
 
+
     cursor.remove();
 
+
     sendToSheet({
+
       name:"",
       rsvp:"kommt nicht",
       plusOne:false,
       plusOneName:""
+
     });
+
 
     triggerClosingGlitch(
       startCountdown
     );
+
   }
+
 }
 
 
 optRed.addEventListener(
   'click',
-  () =>
-    selectPill(
-      'kommt',
-      'RED PILL — JOIN THE MATRIX'
-    )
+  ()=>selectPill(
+    'kommt',
+    'RED PILL — JOIN THE MATRIX'
+  )
 );
+
 
 optBlue.addEventListener(
   'click',
-  () =>
-    selectPill(
-      'kommt nicht',
-      'BLUE PILL — REFUSE THE MATRIX'
-    )
+  ()=>selectPill(
+    'kommt nicht',
+    'BLUE PILL — REFUSE THE MATRIX'
+  )
 );
 
 
 /* =========================================================
-   INLINE TERMINAL FORM
+   VIRTUELLE TASTATUR
    ========================================================= */
 
-function typePrompt(text){
+const matrixKeyboard =
+  document.getElementById(
+    'matrixKeyboard'
+  );
 
-  return new Promise(resolve=>{
 
-    const span =
-      document.createElement('span');
-
-    termEl.appendChild(span);
-
-    let i = 0;
-
-    function step(){
-
-      if(i < text.length){
-
-        span.textContent +=
-          text[i];
-
-        i++;
-
-        setTimeout(
-          step,
-          16 + Math.random()*22
-        );
-
-      }else{
-
-        resolve(span);
-
-      }
-    }
-
-    step();
-  });
-}
-
+/* =========================================================
+   INPUT MIT VIRTUELLER TASTATUR
+   ========================================================= */
 
 function promptInput(
   promptText,
@@ -1039,84 +1681,388 @@ function promptInput(
         promptText
       );
 
-      const form =
-        document.createElement('form');
 
-      form.className =
-        'inline-form';
+      /*
+       * KEIN echtes Input-Element.
+       *
+       * Dadurch öffnet iOS keine
+       * normale Systemtastatur.
+       */
 
-      form.setAttribute(
-        'novalidate',
-        ''
+
+      const valueSpan =
+        document.createElement(
+          'span'
+        );
+
+      valueSpan.className =
+        'virtual-input';
+
+
+      let value = "";
+
+
+      valueSpan.textContent =
+        placeholder || "";
+
+
+      valueSpan.style.opacity =
+        placeholder
+          ? "0.25"
+          : "1";
+
+
+      termEl.appendChild(
+        valueSpan
       );
 
-      const input =
-        document.createElement('input');
-
-      input.type = 'text';
-
-      input.className =
-        'inline-input';
-
-      if(placeholder)
-        input.placeholder =
-          placeholder;
-
-      input.autocomplete =
-        'name';
-
-      input.enterKeyHint =
-        'done';
-
-      input.inputMode =
-        'text';
-
-      form.appendChild(input);
-
-      termEl.appendChild(form);
 
       const cursor =
-        document.createElement('span');
+        document.createElement(
+          'span'
+        );
 
       cursor.className =
         'cursor';
 
-      termEl.appendChild(cursor);
 
-      input.focus();
-
-      form.addEventListener(
-        'submit',
-        e=>{
-
-          e.preventDefault();
-
-          const val =
-            input.value.trim();
-
-          if(!val) return;
-
-          cursor.remove();
-
-          const valSpan =
-            document.createElement('span');
-
-          valSpan.textContent =
-            val.toUpperCase();
-
-          form.replaceWith(
-            valSpan
-          );
-
-          termEl.appendChild(
-            document.createElement('br')
-          );
-
-          resolve(val);
-        }
+      termEl.appendChild(
+        cursor
       );
+
+
+      /*
+       * Matrix-Tastatur anzeigen
+       */
+
+      matrixKeyboard.classList.add(
+        'visible'
+      );
+
+
+      document.body.classList.add(
+        'keyboard-open'
+      );
+
+
+      /*
+       * Anzeige aktualisieren
+       */
+
+      function updateDisplay(){
+
+        if(value.length === 0){
+
+          valueSpan.textContent =
+            placeholder || "";
+
+          valueSpan.style.opacity =
+            placeholder
+              ? "0.25"
+              : "1";
+
+        }else{
+
+          valueSpan.textContent =
+            value.toUpperCase();
+
+          valueSpan.style.opacity =
+            "1";
+
+        }
+
+      }
+
+
+      /*
+       * Zeichen hinzufügen
+       */
+
+      function addCharacter(
+        character
+      ){
+
+        value +=
+          character;
+
+        updateDisplay();
+
+      }
+
+
+      /*
+       * Zeichen löschen
+       */
+
+      function deleteCharacter(){
+
+        if(
+          value.length === 0
+        )
+          return;
+
+
+        value =
+          value.slice(0,-1);
+
+
+        updateDisplay();
+
+      }
+
+
+      /*
+       * Eingabe abschicken
+       */
+
+      function submit(){
+
+        const cleanValue =
+          value.trim();
+
+
+        if(!cleanValue)
+          return;
+
+
+        /*
+         * Tastatur verstecken
+         */
+
+        matrixKeyboard.classList.remove(
+          'visible'
+        );
+
+
+        document.body.classList.remove(
+          'keyboard-open'
+        );
+
+
+        /*
+         * Cursor entfernen
+         */
+
+        cursor.remove();
+
+
+        /*
+         * Finale Eingabe anzeigen
+         */
+
+        valueSpan.textContent =
+          cleanValue.toUpperCase();
+
+
+        valueSpan.style.opacity =
+          "1";
+
+
+        termEl.appendChild(
+          document.createElement(
+            'br'
+          )
+        );
+
+
+        /*
+         * Alte Event Listener entfernen
+         */
+
+        matrixKeyboard
+          .querySelectorAll(
+            '.keyboard-key'
+          )
+          .forEach(key=>{
+
+            if(
+              key._matrixHandler
+            ){
+
+              key.removeEventListener(
+                'click',
+                key._matrixHandler
+              );
+
+              key._matrixHandler =
+                null;
+            }
+
+          });
+
+
+        /*
+         * Wert zurückgeben
+         */
+
+        resolve(
+          cleanValue
+        );
+
+      }
+
+
+      /*
+       * Alle Tastatur-Buttons
+       * aktivieren
+       */
+
+      matrixKeyboard
+        .querySelectorAll(
+          '.keyboard-key'
+        )
+        .forEach(key=>{
+
+
+          const handler =
+            ()=>{
+
+
+              /*
+               * Visuelles Feedback
+               */
+
+              key.classList.add(
+                'pressed'
+              );
+
+
+              setTimeout(()=>{
+
+                key.classList.remove(
+                  'pressed'
+                );
+
+              },100);
+
+
+              const action =
+                key.dataset.action;
+
+
+              const character =
+                key.dataset.key;
+
+
+              /*
+               * DELETE
+               */
+
+              if(
+                action ===
+                'backspace'
+              ){
+
+                deleteCharacter();
+
+              }
+
+
+              /*
+               * ENTER
+               */
+
+              else if(
+                action ===
+                'enter'
+              ){
+
+                submit();
+
+              }
+
+
+              /*
+               * Buchstabe /
+               * Leerzeichen
+               */
+
+              else if(
+                character !==
+                undefined
+              ){
+
+                addCharacter(
+                  character
+                );
+
+              }
+
+            };
+
+
+          key._matrixHandler =
+            handler;
+
+
+          key.addEventListener(
+            'click',
+            handler
+          );
+
+        });
+
+    }
+
+  );
+
+}
+
+
+/* =========================================================
+   TYPE PROMPT
+   ========================================================= */
+
+function typePrompt(text){
+
+  return new Promise(
+    resolve=>{
+
+      const span =
+        document.createElement(
+          'span'
+        );
+
+
+      termEl.appendChild(
+        span
+      );
+
+
+      let i = 0;
+
+
+      function step(){
+
+        if(
+          i < text.length
+        ){
+
+          span.textContent +=
+            text[i];
+
+          i++;
+
+
+          setTimeout(
+            step,
+            16 + Math.random()*22
+          );
+
+        }else{
+
+          resolve(span);
+
+        }
+
+      }
+
+
+      step();
+
     }
   );
+
 }
 
 
@@ -1135,11 +2081,17 @@ function promptYesNo(
         promptText + " "
       );
 
+
       const wrap =
-        document.createElement('span');
+        document.createElement(
+          'span'
+        );
+
 
       const yes =
-        document.createElement('span');
+        document.createElement(
+          'span'
+        );
 
       yes.textContent =
         '[YES]';
@@ -1147,8 +2099,11 @@ function promptYesNo(
       yes.className =
         'inline-option';
 
+
       const no =
-        document.createElement('span');
+        document.createElement(
+          'span'
+        );
 
       no.textContent =
         '[NO]';
@@ -1156,11 +2111,19 @@ function promptYesNo(
       no.className =
         'inline-option';
 
-      wrap.appendChild(yes);
 
-      wrap.appendChild(no);
+      wrap.appendChild(
+        yes
+      );
 
-      termEl.appendChild(wrap);
+      wrap.appendChild(
+        no
+      );
+
+
+      termEl.appendChild(
+        wrap
+      );
 
 
       function choose(
@@ -1170,44 +2133,54 @@ function promptYesNo(
 
         wrap.remove();
 
+
         const chosen =
-          document.createElement('span');
+          document.createElement(
+            'span'
+          );
+
 
         chosen.textContent =
           label;
+
 
         termEl.appendChild(
           chosen
         );
 
+
         termEl.appendChild(
-          document.createElement('br')
+          document.createElement(
+            'br'
+          )
         );
 
+
         resolve(val);
+
       }
 
 
       yes.addEventListener(
         'click',
-        () =>
-          choose(
-            true,
-            '[YES]'
-          )
+        ()=>choose(
+          true,
+          '[YES]'
+        )
       );
+
 
       no.addEventListener(
         'click',
-        () =>
-          choose(
-            false,
-            '[NO]'
-          )
+        ()=>choose(
+          false,
+          '[NO]'
+        )
       );
 
     }
   );
+
 }
 
 
@@ -1221,48 +2194,78 @@ function promptSubmit(){
     resolve=>{
 
       termEl.appendChild(
-        document.createElement('br')
+        document.createElement(
+          'br'
+        )
       );
 
+
       const btn =
-        document.createElement('button');
+        document.createElement(
+          'button'
+        );
+
 
       btn.type =
         'button';
 
+
       btn.className =
         'inline-submit';
+
 
       btn.textContent =
         '> SUBMIT';
 
-      termEl.appendChild(btn);
+
+      termEl.appendChild(
+        btn
+      );
+
 
       btn.addEventListener(
         'click',
-        () => resolve(btn),
-        { once:true }
+        ()=>resolve(btn),
+        {
+          once:true
+        }
       );
 
     }
   );
+
 }
 
 
-function appendStatus(text){
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+function appendStatus(
+  text
+){
 
   const s =
-    document.createElement('div');
+    document.createElement(
+      'div'
+    );
+
 
   s.className =
     'status-line';
 
+
   s.textContent =
     text;
 
-  termEl.appendChild(s);
+
+  termEl.appendChild(
+    s
+  );
+
 
   return s;
+
 }
 
 
@@ -1277,12 +2280,16 @@ async function runRsvpForm(){
       'NAME: '
     );
 
+
   const wantsPlusOne =
     await promptYesNo(
       'PLUS ONE?'
     );
 
-  let plusOneName = '';
+
+  let plusOneName =
+    '';
+
 
   if(wantsPlusOne){
 
@@ -1290,28 +2297,38 @@ async function runRsvpForm(){
       await promptInput(
         'NAME PLUS ONE: '
       );
+
   }
+
 
   const submitBtn =
     await promptSubmit();
 
+
   submitBtn.disabled =
     true;
+
 
   const statusEl =
     appendStatus(
       '> TRANSMITTING...'
     );
 
+
   const payload = {
 
-    name:name,
+    name:
+      name,
 
-    rsvp:rsvpChoice,
+    rsvp:
+      rsvpChoice,
 
-    plusOne:wantsPlusOne,
+    plusOne:
+      wantsPlusOne,
 
-    plusOneName:plusOneName
+    plusOneName:
+      plusOneName
+
   };
 
 
@@ -1319,45 +2336,64 @@ async function runRsvpForm(){
 
     if(
       CONFIG.sheetURL &&
-      CONFIG.sheetURL.startsWith("http")
+      CONFIG.sheetURL.startsWith(
+        "http"
+      )
     ){
 
       await fetch(
         CONFIG.sheetURL,
         {
-          method:"POST",
-          mode:"no-cors",
+
+          method:
+            "POST",
+
+          mode:
+            "no-cors",
+
           headers:{
             "Content-Type":
               "text/plain;charset=utf-8"
           },
+
           body:
-            JSON.stringify(payload)
+            JSON.stringify(
+              payload
+            )
+
         }
       );
+
     }
+
 
     statusEl.textContent =
       "> welcome, " +
       name.toUpperCase() +
       ". see you there.";
 
+
     setTimeout(
-      () =>
+      ()=>{
         triggerClosingGlitch(
           startCountdown
-        ),
+        );
+      },
       900
     );
+
 
   }catch(err){
 
     statusEl.textContent =
       "> transmission failed — try again";
 
+
     submitBtn.disabled =
       false;
+
   }
+
 }
 
 
@@ -1372,31 +2408,47 @@ async function sendToSheet(
   if(
     !(
       CONFIG.sheetURL &&
-      CONFIG.sheetURL.startsWith("http")
+      CONFIG.sheetURL.startsWith(
+        "http"
+      )
     )
-  ) return;
+  )
+    return;
+
 
   try{
 
     await fetch(
       CONFIG.sheetURL,
       {
-        method:"POST",
-        mode:"no-cors",
+
+        method:
+          "POST",
+
+        mode:
+          "no-cors",
+
         headers:{
           "Content-Type":
             "text/plain;charset=utf-8"
         },
+
         body:
-          JSON.stringify(payload)
+          JSON.stringify(
+            payload
+          )
+
       }
     );
 
   }catch(err){
 
-    /* stiller Fehlschlag */
+    /*
+     * Stiller Fehlschlag
+     */
 
   }
+
 }
 
 
@@ -1412,29 +2464,42 @@ function triggerClosingGlitch(
     'active'
   );
 
+
   setTimeout(
     ()=>{
-      termEl.innerHTML = '';
+
+      termEl.innerHTML =
+        '';
+
       choiceEl.classList.remove(
         'visible'
       );
+
     },
     300
   );
 
+
   setTimeout(
     ()=>{
+
       glitchEl.classList.remove(
         'active'
       );
+
 
       next();
 
     },
     650
   );
+
 }
 
+
+/* =========================================================
+   COUNTDOWN
+   ========================================================= */
 
 const countdownEl =
   document.getElementById(
@@ -1453,6 +2518,7 @@ function getPartyDate(){
       .split('.')
       .map(Number);
 
+
   const [
     hh,
     mm
@@ -1460,6 +2526,7 @@ function getPartyDate(){
     CONFIG.time
       .split(':')
       .map(Number);
+
 
   return new Date(
     y,
@@ -1469,6 +2536,7 @@ function getPartyDate(){
     mm,
     0
   );
+
 }
 
 
@@ -1486,6 +2554,7 @@ function startCountdown(){
     'visible'
   );
 
+
   const target =
     getPartyDate();
 
@@ -1493,7 +2562,9 @@ function startCountdown(){
   function tick(){
 
     const diff =
-      target - new Date();
+      target -
+      new Date();
+
 
     if(diff <= 0){
 
@@ -1508,9 +2579,14 @@ function startCountdown(){
         ' is live' +
         '</div>';
 
-      clearInterval(timer);
+
+      clearInterval(
+        timer
+      );
+
 
       return;
+
     }
 
 
@@ -1519,20 +2595,26 @@ function startCountdown(){
         diff / 1000
       );
 
+
     const days =
       Math.floor(
         s / 86400
       );
 
+
     const hours =
       Math.floor(
-        (s % 86400) / 3600
+        (s % 86400) /
+        3600
       );
+
 
     const mins =
       Math.floor(
-        (s % 3600) / 60
+        (s % 3600) /
+        60
       );
+
 
     const secs =
       s % 60;
@@ -1546,25 +2628,33 @@ function startCountdown(){
       '</div>' +
 
       '<div class="cd-time">' +
+
       pad(days) +
       'D ' +
+
       pad(hours) +
       'H ' +
+
       pad(mins) +
       'M ' +
+
       pad(secs) +
       'S' +
+
       '</div>';
+
   }
 
 
   tick();
+
 
   const timer =
     setInterval(
       tick,
       1000
     );
+
 }
 
 </script>
