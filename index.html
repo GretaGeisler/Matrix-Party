@@ -106,7 +106,7 @@ body{
 
 
 /* =========================================================
-   WHITE START SCREEN
+   WHITE SCREEN
    ========================================================= */
 
 #white{
@@ -155,9 +155,7 @@ body{
 @keyframes fadein{
 
   to{
-
     opacity:1;
-
   }
 
 }
@@ -383,9 +381,9 @@ canvas#rain{
 
     radial-gradient(
       ellipse at 50% 40%,
-      rgba(2,4,3,.35) 0%,
-      rgba(2,4,3,.82) 65%,
-      rgba(2,4,3,.95) 100%
+      rgba(2,4,3,0.35) 0%,
+      rgba(2,4,3,0.82) 65%,
+      rgba(2,4,3,0.95) 100%
     );
 
 }
@@ -470,7 +468,7 @@ canvas#rain{
 #choice{
 
   margin-top:
-    calc(var(--matrix-font-size) * .8);
+    calc(var(--matrix-font-size) * 0.8);
 
   display:none;
 
@@ -594,14 +592,11 @@ canvas#rain{
     1px solid var(--green);
 
   padding:
-
-    calc(var(--matrix-font-size)*.5)
-
-    calc(var(--matrix-font-size)*.9);
+    calc(var(--matrix-font-size)*0.5)
+    calc(var(--matrix-font-size)*0.9);
 
   margin-top:
-
-    calc(var(--matrix-font-size)*1.5);
+    calc(var(--matrix-font-size) * 1.5);
 
   cursor:pointer;
 
@@ -627,8 +622,7 @@ canvas#rain{
 .status-line{
 
   margin-top:
-
-    calc(var(--matrix-font-size)*.9);
+    calc(var(--matrix-font-size) * 0.9);
 
   font-size:var(--matrix-font-size);
 
@@ -665,7 +659,7 @@ canvas#rain{
 #countdown .cd-label{
 
   font-size:
-    calc(var(--matrix-font-size)*.85);
+    calc(var(--matrix-font-size) * 0.85);
 
   letter-spacing:.1em;
 
@@ -679,7 +673,7 @@ canvas#rain{
 #countdown .cd-time{
 
   font-size:
-    calc(var(--matrix-font-size)*1.7);
+    calc(var(--matrix-font-size) * 1.7);
 
   letter-spacing:.04em;
 
@@ -689,7 +683,7 @@ canvas#rain{
 
 
 /* =========================================================
-   VIRTUAL KEYBOARD
+   KEYBOARD
    ========================================================= */
 
 .matrix-keyboard{
@@ -707,15 +701,9 @@ canvas#rain{
   display:none;
 
   padding:
-
     10px
-
     8px
-
-    calc(
-      8px +
-      env(safe-area-inset-bottom)
-    );
+    calc(8px + env(safe-area-inset-bottom));
 
   background:
     rgba(2,4,3,.98);
@@ -857,6 +845,7 @@ body.keyboard-open #content{
 
   }
 
+
   body.keyboard-open #content{
 
     padding-bottom:275px;
@@ -918,7 +907,6 @@ body.keyboard-open #content{
         <button
           class="code-choice-btn"
           id="opt-red"
-          type="button"
         >
           &gt; RED PILL — JOIN THE MATRIX
         </button>
@@ -927,7 +915,6 @@ body.keyboard-open #content{
         <button
           class="code-choice-btn"
           id="opt-blue"
-          type="button"
         >
           &gt; BLUE PILL — REFUSE THE MATRIX
         </button>
@@ -944,9 +931,9 @@ body.keyboard-open #content{
 </div>
 
 
-<!-- =======================================================
-     VIRTUAL KEYBOARD
-     ======================================================= -->
+<!-- =========================================================
+     KEYBOARD
+     ========================================================= -->
 
 <div
   id="matrixKeyboard"
@@ -1035,17 +1022,16 @@ body.keyboard-open #content{
 </div>
 
 
-
 <script>
 
 /* =========================================================
-   CONFIG
+   CONFIGURATION
    ========================================================= */
 
 const CONFIG = {
 
   sheetURL:
-    "https://script.google.com/macros/s/AKfycbzWDWCkEEfo2InzVIyot7C_k1J85sR_mV3Nt0axw6AXdH5aMBH9Sn3yQ4xHwqDfXyAbbw/exec",
+    "https://script.google.com/macros/s/AKfycbzIxhO184zUCnZiiXuUejnvceABSvxqMi2i4yHsN2dsw1Qogop5b5ksqEgeeSkOz7l80Q/exec",
 
   eventName:
     "HG_GG_HALLOWEEN",
@@ -1146,32 +1132,49 @@ function startSequence(){
 
   started = true;
 
-  glitchEl.classList.add("active");
+  glitchEl.classList.add(
+    "active"
+  );
 
 
-  setTimeout(() => {
+  setTimeout(
+    () => {
 
-    whiteEl.classList.add("hidden");
+      whiteEl.classList.add(
+        "hidden"
+      );
 
-  },120);
-
-
-  setTimeout(() => {
-
-    matrixEl.classList.add("visible");
-
-    startRain();
-
-    runTerminal();
-
-  },260);
+    },
+    120
+  );
 
 
-  setTimeout(() => {
+  setTimeout(
+    () => {
 
-    glitchEl.classList.remove("active");
+      matrixEl.classList.add(
+        "visible"
+      );
 
-  },600);
+      startRain();
+
+      runTerminal();
+
+    },
+    260
+  );
+
+
+  setTimeout(
+    () => {
+
+      glitchEl.classList.remove(
+        "active"
+      );
+
+    },
+    600
+  );
 
 }
 
@@ -1196,6 +1199,7 @@ const ctx =
 let columns;
 let drops;
 
+
 const chars =
   "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
@@ -1208,21 +1212,26 @@ function resizeCanvas(){
   canvas.height =
     window.innerHeight;
 
+
   const fontSize =
     16;
 
+
   columns =
     Math.floor(
-      canvas.width / fontSize
+      canvas.width /
+      fontSize
     );
+
 
   drops =
     new Array(columns)
       .fill(0)
-      .map(() =>
-        Math.floor(
-          Math.random() * -40
-        )
+      .map(
+        () =>
+          Math.floor(
+            Math.random() * -40
+          )
       );
 
 }
@@ -1247,15 +1256,19 @@ function startRain(){
 
   rainRunning = true;
 
-  const fontSize = 16;
 
-  const frameDelay = 110;
+  const fontSize =
+    16;
+
+  const frameDelay =
+    110;
 
 
   function draw(){
 
     ctx.fillStyle =
       "rgba(2,4,3,0.16)";
+
 
     ctx.fillRect(
       0,
@@ -1266,7 +1279,9 @@ function startRain(){
 
 
     ctx.font =
-      '600 16px "Share Tech Mono", monospace';
+      '600 ' +
+      fontSize +
+      'px "Share Tech Mono", monospace';
 
 
     for(
@@ -1287,11 +1302,14 @@ function startRain(){
       const x =
         i * fontSize;
 
+
       const y =
         drops[i] * fontSize;
 
 
-      if(Math.random() > .965){
+      if(
+        Math.random() > 0.965
+      ){
 
         ctx.fillStyle =
           "#e9fff1";
@@ -1301,8 +1319,8 @@ function startRain(){
         ctx.fillStyle =
           "rgba(25,221,97," +
           (
-            .35 +
-            Math.random()*.5
+            0.35 +
+            Math.random() * 0.5
           ) +
           ")";
 
@@ -1318,7 +1336,7 @@ function startRain(){
 
       if(
         y > canvas.height &&
-        Math.random() > .975
+        Math.random() > 0.975
       ){
 
         drops[i] = 0;
@@ -1332,7 +1350,8 @@ function startRain(){
 
 
     setTimeout(
-      () => requestAnimationFrame(draw),
+      () =>
+        requestAnimationFrame(draw),
       frameDelay
     );
 
@@ -1353,61 +1372,85 @@ const introLines = [
   {
     text:
       "> initiating secure channel...",
-    pause:550
+    pause:
+      550
   },
 
   {
     text:
       "> access granted",
-    pause:550
+    pause:
+      550
   },
 
   {
-    text:"",
-    pause:250
+    text:
+      "",
+    pause:
+      250
   },
 
   {
     text:
       "> EVENT: " +
       CONFIG.eventName,
-    pause:120
+    pause:
+      120
   },
 
   {
     text:
       "> DATE:  " +
       CONFIG.date,
-    pause:120
+    pause:
+      120
   },
 
   {
     text:
       "> TIME:  " +
       CONFIG.time,
-    pause:120
+    pause:
+      120
   },
 
   {
     text:
       "> LOCATION: " +
       CONFIG.location,
-    pause:120
+    pause:
+      120
   },
 
   {
     text:
       "> DRESS CODE: " +
       CONFIG.dresscode,
-    pause:120
+    pause:
+      120
   },
 
   {
-    text:"",
-    pause:200
+    text:
+      "",
+    pause:
+      200
   }
 
 ];
+
+
+function delay(ms){
+
+  return new Promise(
+    resolve =>
+      setTimeout(
+        resolve,
+        ms
+      )
+  );
+
+}
 
 
 function typeLine(
@@ -1415,59 +1458,62 @@ function typeLine(
   container
 ){
 
-  return new Promise(resolve => {
+  return new Promise(
+    resolve => {
 
-    const span =
-      document.createElement("span");
-
-    container.appendChild(span);
-
-    let i = 0;
-
-
-    function step(){
-
-      if(i < line.text.length){
-
-        span.textContent +=
-          line.text[i];
-
-        i++;
-
-
-        setTimeout(
-          step,
-          16 + Math.random()*22
+      const span =
+        document.createElement(
+          "span"
         );
 
-      }else{
+      container.appendChild(
+        span
+      );
 
-        container.appendChild(
-          document.createElement("br")
-        );
 
-        setTimeout(
-          resolve,
-          line.pause || 100
-        );
+      let i = 0;
+
+
+      function step(){
+
+        if(
+          i < line.text.length
+        ){
+
+          span.textContent +=
+            line.text[i];
+
+          i++;
+
+
+          setTimeout(
+            step,
+            16 +
+            Math.random() * 22
+          );
+
+        }else{
+
+          container.appendChild(
+            document.createElement(
+              "br"
+            )
+          );
+
+
+          setTimeout(
+            resolve,
+            line.pause || 100
+          );
+
+        }
 
       }
 
+
+      step();
+
     }
-
-
-    step();
-
-  });
-
-}
-
-
-function delay(ms){
-
-  return new Promise(
-    resolve =>
-      setTimeout(resolve,ms)
   );
 
 }
@@ -1476,13 +1522,17 @@ function delay(ms){
 async function runTerminal(){
 
   const cursor =
-    document.createElement("span");
+    document.createElement(
+      "span"
+    );
 
   cursor.className =
     "cursor";
 
 
-  termEl.appendChild(cursor);
+  termEl.appendChild(
+    cursor
+  );
 
 
   for(
@@ -1491,12 +1541,16 @@ async function runTerminal(){
 
     cursor.remove();
 
+
     await typeLine(
       line,
       termEl
     );
 
-    termEl.appendChild(cursor);
+
+    termEl.appendChild(
+      cursor
+    );
 
   }
 
@@ -1513,7 +1567,8 @@ async function runTerminal(){
     {
       text:
         CONFIG.pillQuestion,
-      pause:200
+      pause:
+        200
     },
     termEl
   );
@@ -1527,10 +1582,11 @@ async function runTerminal(){
 
 
 /* =========================================================
-   PILL SELECTION
+   PILL CHOICE
    ========================================================= */
 
-let rsvpChoice = null;
+let rsvpChoice =
+  null;
 
 
 async function selectPill(
@@ -1548,20 +1604,25 @@ async function selectPill(
 
 
   const cursor =
-    document.createElement("span");
+    document.createElement(
+      "span"
+    );
 
   cursor.className =
     "cursor";
 
 
-  termEl.appendChild(cursor);
+  termEl.appendChild(
+    cursor
+  );
 
 
   await typeLine(
     {
       text:
         "> " + label,
-      pause:250
+      pause:
+        250
     },
     termEl
   );
@@ -1576,7 +1637,8 @@ async function selectPill(
       {
         text:
           "> enter your details below",
-        pause:300
+        pause:
+          300
       },
       termEl
     );
@@ -1585,7 +1647,7 @@ async function selectPill(
     await delay(150);
 
 
-    runRsvpForm();
+    await runRsvpForm();
 
   }else{
 
@@ -1593,18 +1655,26 @@ async function selectPill(
       {
         text:
           "> entry logged. maybe next time.",
-        pause:500
+        pause:
+          500
       },
       termEl
     );
 
 
-    await sendToSheet({
+    sendToSheet({
 
-      name:"",
-      rsvp:"kommt nicht",
-      plusOne:false,
-      plusOneName:""
+      name:
+        "",
+
+      rsvp:
+        "kommt nicht",
+
+      plusOne:
+        false,
+
+      plusOneName:
+        ""
 
     });
 
@@ -1639,7 +1709,7 @@ optBlue.addEventListener(
 
 
 /* =========================================================
-   PROMPT INPUT
+   INPUT
    ========================================================= */
 
 function promptInput(
@@ -1656,13 +1726,16 @@ function promptInput(
 
 
       const valueSpan =
-        document.createElement("span");
+        document.createElement(
+          "span"
+        );
 
       valueSpan.className =
         "virtual-input";
 
 
-      let value = "";
+      let value =
+        "";
 
 
       valueSpan.textContent =
@@ -1671,7 +1744,7 @@ function promptInput(
 
       valueSpan.style.opacity =
         placeholder
-          ? ".25"
+          ? "0.25"
           : "1";
 
 
@@ -1681,13 +1754,17 @@ function promptInput(
 
 
       const cursor =
-        document.createElement("span");
+        document.createElement(
+          "span"
+        );
 
       cursor.className =
         "cursor";
 
 
-      termEl.appendChild(cursor);
+      termEl.appendChild(
+        cursor
+      );
 
 
       matrixKeyboard.classList.add(
@@ -1702,14 +1779,16 @@ function promptInput(
 
       function updateDisplay(){
 
-        if(value.length === 0){
+        if(
+          value.length === 0
+        ){
 
           valueSpan.textContent =
             placeholder || "";
 
           valueSpan.style.opacity =
             placeholder
-              ? ".25"
+              ? "0.25"
               : "1";
 
         }else{
@@ -1729,7 +1808,8 @@ function promptInput(
         character
       ){
 
-        value += character;
+        value +=
+          character;
 
         updateDisplay();
 
@@ -1738,44 +1818,20 @@ function promptInput(
 
       function deleteCharacter(){
 
-        if(value.length === 0)
+        if(
+          value.length === 0
+        )
           return;
 
+
         value =
-          value.slice(0,-1);
+          value.slice(
+            0,
+            -1
+          );
+
 
         updateDisplay();
-
-      }
-
-
-      function cleanup(){
-
-        matrixKeyboard.classList.remove(
-          "visible"
-        );
-
-        document.body.classList.remove(
-          "keyboard-open"
-        );
-
-
-        matrixKeyboard
-          .querySelectorAll(".keyboard-key")
-          .forEach(key => {
-
-            if(key._matrixHandler){
-
-              key.removeEventListener(
-                "click",
-                key._matrixHandler
-              );
-
-              key._matrixHandler = null;
-
-            }
-
-          });
 
       }
 
@@ -1790,7 +1846,14 @@ function promptInput(
           return;
 
 
-        cleanup();
+        matrixKeyboard.classList.remove(
+          "visible"
+        );
+
+
+        document.body.classList.remove(
+          "keyboard-open"
+        );
 
 
         cursor.remove();
@@ -1799,13 +1862,41 @@ function promptInput(
         valueSpan.textContent =
           cleanValue.toUpperCase();
 
+
         valueSpan.style.opacity =
           "1";
 
 
         termEl.appendChild(
-          document.createElement("br")
+          document.createElement(
+            "br"
+          )
         );
+
+
+        matrixKeyboard
+          .querySelectorAll(
+            ".keyboard-key"
+          )
+          .forEach(
+            key => {
+
+              if(
+                key._matrixHandler
+              ){
+
+                key.removeEventListener(
+                  "click",
+                  key._matrixHandler
+                );
+
+                key._matrixHandler =
+                  null;
+
+              }
+
+            }
+          );
 
 
         resolve(
@@ -1816,74 +1907,78 @@ function promptInput(
 
 
       matrixKeyboard
-        .querySelectorAll(".keyboard-key")
-        .forEach(key => {
+        .querySelectorAll(
+          ".keyboard-key"
+        )
+        .forEach(
+          key => {
 
-          const handler = () => {
+            const handler =
+              () => {
 
-            key.classList.add(
-              "pressed"
-            );
-
-
-            setTimeout(
-              () =>
-                key.classList.remove(
+                key.classList.add(
                   "pressed"
-                ),
-              100
+                );
+
+
+                setTimeout(
+                  () =>
+                    key.classList.remove(
+                      "pressed"
+                    ),
+                  100
+                );
+
+
+                const action =
+                  key.dataset.action;
+
+
+                const character =
+                  key.dataset.key;
+
+
+                if(
+                  action ===
+                  "backspace"
+                ){
+
+                  deleteCharacter();
+
+                }else if(
+                  action ===
+                  "enter"
+                ){
+
+                  submit();
+
+                }else if(
+                  character !==
+                  undefined
+                ){
+
+                  addCharacter(
+                    character
+                  );
+
+                }
+
+              };
+
+
+            key._matrixHandler =
+              handler;
+
+
+            key.addEventListener(
+              "click",
+              handler
             );
 
-
-            const action =
-              key.dataset.action;
-
-            const character =
-              key.dataset.key;
-
-
-            if(
-              action === "backspace"
-            ){
-
-              deleteCharacter();
-
-            }
-
-            else if(
-              action === "enter"
-            ){
-
-              submit();
-
-            }
-
-            else if(
-              character !== undefined
-            ){
-
-              addCharacter(
-                character
-              );
-
-            }
-
-          };
-
-
-          key._matrixHandler =
-            handler;
-
-
-          key.addEventListener(
-            "click",
-            handler
-          );
-
-        });
+          }
+        );
 
     }
-
   );
 
 }
@@ -1895,45 +1990,54 @@ function promptInput(
 
 function typePrompt(text){
 
-  return new Promise(resolve => {
+  return new Promise(
+    resolve => {
 
-    const span =
-      document.createElement("span");
-
-
-    termEl.appendChild(span);
-
-
-    let i = 0;
-
-
-    function step(){
-
-      if(i < text.length){
-
-        span.textContent +=
-          text[i];
-
-        i++;
-
-
-        setTimeout(
-          step,
-          16 + Math.random()*22
+      const span =
+        document.createElement(
+          "span"
         );
 
-      }else{
 
-        resolve(span);
+      termEl.appendChild(
+        span
+      );
+
+
+      let i = 0;
+
+
+      function step(){
+
+        if(
+          i < text.length
+        ){
+
+          span.textContent +=
+            text[i];
+
+          i++;
+
+
+          setTimeout(
+            step,
+            16 +
+            Math.random() * 22
+          );
+
+        }else{
+
+          resolve(span);
+
+        }
 
       }
 
+
+      step();
+
     }
-
-
-    step();
-
-  });
+  );
 
 }
 
@@ -1955,39 +2059,45 @@ function promptYesNo(
 
 
       const wrap =
-        document.createElement("span");
+        document.createElement(
+          "span"
+        );
 
 
       const yes =
-        document.createElement("span");
+        document.createElement(
+          "span"
+        );
 
       yes.textContent =
         "[YES]";
 
-      yes.className =
-        "inline-option";
-
 
       const no =
-        document.createElement("span");
+        document.createElement(
+          "span"
+        );
 
       no.textContent =
         "[NO]";
 
-      no.className =
-        "inline-option";
+
+      wrap.appendChild(
+        yes
+      );
+
+      wrap.appendChild(
+        no
+      );
 
 
-      wrap.appendChild(yes);
-
-      wrap.appendChild(no);
-
-
-      termEl.appendChild(wrap);
+      termEl.appendChild(
+        wrap
+      );
 
 
       function choose(
-        value,
+        val,
         label
       ){
 
@@ -1995,21 +2105,30 @@ function promptYesNo(
 
 
         const chosen =
-          document.createElement("span");
+          document.createElement(
+            "span"
+          );
+
 
         chosen.textContent =
           label;
 
 
-        termEl.appendChild(chosen);
-
-
         termEl.appendChild(
-          document.createElement("br")
+          chosen
         );
 
 
-        resolve(value);
+        termEl.appendChild(
+          document.createElement(
+            "br"
+          )
+        );
+
+
+        resolve(
+          val
+        );
 
       }
 
@@ -2040,44 +2159,55 @@ function promptYesNo(
 
 
 /* =========================================================
-   SUBMIT BUTTON
+   SUBMIT
    ========================================================= */
 
 function promptSubmit(){
 
-  return new Promise(resolve => {
+  return new Promise(
+    resolve => {
 
-    termEl.appendChild(
-      document.createElement("br")
-    );
-
-
-    const btn =
-      document.createElement("button");
-
-
-    btn.type =
-      "button";
+      termEl.appendChild(
+        document.createElement(
+          "br"
+        )
+      );
 
 
-    btn.className =
-      "inline-submit";
+      const btn =
+        document.createElement(
+          "button"
+        );
 
 
-    btn.textContent =
-      "> SUBMIT";
+      btn.type =
+        "button";
 
 
-    termEl.appendChild(btn);
+      btn.className =
+        "inline-submit";
 
 
-    btn.addEventListener(
-      "click",
-      () => resolve(btn),
-      { once:true }
-    );
+      btn.textContent =
+        "> SUBMIT";
 
-  });
+
+      termEl.appendChild(
+        btn
+      );
+
+
+      btn.addEventListener(
+        "click",
+        () =>
+          resolve(btn),
+        {
+          once:true
+        }
+      );
+
+    }
+  );
 
 }
 
@@ -2086,10 +2216,14 @@ function promptSubmit(){
    STATUS
    ========================================================= */
 
-function appendStatus(text){
+function appendStatus(
+  text
+){
 
   const s =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
 
 
   s.className =
@@ -2100,7 +2234,9 @@ function appendStatus(text){
     text;
 
 
-  termEl.appendChild(s);
+  termEl.appendChild(
+    s
+  );
 
 
   return s;
@@ -2110,70 +2246,84 @@ function appendStatus(text){
 
 /* =========================================================
    SEND TO GOOGLE SHEETS
+   =========================================================
+   
+   WICHTIG:
+   KEIN await.
+   
+   Dadurch wartet die UI nicht auf Google.
+   
    ========================================================= */
 
-async function sendToSheet(payload){
+function sendToSheet(
+  payload
+){
 
   if(
     !CONFIG.sheetURL ||
-    !CONFIG.sheetURL.startsWith("http")
+    !CONFIG.sheetURL.startsWith(
+      "http"
+    )
   ){
 
     console.error(
-      "sheetURL is missing"
+      "Keine gültige Sheet URL."
     );
 
-    return false;
+    return;
 
   }
 
 
   console.log(
-    "Sending to Google Sheets:",
+    "Sending to Sheet:",
     payload
   );
 
 
-  try{
+  fetch(
+    CONFIG.sheetURL,
+    {
 
-    await fetch(
-      CONFIG.sheetURL,
-      {
+      method:
+        "POST",
 
-        method:"POST",
+      mode:
+        "no-cors",
 
-        mode:"no-cors",
+      headers:{
 
-        headers:{
-          "Content-Type":
-            "text/plain;charset=utf-8"
-        },
+        "Content-Type":
+          "text/plain;charset=utf-8"
 
-        body:
-          JSON.stringify(payload)
+      },
 
-      }
-    );
+      body:
+        JSON.stringify(
+          payload
+        )
 
+    }
+  )
+  .then(
+    () => {
 
-    console.log(
-      "POST request sent"
-    );
+      console.log(
+        "Transmission sent."
+      );
 
+    }
+  )
+  .catch(
+    error => {
 
-    return true;
+      console.error(
+        "Transmission error:",
+        error
+      );
 
-  }catch(error){
-
-    console.error(
-      "Google Sheets transmission failed:",
-      error
-    );
-
-
-    return false;
-
-  }
+    }
+  );
 
 }
 
@@ -2184,113 +2334,95 @@ async function sendToSheet(payload){
 
 async function runRsvpForm(){
 
-  try{
+  const name =
+    await promptInput(
+      "NAME: "
+    );
 
-    const name =
+
+  const wantsPlusOne =
+    await promptYesNo(
+      "PLUS ONE?"
+    );
+
+
+  let plusOneName =
+    "";
+
+
+  if(wantsPlusOne){
+
+    plusOneName =
       await promptInput(
-        "NAME:"
+        "NAME PLUS ONE: "
       );
-
-
-    const wantsPlusOne =
-      await promptYesNo(
-        "PLUS ONE?"
-      );
-
-
-    let plusOneName = "";
-
-
-    if(wantsPlusOne){
-
-      plusOneName =
-        await promptInput(
-          "NAME PLUS ONE:"
-        );
-
-    }
-
-
-    const submitBtn =
-      await promptSubmit();
-
-
-    submitBtn.disabled =
-      true;
-
-
-    const statusEl =
-      appendStatus(
-        "> TRANSMITTING..."
-      );
-
-
-    const payload = {
-
-      name:
-        name,
-
-      rsvp:
-        rsvpChoice,
-
-      plusOne:
-        wantsPlusOne,
-
-      plusOneName:
-        plusOneName
-
-    };
-
-
-    console.log(
-      "FINAL PAYLOAD:",
-      payload
-    );
-
-
-    const success =
-      await sendToSheet(
-        payload
-      );
-
-
-    if(!success){
-
-      statusEl.textContent =
-        "> TRANSMISSION FAILED — TRY AGAIN";
-
-      submitBtn.disabled =
-        false;
-
-      return;
-
-    }
-
-
-    statusEl.textContent =
-      "> TRANSMISSION COMPLETE";
-
-
-    setTimeout(
-      () => {
-
-        triggerClosingGlitch(
-          startCountdown
-        );
-
-      },
-      900
-    );
-
-
-  }catch(error){
-
-    console.error(
-      "RSVP FORM ERROR:",
-      error
-    );
 
   }
+
+
+  const submitBtn =
+    await promptSubmit();
+
+
+  submitBtn.disabled =
+    true;
+
+
+  const statusEl =
+    appendStatus(
+      "> TRANSMITTING..."
+    );
+
+
+  const payload = {
+
+    name:
+      name,
+
+    rsvp:
+      rsvpChoice,
+
+    plusOne:
+      wantsPlusOne,
+
+    plusOneName:
+      plusOneName
+
+  };
+
+
+  /*
+   * Request abschicken,
+   * aber NICHT darauf warten.
+   */
+
+  sendToSheet(
+    payload
+  );
+
+
+  /*
+   * Sofort UI aktualisieren.
+   */
+
+  statusEl.textContent =
+    "> TRANSMISSION COMPLETE";
+
+
+  /*
+   * Kurze Pause für Animation.
+   */
+
+  setTimeout(
+    () => {
+
+      triggerClosingGlitch(
+        startCountdown
+      );
+
+    },
+    400
+  );
 
 }
 
@@ -2299,7 +2431,9 @@ async function runRsvpForm(){
    GLITCH → COUNTDOWN
    ========================================================= */
 
-function triggerClosingGlitch(next){
+function triggerClosingGlitch(
+  next
+){
 
   glitchEl.classList.add(
     "active"
@@ -2309,7 +2443,8 @@ function triggerClosingGlitch(next){
   setTimeout(
     () => {
 
-      termEl.innerHTML = "";
+      termEl.innerHTML =
+        "";
 
       choiceEl.classList.remove(
         "visible"
@@ -2377,7 +2512,10 @@ function getPartyDate(){
 function pad(n){
 
   return String(n)
-    .padStart(2,"0");
+    .padStart(
+      2,
+      "0"
+    );
 
 }
 
@@ -2396,7 +2534,8 @@ function startCountdown(){
   function tick(){
 
     const diff =
-      target - new Date();
+      target -
+      new Date();
 
 
     if(diff <= 0){
@@ -2404,16 +2543,19 @@ function startCountdown(){
       countdownEl.innerHTML =
 
         '<div class="cd-label">' +
-        '&gt; status' +
-        '</div>' +
+        "&gt; status" +
+        "</div>" +
 
         '<div class="cd-time">' +
         CONFIG.eventName.toLowerCase() +
-        ' is live' +
-        '</div>';
+        " is live" +
+        "</div>";
 
 
-      clearInterval(timer);
+      clearInterval(
+        timer
+      );
+
 
       return;
 
@@ -2434,13 +2576,15 @@ function startCountdown(){
 
     const hours =
       Math.floor(
-        (s % 86400) / 3600
+        (s % 86400) /
+        3600
       );
 
 
     const mins =
       Math.floor(
-        (s % 3600) / 60
+        (s % 3600) /
+        60
       );
 
 
@@ -2451,26 +2595,25 @@ function startCountdown(){
     countdownEl.innerHTML =
 
       '<div class="cd-label">' +
-      '&gt; countdown to ' +
+      "&gt; countdown to " +
       CONFIG.eventName.toLowerCase() +
-      '</div>' +
+      "</div>" +
 
       '<div class="cd-time">' +
 
       pad(days) +
-      'D ' +
+      "D " +
 
       pad(hours) +
-      'H ' +
+      "H " +
 
       pad(mins) +
-      'M ' +
+      "M " +
 
       pad(secs) +
+      "S" +
 
-      'S' +
-
-      '</div>';
+      "</div>";
 
   }
 
@@ -2489,4 +2632,5 @@ function startCountdown(){
 </script>
 
 </body>
+
 </html>
