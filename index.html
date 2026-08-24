@@ -865,7 +865,7 @@ body.keyboard-open #content{
   <div id="white">
 
     <span>
-      TAP TO CONTINUE
+      YOU HAVE BEEN CHOSEN 
     </span>
 
   </div>
@@ -2519,89 +2519,100 @@ function appendStatus(
 /* =========================================================
    GOOGLE SHEETS
    ========================================================= */
-async function sendToSheet(payload){
+async function sendToSheet(payload) {
 
-  if(
-    !CONFIG.sheetURL ||
-    !CONFIG.sheetURL.startsWith("http")
-  ){
-    throw new Error("Keine gültige Sheet URL.");
+  console.log("=== TRANSMISSION START ===");
+  console.log("URL:", CONFIG.sheetURL);
+  console.log("PAYLOAD:", payload);
+
+  if (!CONFIG.sheetURL) {
+    throw new Error("sheetURL fehlt");
   }
 
   const controller = new AbortController();
 
   const timeout = setTimeout(() => {
+    console.error("TRANSMISSION TIMEOUT");
     controller.abort();
-  }, 10000);
+  }, 8000);
 
-  try{
+  try {
 
-    const response = await fetch(
-      CONFIG.sheetURL,
-      {
-        method:"POST",
+    const response = await fetch(CONFIG.sheetURL, {
+      method: "POST",
 
-        headers:{
-          "Content-Type":"text/plain;charset=utf-8"
-        },
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
 
-        body:JSON.stringify(payload),
+      body: JSON.stringify(payload),
 
-        signal:controller.signal
-      }
-    );
+      signal: controller.signal
+    });
 
     clearTimeout(timeout);
 
-    if(!response.ok){
-      throw new Error(
-        "HTTP Fehler: " + response.status
-      );
-    }
+    console.log("HTTP STATUS:", response.status);
+    console.log("HTTP OK:", response.ok);
 
     const text = await response.text();
 
-    console.log(
-      "Google Apps Script response:",
-      text
-    );
+    console.log("RAW RESPONSE:", text);
+
+    if (!response.ok) {
+      throw new Error(
+        "HTTP ERROR " + response.status
+      );
+    }
 
     let result;
 
-    try{
+    try {
       result = JSON.parse(text);
-    }catch(e){
+    } catch (e) {
+
       throw new Error(
-        "Google Apps Script hat keine gültige JSON-Antwort gesendet."
+        "Apps Script returned invalid JSON: " + text
       );
+
     }
 
-    if(!result.success){
+    console.log("PARSED RESPONSE:", result);
+
+    if (!result.success) {
+
       throw new Error(
         result.error ||
-        "Google Sheets Fehler"
+        "Apps Script returned success=false"
       );
+
     }
+
+    console.log("=== TRANSMISSION SUCCESS ===");
 
     return result;
 
-  }catch(error){
+  } catch (error) {
 
     clearTimeout(timeout);
 
     console.error(
-      "Transmission error:",
+      "=== TRANSMISSION ERROR ===",
       error
     );
 
-    if(error.name === "AbortError"){
+    if (error.name === "AbortError") {
+
       throw new Error(
-        "Transmission timeout."
+        "Transmission timeout after 8 seconds"
       );
+
     }
 
     throw error;
+
   }
+
 }
 /* =========================================================
    GLITCH
