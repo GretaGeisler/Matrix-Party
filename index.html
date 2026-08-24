@@ -1043,7 +1043,7 @@ const CONFIG = {
 
 
   startScreenText:
-    "YOU HAVE BEEN GIVEN THE CHOICE – TAP TO CONTINUE",
+    "YOU HAVE BEEN GIVEN THE CHOICE<br>TAP TO CONTINUE",
 
 
   matrixFontSize:
@@ -2568,7 +2568,9 @@ async function sendToSheet(payload) {
     let result;
 
     try {
+
       result = JSON.parse(text);
+
     } catch (e) {
 
       throw new Error(
@@ -2577,18 +2579,33 @@ async function sendToSheet(payload) {
 
     }
 
-    console.log("PARSED RESPONSE:", result);
+    console.log(
+      "PARSED RESPONSE:",
+      result
+    );
 
-    if (!result.success) {
+    /*
+     * Dein Apps Script antwortet mit:
+     *
+     * {"result":"success"}
+     *
+     * Deshalb prüfen wir result.result
+     */
+
+    if (
+      result.result !== "success"
+    ) {
 
       throw new Error(
         result.error ||
-        "Apps Script returned success=false"
+        "Apps Script returned an unsuccessful result"
       );
 
     }
 
-    console.log("=== TRANSMISSION SUCCESS ===");
+    console.log(
+      "=== TRANSMISSION SUCCESS ==="
+    );
 
     return result;
 
@@ -2601,7 +2618,9 @@ async function sendToSheet(payload) {
       error
     );
 
-    if (error.name === "AbortError") {
+    if (
+      error.name === "AbortError"
+    ) {
 
       throw new Error(
         "Transmission timeout after 8 seconds"
