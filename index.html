@@ -115,7 +115,6 @@ body.keyboard-open{
 /* =========================================================
    WHITE START SCREEN
    ========================================================= */
-
 #white{
 
   position:absolute;
@@ -128,30 +127,105 @@ body.keyboard-open{
 
   display:flex;
 
-  align-items:flex-end;
+  align-items:center;
 
   justify-content:center;
 
-  padding-bottom:14dvh;
+  text-align:center;
+
+  padding:0 20px;
 
 }
 
 
-#white span{
+.start-message{
 
   font-family:
     var(--start-font);
 
-  font-size:12px;
+  color:#888;
 
-  letter-spacing:.2em;
+  text-align:center;
 
-  color:#2b2b2b;
+}
+
+
+.choice-text{
+
+  font-size:11px;
+
+  letter-spacing:.15em;
+
+  line-height:1.5;
 
   opacity:0;
 
   animation:
-    fadein 1s ease forwards .9s;
+    choiceFadeIn 1s ease forwards .3s;
+
+}
+
+
+.tap-text{
+
+  margin-top:14px;
+
+  font-size:9px;
+
+  letter-spacing:.2em;
+
+  color:#aaa;
+
+  opacity:0;
+
+  animation:
+    tapFadeIn .8s ease forwards 1.5s;
+
+}
+
+
+@keyframes choiceFadeIn{
+
+  from{
+
+    opacity:0;
+
+    transform:
+      translateY(5px);
+
+  }
+
+  to{
+
+    opacity:1;
+
+    transform:
+      translateY(0);
+
+  }
+
+}
+
+
+@keyframes tapFadeIn{
+
+  from{
+
+    opacity:0;
+
+    transform:
+      translateY(5px);
+
+  }
+
+  to{
+
+    opacity:1;
+
+    transform:
+      translateY(0);
+
+  }
 
 }
 
@@ -862,13 +936,21 @@ body.keyboard-open #content{
 
 <div id="app">
 
-  <div id="white">
+<div id="white">
 
-    <span>
-      YOU HAVE BEEN CHOSEN 
-    </span>
+  <div class="start-message">
+
+    <div class="choice-text">
+      YOU HAVE BEEN GIVEN THE CHOICE
+    </div>
+
+    <div class="tap-text">
+      TAP TO CONTINUE
+    </div>
 
   </div>
+
+</div>
 
 
   <div id="glitch"></div>
@@ -1042,10 +1124,6 @@ const CONFIG = {
     "Science Fiction",
 
 
-  startScreenText:
-    "YOU HAVE BEEN GIVEN THE CHOICE<br>TAP TO CONTINUE",
-
-
   matrixFontSize:
     "11px",
 
@@ -1107,11 +1185,6 @@ document.documentElement.style.setProperty(
   CONFIG.matrixFontSize
 );
 
-
-document.querySelector(
-  "#white span"
-).textContent =
-  CONFIG.startScreenText;
 
 
 /* =========================================================
