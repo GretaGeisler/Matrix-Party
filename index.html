@@ -1,668 +1,905 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#020403">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, viewport-fit=cover"
+>
+
+<meta
+  name="theme-color"
+  content="#020403"
+>
 
 <title>Transmission</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link
+  rel="preconnect"
+  href="https://fonts.googleapis.com"
+>
+
+<link
+  href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap"
+  rel="stylesheet"
+>
+
 
 <style>
 
-  :root{
-    --green:#15cd96;
-    --black:#020403;
-    --font:'Share Tech Mono','Courier New',monospace;
-    --start-font:'Share Tech Mono','Courier New',monospace;
-    --matrix-font-size:16px;
-  }
+/* =========================================================
+   VARIABLES
+   ========================================================= */
 
-  *{
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
-  }
+:root{
 
-  html,
-  body{
-    margin:0;
-    padding:0;
-    width:100%;
-    height:100%;
-    background:var(--black);
-    overflow:hidden;
-    font-family:var(--font);
-    text-transform:uppercase;
-  }
+  --green:#15cd96;
 
-  #app{
-    position:fixed;
-    inset:0;
-    width:100%;
-    height:100dvh;
-    background:var(--black);
-  }
+  --black:#020403;
+
+  --font:
+    'Share Tech Mono',
+    'Courier New',
+    monospace;
+
+  --start-font:
+    'Share Tech Mono',
+    'Courier New',
+    monospace;
+
+  --matrix-font-size:16px;
+
+}
 
 
-  /* =========================================================
-     WHITE SCREEN
-     ========================================================= */
+/* =========================================================
+   GLOBAL
+   ========================================================= */
 
-  #white{
-    position:absolute;
-    inset:0;
-    background:#fdfdfd;
-    z-index:50;
-    display:flex;
-    align-items:flex-end;
-    justify-content:center;
-    padding-bottom:14dvh;
-    transition:opacity .15s linear;
-  }
+*{
 
-  #white span{
-    font-family:var(--start-font);
-    font-size:9px;
-    letter-spacing:.2em;
-    color:#bbb;
-    opacity:0;
-    animation:fadein 1s ease forwards .9s;
-    text-transform:uppercase;
-  }
+  box-sizing:border-box;
 
-  @keyframes fadein{
-    to{
-      opacity:1;
-    }
-  }
+  -webkit-tap-highlight-color:transparent;
 
-  #white.hidden{
-    display:none;
-  }
+}
 
 
-  /* =========================================================
-     GLITCH OVERLAY
-     ========================================================= */
+html,
+body{
 
-  #glitch{
-    position:absolute;
-    inset:0;
-    z-index:60;
-    background:#fff;
-    display:none;
-    pointer-events:none;
-  }
+  margin:0;
 
-  #glitch.active{
-    display:block;
-    animation:glitchflash .55s steps(2,end) forwards;
-  }
+  padding:0;
 
-  #glitch::before,
-  #glitch::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:#000;
-    mix-blend-mode:difference;
-  }
+  width:100%;
 
-  #glitch.active::before{
-    animation:slice1 .55s steps(6,end) forwards;
-  }
+  height:100%;
 
-  #glitch.active::after{
-    animation:slice2 .55s steps(8,end) forwards;
-  }
+  background:var(--black);
 
-  @keyframes glitchflash{
-    0%{
-      background:#fff;
-    }
+  overflow:hidden;
 
-    15%{
-      background:#000;
-    }
+  font-family:var(--font);
 
-    30%{
-      background:#39ff6a;
-    }
+  text-transform:uppercase;
 
-    45%{
-      background:#000;
-    }
-
-    60%{
-      background:#fff;
-    }
-
-    75%{
-      background:#000;
-    }
-
-    100%{
-      background:#000;
-      opacity:0;
-    }
-  }
-
-  @keyframes slice1{
-
-    0%{
-      clip-path:inset(10% 0 70% 0);
-      transform:translateX(-4%);
-    }
-
-    20%{
-      clip-path:inset(60% 0 5% 0);
-      transform:translateX(3%);
-    }
-
-    40%{
-      clip-path:inset(30% 0 40% 0);
-      transform:translateX(-6%);
-    }
-
-    60%{
-      clip-path:inset(5% 0 80% 0);
-      transform:translateX(2%);
-    }
-
-    80%{
-      clip-path:inset(75% 0 2% 0);
-      transform:translateX(-2%);
-    }
-
-    100%{
-      clip-path:inset(0 0 100% 0);
-      transform:translateX(0);
-      opacity:0;
-    }
-  }
-
-  @keyframes slice2{
-
-    0%{
-      clip-path:inset(80% 0 5% 0);
-      transform:translateX(5%);
-    }
-
-    25%{
-      clip-path:inset(20% 0 60% 0);
-      transform:translateX(-3%);
-    }
-
-    50%{
-      clip-path:inset(45% 0 20% 0);
-      transform:translateX(4%);
-    }
-
-    75%{
-      clip-path:inset(10% 0 75% 0);
-      transform:translateX(-5%);
-    }
-
-    100%{
-      clip-path:inset(100% 0 0 0);
-      transform:translateX(0);
-      opacity:0;
-    }
-  }
+}
 
 
-  /* =========================================================
-     MATRIX SCENE
-     ========================================================= */
+#app{
 
-  #matrix{
-    position:absolute;
-    inset:0;
-    z-index:10;
-    background:var(--black);
-    opacity:0;
-  }
+  position:fixed;
 
-  #matrix.visible{
+  inset:0;
+
+  width:100%;
+
+  height:100dvh;
+
+  background:var(--black);
+
+}
+
+
+/* =========================================================
+   WHITE START SCREEN
+   ========================================================= */
+
+#white{
+
+  position:absolute;
+
+  inset:0;
+
+  background:#fdfdfd;
+
+  z-index:50;
+
+  display:flex;
+
+  align-items:flex-end;
+
+  justify-content:center;
+
+  padding-bottom:14dvh;
+
+  transition:opacity .15s linear;
+
+}
+
+
+#white span{
+
+  font-family:var(--start-font);
+
+  font-size:9px;
+
+  letter-spacing:.2em;
+
+  color:#bbb;
+
+  opacity:0;
+
+  animation:
+    fadein 1s ease forwards .9s;
+
+  text-transform:uppercase;
+
+}
+
+
+@keyframes fadein{
+
+  to{
+
     opacity:1;
+
   }
 
-  canvas#rain{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
+}
+
+
+#white.hidden{
+
+  display:none;
+
+}
+
+
+/* =========================================================
+   GLITCH
+   ========================================================= */
+
+#glitch{
+
+  position:absolute;
+
+  inset:0;
+
+  z-index:60;
+
+  background:#fff;
+
+  display:none;
+
+  pointer-events:none;
+
+}
+
+
+#glitch.active{
+
+  display:block;
+
+  animation:
+    glitchflash .55s steps(2,end) forwards;
+
+}
+
+
+#glitch::before,
+#glitch::after{
+
+  content:"";
+
+  position:absolute;
+
+  inset:0;
+
+  background:#000;
+
+  mix-blend-mode:difference;
+
+}
+
+
+#glitch.active::before{
+
+  animation:
+    slice1 .55s steps(6,end) forwards;
+
+}
+
+
+#glitch.active::after{
+
+  animation:
+    slice2 .55s steps(8,end) forwards;
+
+}
+
+
+@keyframes glitchflash{
+
+  0%{
+    background:#fff;
   }
 
-  #scrim{
-    position:absolute;
-    inset:0;
-
-    background:
-      radial-gradient(
-        ellipse at 50% 40%,
-        rgba(2,4,3,0.35) 0%,
-        rgba(2,4,3,0.82) 65%,
-        rgba(2,4,3,0.95) 100%
-      );
+  15%{
+    background:#000;
   }
 
-  #content{
-    position:relative;
-    z-index:20;
-    height:100%;
-
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-
-    padding:7vh 6vw;
-
-    color:var(--green);
-
-    max-width:520px;
-    margin:0 auto;
-
-    transition:padding-bottom .25s ease;
+  30%{
+    background:#39ff6a;
   }
 
-  #term{
-    font-size:var(--matrix-font-size);
-    line-height:1.5;
-    white-space:pre-wrap;
-    min-height:38vh;
-    color:var(--green);
+  45%{
+    background:#000;
   }
 
-  .cursor{
-    display:inline-block;
-    width:.55em;
-    height:1em;
-    background:var(--green);
-    vertical-align:text-bottom;
-    margin-left:2px;
-    animation:blink 1s steps(1) infinite;
+  60%{
+    background:#fff;
   }
 
-  @keyframes blink{
-    50%{
-      opacity:0;
-    }
+  75%{
+    background:#000;
   }
 
-
-  /* =========================================================
-     PILL CHOICES
-     ========================================================= */
-
-  #choice{
-    margin-top:calc(var(--matrix-font-size) * 0.8);
-
-    display:none;
-    flex-direction:column;
-
-    gap:calc(var(--matrix-font-size) * 1.5);
-
-    animation:riseIn .6s ease forwards;
+  100%{
+    background:#000;
+    opacity:0;
   }
 
-  #choice.visible{
-    display:flex;
+}
+
+
+@keyframes slice1{
+
+  0%{
+    clip-path:inset(10% 0 70% 0);
+    transform:translateX(-4%);
   }
 
-  @keyframes riseIn{
-
-    from{
-      opacity:0;
-      transform:translateY(10px);
-    }
-
-    to{
-      opacity:1;
-      transform:translateY(0);
-    }
+  20%{
+    clip-path:inset(60% 0 5% 0);
+    transform:translateX(3%);
   }
 
-  .code-choice-btn{
-    font-family:var(--font);
-    font-size:var(--matrix-font-size);
-    letter-spacing:.05em;
-
-    padding:0;
-
-    background:transparent;
-    border:none;
-
-    color:var(--green);
-
-    text-align:left;
-    cursor:pointer;
-
-    -webkit-appearance:none;
-
-    text-transform:uppercase;
+  40%{
+    clip-path:inset(30% 0 40% 0);
+    transform:translateX(-6%);
   }
 
-  .code-choice-btn:active{
-    opacity:.55;
+  60%{
+    clip-path:inset(5% 0 80% 0);
+    transform:translateX(2%);
   }
 
-  .code-choice-btn:focus-visible{
-    outline:1px dashed var(--green);
+  80%{
+    clip-path:inset(75% 0 2% 0);
+    transform:translateX(-2%);
   }
 
-
-  /* =========================================================
-     VIRTUAL INPUT
-     ========================================================= */
-
-  .virtual-input{
-    font-family:var(--font);
-    font-size:var(--matrix-font-size);
-    color:var(--green);
-    letter-spacing:.05em;
+  100%{
+    clip-path:inset(0 0 100% 0);
+    transform:translateX(0);
+    opacity:0;
   }
 
+}
 
-  /* =========================================================
-     INLINE TERMINAL FORM
-     ========================================================= */
 
-  .inline-form{
-    display:inline;
+@keyframes slice2{
+
+  0%{
+    clip-path:inset(80% 0 5% 0);
+    transform:translateX(5%);
   }
 
-  .inline-input{
-    background:transparent;
-    border:none;
-    outline:none;
-
-    caret-color:transparent;
-
-    font-family:var(--font);
-    font-size:var(--matrix-font-size);
-    letter-spacing:.05em;
-
-    color:var(--green);
-
-    text-transform:uppercase;
-
-    width:12ch;
-
-    padding:0;
-    margin:0;
-
-    vertical-align:text-bottom;
+  25%{
+    clip-path:inset(20% 0 60% 0);
+    transform:translateX(-3%);
   }
 
-  .inline-input::placeholder{
-    color:var(--green);
-    opacity:.25;
+  50%{
+    clip-path:inset(45% 0 20% 0);
+    transform:translateX(4%);
   }
 
-
-  /* =========================================================
-     SUBMIT
-     ========================================================= */
-
-  .inline-submit{
-    font-family:var(--font);
-    font-size:var(--matrix-font-size);
-    letter-spacing:.1em;
-
-    background:transparent;
-    color:var(--green);
-
-    border:1px solid var(--green);
-
-    padding:
-      calc(var(--matrix-font-size)*0.5)
-      calc(var(--matrix-font-size)*0.9);
-
-    margin-top:
-      calc(var(--matrix-font-size) * 1.5);
-
-    cursor:pointer;
-    text-transform:uppercase;
+  75%{
+    clip-path:inset(10% 0 75% 0);
+    transform:translateX(-5%);
   }
 
-  .inline-submit:disabled{
-    opacity:.35;
+  100%{
+    clip-path:inset(100% 0 0 0);
+    transform:translateX(0);
+    opacity:0;
   }
 
-  .inline-submit:active{
-    transform:scale(.98);
+}
+
+
+/* =========================================================
+   MATRIX
+   ========================================================= */
+
+#matrix{
+
+  position:absolute;
+
+  inset:0;
+
+  z-index:10;
+
+  background:var(--black);
+
+  opacity:0;
+
+}
+
+
+#matrix.visible{
+
+  opacity:1;
+
+}
+
+
+canvas#rain{
+
+  position:absolute;
+
+  inset:0;
+
+  width:100%;
+
+  height:100%;
+
+}
+
+
+#scrim{
+
+  position:absolute;
+
+  inset:0;
+
+  background:
+
+    radial-gradient(
+      ellipse at 50% 40%,
+      rgba(2,4,3,.35) 0%,
+      rgba(2,4,3,.82) 65%,
+      rgba(2,4,3,.95) 100%
+    );
+
+}
+
+
+#content{
+
+  position:relative;
+
+  z-index:20;
+
+  height:100%;
+
+  display:flex;
+
+  flex-direction:column;
+
+  justify-content:center;
+
+  padding:7vh 6vw;
+
+  color:var(--green);
+
+  max-width:520px;
+
+  margin:0 auto;
+
+  transition:
+    padding-bottom .25s ease;
+
+}
+
+
+#term{
+
+  font-size:var(--matrix-font-size);
+
+  line-height:1.5;
+
+  white-space:pre-wrap;
+
+  min-height:38vh;
+
+  color:var(--green);
+
+}
+
+
+.cursor{
+
+  display:inline-block;
+
+  width:.55em;
+
+  height:1em;
+
+  background:var(--green);
+
+  vertical-align:text-bottom;
+
+  margin-left:2px;
+
+  animation:
+    blink 1s steps(1) infinite;
+
+}
+
+
+@keyframes blink{
+
+  50%{
+    opacity:0;
   }
 
-  .status-line{
-    margin-top:
-      calc(var(--matrix-font-size) * 0.9);
+}
 
-    font-size:var(--matrix-font-size);
 
-    color:var(--green);
+/* =========================================================
+   CHOICES
+   ========================================================= */
 
-    opacity:.85;
+#choice{
+
+  margin-top:
+    calc(var(--matrix-font-size) * .8);
+
+  display:none;
+
+  flex-direction:column;
+
+  gap:
+    calc(var(--matrix-font-size) * 1.5);
+
+  animation:
+    riseIn .6s ease forwards;
+
+}
+
+
+#choice.visible{
+
+  display:flex;
+
+}
+
+
+@keyframes riseIn{
+
+  from{
+
+    opacity:0;
+
+    transform:
+      translateY(10px);
+
   }
 
+  to{
 
-  /* =========================================================
-     COUNTDOWN
-     ========================================================= */
+    opacity:1;
 
-  #countdown{
-    display:none;
-    text-align:left;
+    transform:
+      translateY(0);
+
   }
 
-  #countdown.visible{
-    display:block;
-    animation:riseIn .5s ease forwards;
-  }
-
-  #countdown .cd-label{
-    font-size:
-      calc(var(--matrix-font-size) * 0.85);
-
-    letter-spacing:.1em;
-
-    opacity:.8;
-
-    margin-bottom:14px;
-  }
-
-  #countdown .cd-time{
-    font-size:
-      calc(var(--matrix-font-size) * 1.7);
-
-    letter-spacing:.04em;
-
-    line-height:1.4;
-  }
+}
 
 
-  /* =========================================================
-     MATRIX VIRTUAL KEYBOARD
-     ========================================================= */
+.code-choice-btn{
 
-  .matrix-keyboard{
+  font-family:var(--font);
 
-    position:fixed;
+  font-size:var(--matrix-font-size);
 
-    left:0;
-    right:0;
-    bottom:0;
+  letter-spacing:.05em;
 
-    z-index:100;
+  padding:0;
 
-    display:none;
+  background:transparent;
 
-    padding:
-      10px
-      8px
-      calc(8px + env(safe-area-inset-bottom));
+  border:none;
 
-    background:rgba(2,4,3,.98);
+  color:var(--green);
 
-    border-top:
-      1px solid rgba(21,205,150,.45);
+  text-align:left;
 
-    box-shadow:
-      0 -8px 30px rgba(0,0,0,.65);
+  cursor:pointer;
 
-    font-family:var(--font);
+  -webkit-appearance:none;
 
-    text-transform:uppercase;
-  }
+  text-transform:uppercase;
 
-  .matrix-keyboard.visible{
-    display:block;
-  }
+}
 
-  .keyboard-label{
 
-    color:var(--green);
+.code-choice-btn:active{
 
-    opacity:.45;
+  opacity:.55;
 
-    font-size:8px;
+}
 
-    letter-spacing:.12em;
 
-    text-align:center;
+.code-choice-btn:focus-visible{
 
-    margin-bottom:6px;
-  }
+  outline:
+    1px dashed var(--green);
 
-  .keyboard-row{
+}
 
-    display:flex;
 
-    gap:5px;
+/* =========================================================
+   VIRTUAL INPUT
+   ========================================================= */
 
-    margin-bottom:5px;
-  }
+.virtual-input{
+
+  font-family:var(--font);
+
+  font-size:var(--matrix-font-size);
+
+  color:var(--green);
+
+  letter-spacing:.05em;
+
+}
+
+
+/* =========================================================
+   SUBMIT
+   ========================================================= */
+
+.inline-submit{
+
+  font-family:var(--font);
+
+  font-size:var(--matrix-font-size);
+
+  letter-spacing:.1em;
+
+  background:transparent;
+
+  color:var(--green);
+
+  border:
+    1px solid var(--green);
+
+  padding:
+
+    calc(var(--matrix-font-size)*.5)
+
+    calc(var(--matrix-font-size)*.9);
+
+  margin-top:
+
+    calc(var(--matrix-font-size)*1.5);
+
+  cursor:pointer;
+
+  text-transform:uppercase;
+
+}
+
+
+.inline-submit:disabled{
+
+  opacity:.35;
+
+}
+
+
+.inline-submit:active{
+
+  transform:scale(.98);
+
+}
+
+
+.status-line{
+
+  margin-top:
+
+    calc(var(--matrix-font-size)*.9);
+
+  font-size:var(--matrix-font-size);
+
+  color:var(--green);
+
+  opacity:.85;
+
+}
+
+
+/* =========================================================
+   COUNTDOWN
+   ========================================================= */
+
+#countdown{
+
+  display:none;
+
+  text-align:left;
+
+}
+
+
+#countdown.visible{
+
+  display:block;
+
+  animation:
+    riseIn .5s ease forwards;
+
+}
+
+
+#countdown .cd-label{
+
+  font-size:
+    calc(var(--matrix-font-size)*.85);
+
+  letter-spacing:.1em;
+
+  opacity:.8;
+
+  margin-bottom:14px;
+
+}
+
+
+#countdown .cd-time{
+
+  font-size:
+    calc(var(--matrix-font-size)*1.7);
+
+  letter-spacing:.04em;
+
+  line-height:1.4;
+
+}
+
+
+/* =========================================================
+   VIRTUAL KEYBOARD
+   ========================================================= */
+
+.matrix-keyboard{
+
+  position:fixed;
+
+  left:0;
+
+  right:0;
+
+  bottom:0;
+
+  z-index:100;
+
+  display:none;
+
+  padding:
+
+    10px
+
+    8px
+
+    calc(
+      8px +
+      env(safe-area-inset-bottom)
+    );
+
+  background:
+    rgba(2,4,3,.98);
+
+  border-top:
+    1px solid rgba(21,205,150,.45);
+
+  box-shadow:
+    0 -8px 30px rgba(0,0,0,.65);
+
+  font-family:var(--font);
+
+  text-transform:uppercase;
+
+}
+
+
+.matrix-keyboard.visible{
+
+  display:block;
+
+}
+
+
+.keyboard-label{
+
+  color:var(--green);
+
+  opacity:.45;
+
+  font-size:8px;
+
+  letter-spacing:.12em;
+
+  text-align:center;
+
+  margin-bottom:6px;
+
+}
+
+
+.keyboard-row{
+
+  display:flex;
+
+  gap:5px;
+
+  margin-bottom:5px;
+
+}
+
+
+.keyboard-key{
+
+  flex:1;
+
+  min-width:0;
+
+  height:42px;
+
+  padding:0;
+
+  border:
+    1px solid rgba(21,205,150,.45);
+
+  background:#020403;
+
+  color:var(--green);
+
+  font-family:var(--font);
+
+  font-size:15px;
+
+  line-height:1;
+
+  -webkit-appearance:none;
+
+  appearance:none;
+
+  border-radius:0;
+
+  touch-action:manipulation;
+
+  user-select:none;
+
+  -webkit-user-select:none;
+
+}
+
+
+.keyboard-key:active,
+.keyboard-key.pressed{
+
+  background:var(--green);
+
+  color:#020403;
+
+  box-shadow:
+    0 0 12px rgba(21,205,150,.8);
+
+}
+
+
+.keyboard-key.wide{
+
+  flex:1.7;
+
+}
+
+
+.keyboard-key.space{
+
+  flex:4;
+
+}
+
+
+.keyboard-key.enter{
+
+  flex:1.5;
+
+}
+
+
+body.keyboard-open #content{
+
+  padding-bottom:300px;
+
+}
+
+
+@media (max-width:380px){
 
   .keyboard-key{
 
-    flex:1;
+    height:38px;
 
-    min-width:0;
+    font-size:13px;
 
-    height:42px;
-
-    padding:0;
-
-    border:
-      1px solid rgba(21,205,150,.45);
-
-    background:#020403;
-
-    color:var(--green);
-
-    font-family:var(--font);
-
-    font-size:15px;
-
-    line-height:1;
-
-    -webkit-appearance:none;
-    appearance:none;
-
-    border-radius:0;
-
-    touch-action:manipulation;
-
-    user-select:none;
-    -webkit-user-select:none;
   }
-
-  .keyboard-key:active,
-  .keyboard-key.pressed{
-
-    background:var(--green);
-
-    color:#020403;
-
-    box-shadow:
-      0 0 12px rgba(21,205,150,.8);
-  }
-
-  .keyboard-key.wide{
-    flex:1.7;
-  }
-
-  .keyboard-key.space{
-    flex:4;
-  }
-
-  .keyboard-key.enter{
-    flex:1.5;
-  }
-
-
-  /* Wenn virtuelle Tastatur offen ist,
-     wird der Terminalbereich etwas nach oben verschoben. */
 
   body.keyboard-open #content{
 
-    padding-bottom:
-      300px;
+    padding-bottom:275px;
+
   }
 
+}
 
-  /* Kleine iPhones */
 
-  @media (max-width:380px){
+@media (prefers-reduced-motion:reduce){
 
-    .keyboard-key{
-      height:38px;
-      font-size:13px;
-    }
+  *{
 
-    body.keyboard-open #content{
+    animation-duration:.01ms !important;
 
-      padding-bottom:
-        275px;
-    }
+    animation-iteration-count:1 !important;
+
   }
 
-
-  /* =========================================================
-     REDUCED MOTION
-     ========================================================= */
-
-  @media (prefers-reduced-motion: reduce){
-
-    *{
-      animation-duration:.01ms !important;
-      animation-iteration-count:1 !important;
-    }
-  }
+}
 
 </style>
+
 </head>
 
 
 <body>
 
+
 <div id="app">
 
-  <!-- WHITE START SCREEN -->
 
   <div id="white">
-    <span>TAP TO CONTINUE</span>
+
+    <span>
+      TAP TO CONTINUE
+    </span>
+
   </div>
 
 
-  <!-- GLITCH -->
-
   <div id="glitch"></div>
 
-
-  <!-- MATRIX -->
 
   <div id="matrix">
 
@@ -670,33 +907,33 @@
 
     <div id="scrim"></div>
 
+
     <div id="content">
 
       <div id="term"></div>
 
-
-      <!-- RED / BLUE -->
 
       <div id="choice">
 
         <button
           class="code-choice-btn"
           id="opt-red"
+          type="button"
         >
           &gt; RED PILL — JOIN THE MATRIX
         </button>
 
+
         <button
           class="code-choice-btn"
           id="opt-blue"
+          type="button"
         >
           &gt; BLUE PILL — REFUSE THE MATRIX
         </button>
 
       </div>
 
-
-      <!-- COUNTDOWN -->
 
       <div id="countdown"></div>
 
@@ -707,10 +944,9 @@
 </div>
 
 
-
-<!-- =========================================================
-     MATRIX VIRTUAL KEYBOARD
-     ========================================================= -->
+<!-- =======================================================
+     VIRTUAL KEYBOARD
+     ======================================================= -->
 
 <div
   id="matrixKeyboard"
@@ -722,223 +958,72 @@
   </div>
 
 
-  <!-- ROW 1 -->
-
   <div class="keyboard-row">
 
-    <button
-      type="button"
-      class="keyboard-key"
-      data-key="Q"
-    >Q</button>
-
-    <button
-      type="button"
-      class="keyboard-key"
-      data-key="W"
-    >W</button>
-
-    <button
-      type="button"
-      class="keyboard-key"
-      data-key="E"
-    >E</button>
-
-    <button
-      type="button"
-      class="keyboard-key"
-      data-key="R"
-    >R</button>
-
-    <button
-      type="button"
-      class="keyboard-key"
-      data-key="T"
-    >T</button>
-
-    <button
-      type="button"
-      class="keyboard-key"
-      data-key="Z"
-    >Z</button>
-
-    <button
-      type="button"
-      class="keyboard-key"
-      data-key="U"
-    >U</button>
-
-    <button
-      type="button"
-      class="keyboard-key"
-      data-key="I"
-    >I</button>
-
-    <button
-      type="button"
-      class="keyboard-key"
-      data-key="O"
-    >O</button>
-
-    <button
-      type="button"
-      class="keyboard-key"
-      data-key="P"
-    >P</button>
+    <button class="keyboard-key" data-key="Q">Q</button>
+    <button class="keyboard-key" data-key="W">W</button>
+    <button class="keyboard-key" data-key="E">E</button>
+    <button class="keyboard-key" data-key="R">R</button>
+    <button class="keyboard-key" data-key="T">T</button>
+    <button class="keyboard-key" data-key="Z">Z</button>
+    <button class="keyboard-key" data-key="U">U</button>
+    <button class="keyboard-key" data-key="I">I</button>
+    <button class="keyboard-key" data-key="O">O</button>
+    <button class="keyboard-key" data-key="P">P</button>
 
   </div>
 
 
-  <!-- ROW 2 -->
-
   <div class="keyboard-row">
 
-    <button
-      type="button"
-      class="keyboard-key"
-      data-key="A"
-    >A</button>
-
-    <button
-      type="button"
-      class="keyboard-key"
-      data-key="S"
-    >S</button>
-
-    <button
-      type="button"
-      class="keyboard-key"
-      data-key="D"
-    >D</button>
-
-    <button
-      type="button"
-      class="keyboard-key"
-      data-key="F"
-    >F</button>
-
-    <button
-      type="button"
-      class="keyboard-key"
-      data-key="G"
-    >G</button>
-
-    <button
-      type="button"
-      class="keyboard-key"
-      data-key="H"
-    >H</button>
-
-    <button
-      type="button"
-      class="keyboard-key"
-      data-key="J"
-    >J</button>
-
-    <button
-      type="button"
-      class="keyboard-key"
-      data-key="K"
-    >K</button>
-
-    <button
-      type="button"
-      class="keyboard-key"
-      data-key="L"
-    >L</button>
+    <button class="keyboard-key" data-key="A">A</button>
+    <button class="keyboard-key" data-key="S">S</button>
+    <button class="keyboard-key" data-key="D">D</button>
+    <button class="keyboard-key" data-key="F">F</button>
+    <button class="keyboard-key" data-key="G">G</button>
+    <button class="keyboard-key" data-key="H">H</button>
+    <button class="keyboard-key" data-key="J">J</button>
+    <button class="keyboard-key" data-key="K">K</button>
+    <button class="keyboard-key" data-key="L">L</button>
 
   </div>
 
 
-  <!-- ROW 3 -->
-
   <div class="keyboard-row">
 
-    <button
-      type="button"
-      class="keyboard-key"
-      data-key="Y"
-    >Y</button>
-
-    <button
-      type="button"
-      class="keyboard-key"
-      data-key="X"
-    >X</button>
-
-    <button
-      type="button"
-      class="keyboard-key"
-      data-key="C"
-    >C</button>
-
-    <button
-      type="button"
-      class="keyboard-key"
-      data-key="V"
-    >V</button>
-
-    <button
-      type="button"
-      class="keyboard-key"
-      data-key="B"
-    >B</button>
-
-    <button
-      type="button"
-      class="keyboard-key"
-      data-key="N"
-    >N</button>
-
-    <button
-      type="button"
-      class="keyboard-key"
-      data-key="M"
-    >M</button>
-
-    <button
-      type="button"
-      class="keyboard-key"
-      data-key="Ä"
-    >Ä</button>
-
-    <button
-      type="button"
-      class="keyboard-key"
-      data-key="Ö"
-    >Ö</button>
-
-    <button
-      type="button"
-      class="keyboard-key"
-      data-key="Ü"
-    >Ü</button>
+    <button class="keyboard-key" data-key="Y">Y</button>
+    <button class="keyboard-key" data-key="X">X</button>
+    <button class="keyboard-key" data-key="C">C</button>
+    <button class="keyboard-key" data-key="V">V</button>
+    <button class="keyboard-key" data-key="B">B</button>
+    <button class="keyboard-key" data-key="N">N</button>
+    <button class="keyboard-key" data-key="M">M</button>
+    <button class="keyboard-key" data-key="Ä">Ä</button>
+    <button class="keyboard-key" data-key="Ö">Ö</button>
+    <button class="keyboard-key" data-key="Ü">Ü</button>
 
   </div>
 
 
-  <!-- BOTTOM ROW -->
-
   <div class="keyboard-row">
 
     <button
-      type="button"
       class="keyboard-key wide"
       data-action="backspace"
     >
       ⌫
     </button>
 
+
     <button
-      type="button"
       class="keyboard-key space"
       data-key=" "
     >
       SPACE
     </button>
 
+
     <button
-      type="button"
       class="keyboard-key enter"
       data-action="enter"
     >
@@ -954,13 +1039,13 @@
 <script>
 
 /* =========================================================
-   KONFIGURATION
+   CONFIG
    ========================================================= */
 
 const CONFIG = {
 
   sheetURL:
-    "https://script.google.com/macros/s/AKfycbwGkyMVrHtTEeqCpayKrRAD-UKXa2c1SUTAlEZX48JyjBPTGgL81CJl4oqNsvg93pyS1A/exec",
+    "https://script.google.com/macros/s/AKfycbzWDWCkEEfo2InzVIyot7C_k1J85sR_mV3Nt0axw6AXdH5aMBH9Sn3yQ4xHwqDfXyAbbw/exec",
 
   eventName:
     "HG_GG_HALLOWEEN",
@@ -977,23 +1062,14 @@ const CONFIG = {
   dresscode:
     "Science Fiction",
 
-
-  /* Startbildschirm */
-
   startScreenText:
     "TAP TO CONTINUE",
 
   startScreenFont:
     "'Share Tech Mono', 'Courier New', monospace",
 
-
-  /* Matrix-Schrift */
-
   matrixFontSize:
     "11px",
-
-
-  /* Zeit bis Pill-Frage */
 
   pillPromptDelay:
     1600,
@@ -1009,33 +1085,56 @@ const CONFIG = {
    ========================================================= */
 
 document.documentElement.style.setProperty(
-  '--start-font',
+  "--start-font",
   CONFIG.startScreenFont
 );
 
 document.documentElement.style.setProperty(
-  '--matrix-font-size',
+  "--matrix-font-size",
   CONFIG.matrixFontSize
 );
 
 document.querySelector(
-  '#white span'
+  "#white span"
 ).textContent =
   CONFIG.startScreenText;
 
 
 /* =========================================================
-   WHITE SCREEN → GLITCH → MATRIX
+   ELEMENTS
    ========================================================= */
 
 const whiteEl =
-  document.getElementById('white');
+  document.getElementById("white");
 
 const glitchEl =
-  document.getElementById('glitch');
+  document.getElementById("glitch");
 
 const matrixEl =
-  document.getElementById('matrix');
+  document.getElementById("matrix");
+
+const termEl =
+  document.getElementById("term");
+
+const choiceEl =
+  document.getElementById("choice");
+
+const optRed =
+  document.getElementById("opt-red");
+
+const optBlue =
+  document.getElementById("opt-blue");
+
+const countdownEl =
+  document.getElementById("countdown");
+
+const matrixKeyboard =
+  document.getElementById("matrixKeyboard");
+
+
+/* =========================================================
+   START
+   ========================================================= */
 
 let started = false;
 
@@ -1047,26 +1146,19 @@ function startSequence(){
 
   started = true;
 
-
-  glitchEl.classList.add(
-    'active'
-  );
+  glitchEl.classList.add("active");
 
 
-  setTimeout(()=>{
+  setTimeout(() => {
 
-    whiteEl.classList.add(
-      'hidden'
-    );
+    whiteEl.classList.add("hidden");
 
   },120);
 
 
-  setTimeout(()=>{
+  setTimeout(() => {
 
-    matrixEl.classList.add(
-      'visible'
-    );
+    matrixEl.classList.add("visible");
 
     startRain();
 
@@ -1075,18 +1167,17 @@ function startSequence(){
   },260);
 
 
-  setTimeout(()=>{
+  setTimeout(() => {
 
-    glitchEl.classList.remove(
-      'active'
-    );
+    glitchEl.classList.remove("active");
 
   },600);
+
 }
 
 
 document.body.addEventListener(
-  'click',
+  "click",
   startSequence,
   { once:true }
 );
@@ -1097,14 +1188,13 @@ document.body.addEventListener(
    ========================================================= */
 
 const canvas =
-  document.getElementById('rain');
+  document.getElementById("rain");
 
 const ctx =
-  canvas.getContext('2d');
+  canvas.getContext("2d");
 
 let columns;
 let drops;
-
 
 const chars =
   "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -1118,33 +1208,28 @@ function resizeCanvas(){
   canvas.height =
     window.innerHeight;
 
-
   const fontSize =
     16;
 
-
   columns =
     Math.floor(
-      canvas.width /
-      fontSize
+      canvas.width / fontSize
     );
-
 
   drops =
     new Array(columns)
       .fill(0)
-      .map(()=>{
-
-        return Math.floor(
+      .map(() =>
+        Math.floor(
           Math.random() * -40
-        );
+        )
+      );
 
-      });
 }
 
 
 window.addEventListener(
-  'resize',
+  "resize",
   resizeCanvas
 );
 
@@ -1162,19 +1247,15 @@ function startRain(){
 
   rainRunning = true;
 
+  const fontSize = 16;
 
-  const fontSize =
-    16;
-
-  const frameDelay =
-    110;
+  const frameDelay = 110;
 
 
   function draw(){
 
     ctx.fillStyle =
-      'rgba(2,4,3,0.16)';
-
+      "rgba(2,4,3,0.16)";
 
     ctx.fillRect(
       0,
@@ -1185,9 +1266,7 @@ function startRain(){
 
 
     ctx.font =
-      '600 ' +
-      fontSize +
-      'px "Share Tech Mono", monospace';
+      '600 16px "Share Tech Mono", monospace';
 
 
     for(
@@ -1208,30 +1287,24 @@ function startRain(){
       const x =
         i * fontSize;
 
-
       const y =
-        drops[i] *
-        fontSize;
+        drops[i] * fontSize;
 
 
-      const roll =
-        Math.random();
-
-
-      if(roll > 0.965){
+      if(Math.random() > .965){
 
         ctx.fillStyle =
-          '#e9fff1';
+          "#e9fff1";
 
       }else{
 
         ctx.fillStyle =
-          'rgba(25,221,97,' +
+          "rgba(25,221,97," +
           (
-            0.35 +
-            Math.random()*0.5
+            .35 +
+            Math.random()*.5
           ) +
-          ')';
+          ")";
 
       }
 
@@ -1245,7 +1318,7 @@ function startRain(){
 
       if(
         y > canvas.height &&
-        Math.random() > 0.975
+        Math.random() > .975
       ){
 
         drops[i] = 0;
@@ -1259,7 +1332,7 @@ function startRain(){
 
 
     setTimeout(
-      ()=>requestAnimationFrame(draw),
+      () => requestAnimationFrame(draw),
       frameDelay
     );
 
@@ -1267,88 +1340,71 @@ function startRain(){
 
 
   draw();
+
 }
 
 
 /* =========================================================
-   TERMINAL TYPEWRITER
+   TYPEWRITER
    ========================================================= */
-
-const termEl =
-  document.getElementById('term');
-
-const choiceEl =
-  document.getElementById('choice');
-
 
 const introLines = [
 
   {
     text:
       "> initiating secure channel...",
-    pause:
-      550
+    pause:550
   },
 
   {
     text:
       "> access granted",
-    pause:
-      550
+    pause:550
   },
 
   {
-    text:
-      "",
-    pause:
-      250
+    text:"",
+    pause:250
   },
 
   {
     text:
       "> EVENT: " +
       CONFIG.eventName,
-    pause:
-      120
+    pause:120
   },
 
   {
     text:
       "> DATE:  " +
       CONFIG.date,
-    pause:
-      120
+    pause:120
   },
 
   {
     text:
       "> TIME:  " +
       CONFIG.time,
-    pause:
-      120
+    pause:120
   },
 
   {
     text:
       "> LOCATION: " +
       CONFIG.location,
-    pause:
-      120
+    pause:120
   },
 
   {
     text:
-      "> DRESS CODE:  " +
+      "> DRESS CODE: " +
       CONFIG.dresscode,
-    pause:
-      120
+    pause:120
   },
 
   {
-    text:
-      "",
-    pause:
-      200
+    text:"",
+    pause:200
   }
 
 ];
@@ -1359,10 +1415,10 @@ function typeLine(
   container
 ){
 
-  return new Promise(resolve=>{
+  return new Promise(resolve => {
 
     const span =
-      document.createElement('span');
+      document.createElement("span");
 
     container.appendChild(span);
 
@@ -1371,9 +1427,7 @@ function typeLine(
 
     function step(){
 
-      if(
-        i < line.text.length
-      ){
+      if(i < line.text.length){
 
         span.textContent +=
           line.text[i];
@@ -1389,9 +1443,8 @@ function typeLine(
       }else{
 
         container.appendChild(
-          document.createElement('br')
+          document.createElement("br")
         );
-
 
         setTimeout(
           resolve,
@@ -1406,6 +1459,7 @@ function typeLine(
     step();
 
   });
+
 }
 
 
@@ -1422,15 +1476,13 @@ function delay(ms){
 async function runTerminal(){
 
   const cursor =
-    document.createElement('span');
+    document.createElement("span");
 
   cursor.className =
-    'cursor';
+    "cursor";
 
 
-  termEl.appendChild(
-    cursor
-  );
+  termEl.appendChild(cursor);
 
 
   for(
@@ -1439,16 +1491,12 @@ async function runTerminal(){
 
     cursor.remove();
 
-
     await typeLine(
       line,
       termEl
     );
 
-
-    termEl.appendChild(
-      cursor
-    );
+    termEl.appendChild(cursor);
 
   }
 
@@ -1461,50 +1509,28 @@ async function runTerminal(){
   );
 
 
-  termEl.appendChild(
-    cursor
-  );
-
-
-  cursor.remove();
-
-
   await typeLine(
     {
       text:
         CONFIG.pillQuestion,
-
-      pause:
-        200
+      pause:200
     },
     termEl
   );
 
 
   choiceEl.classList.add(
-    'visible'
+    "visible"
   );
 
 }
 
 
 /* =========================================================
-   RED / BLUE
+   PILL SELECTION
    ========================================================= */
 
-const optRed =
-  document.getElementById(
-    'opt-red'
-  );
-
-const optBlue =
-  document.getElementById(
-    'opt-blue'
-  );
-
-
-let rsvpChoice =
-  null;
+let rsvpChoice = null;
 
 
 async function selectPill(
@@ -1517,57 +1543,43 @@ async function selectPill(
 
 
   choiceEl.classList.remove(
-    'visible'
+    "visible"
   );
 
 
   const cursor =
-    document.createElement('span');
+    document.createElement("span");
 
   cursor.className =
-    'cursor';
+    "cursor";
 
 
-  if(choice === 'kommt'){
-
-    termEl.appendChild(
-      cursor
-    );
+  termEl.appendChild(cursor);
 
 
-    await typeLine(
-      {
-        text:
-          "> " + label,
-
-        pause:
-          250
-      },
-      termEl
-    );
+  await typeLine(
+    {
+      text:
+        "> " + label,
+      pause:250
+    },
+    termEl
+  );
 
 
-    cursor.remove();
+  cursor.remove();
 
 
-    termEl.appendChild(
-      cursor
-    );
-
+  if(choice === "kommt"){
 
     await typeLine(
       {
         text:
           "> enter your details below",
-
-        pause:
-          300
+        pause:300
       },
       termEl
     );
-
-
-    cursor.remove();
 
 
     await delay(150);
@@ -1575,50 +1587,19 @@ async function selectPill(
 
     runRsvpForm();
 
-
   }else{
-
-    termEl.appendChild(
-      cursor
-    );
-
-
-    await typeLine(
-      {
-        text:
-          "> " + label,
-
-        pause:
-          250
-      },
-      termEl
-    );
-
-
-    cursor.remove();
-
-
-    termEl.appendChild(
-      cursor
-    );
-
 
     await typeLine(
       {
         text:
           "> entry logged. maybe next time.",
-
-        pause:
-          500
+        pause:500
       },
       termEl
     );
 
 
-    cursor.remove();
-
-
-    sendToSheet({
+    await sendToSheet({
 
       name:"",
       rsvp:"kommt nicht",
@@ -1638,35 +1619,27 @@ async function selectPill(
 
 
 optRed.addEventListener(
-  'click',
-  ()=>selectPill(
-    'kommt',
-    'RED PILL — JOIN THE MATRIX'
-  )
+  "click",
+  () =>
+    selectPill(
+      "kommt",
+      "RED PILL — JOIN THE MATRIX"
+    )
 );
 
 
 optBlue.addEventListener(
-  'click',
-  ()=>selectPill(
-    'kommt nicht',
-    'BLUE PILL — REFUSE THE MATRIX'
-  )
+  "click",
+  () =>
+    selectPill(
+      "kommt nicht",
+      "BLUE PILL — REFUSE THE MATRIX"
+    )
 );
 
 
 /* =========================================================
-   VIRTUELLE TASTATUR
-   ========================================================= */
-
-const matrixKeyboard =
-  document.getElementById(
-    'matrixKeyboard'
-  );
-
-
-/* =========================================================
-   INPUT MIT VIRTUELLER TASTATUR
+   PROMPT INPUT
    ========================================================= */
 
 function promptInput(
@@ -1675,28 +1648,18 @@ function promptInput(
 ){
 
   return new Promise(
-    async resolve=>{
+    async resolve => {
 
       await typePrompt(
         promptText
       );
 
 
-      /*
-       * KEIN echtes Input-Element.
-       *
-       * Dadurch öffnet iOS keine
-       * normale Systemtastatur.
-       */
-
-
       const valueSpan =
-        document.createElement(
-          'span'
-        );
+        document.createElement("span");
 
       valueSpan.className =
-        'virtual-input';
+        "virtual-input";
 
 
       let value = "";
@@ -1708,7 +1671,7 @@ function promptInput(
 
       valueSpan.style.opacity =
         placeholder
-          ? "0.25"
+          ? ".25"
           : "1";
 
 
@@ -1718,36 +1681,24 @@ function promptInput(
 
 
       const cursor =
-        document.createElement(
-          'span'
-        );
+        document.createElement("span");
 
       cursor.className =
-        'cursor';
+        "cursor";
 
 
-      termEl.appendChild(
-        cursor
-      );
+      termEl.appendChild(cursor);
 
-
-      /*
-       * Matrix-Tastatur anzeigen
-       */
 
       matrixKeyboard.classList.add(
-        'visible'
+        "visible"
       );
 
 
       document.body.classList.add(
-        'keyboard-open'
+        "keyboard-open"
       );
 
-
-      /*
-       * Anzeige aktualisieren
-       */
 
       function updateDisplay(){
 
@@ -1758,7 +1709,7 @@ function promptInput(
 
           valueSpan.style.opacity =
             placeholder
-              ? "0.25"
+              ? ".25"
               : "1";
 
         }else{
@@ -1774,46 +1725,60 @@ function promptInput(
       }
 
 
-      /*
-       * Zeichen hinzufügen
-       */
-
       function addCharacter(
         character
       ){
 
-        value +=
-          character;
+        value += character;
 
         updateDisplay();
 
       }
 
 
-      /*
-       * Zeichen löschen
-       */
-
       function deleteCharacter(){
 
-        if(
-          value.length === 0
-        )
+        if(value.length === 0)
           return;
-
 
         value =
           value.slice(0,-1);
 
-
         updateDisplay();
 
       }
 
 
-      /*
-       * Eingabe abschicken
-       */
+      function cleanup(){
+
+        matrixKeyboard.classList.remove(
+          "visible"
+        );
+
+        document.body.classList.remove(
+          "keyboard-open"
+        );
+
+
+        matrixKeyboard
+          .querySelectorAll(".keyboard-key")
+          .forEach(key => {
+
+            if(key._matrixHandler){
+
+              key.removeEventListener(
+                "click",
+                key._matrixHandler
+              );
+
+              key._matrixHandler = null;
+
+            }
+
+          });
+
+      }
+
 
       function submit(){
 
@@ -1825,75 +1790,23 @@ function promptInput(
           return;
 
 
-        /*
-         * Tastatur verstecken
-         */
+        cleanup();
 
-        matrixKeyboard.classList.remove(
-          'visible'
-        );
-
-
-        document.body.classList.remove(
-          'keyboard-open'
-        );
-
-
-        /*
-         * Cursor entfernen
-         */
 
         cursor.remove();
 
 
-        /*
-         * Finale Eingabe anzeigen
-         */
-
         valueSpan.textContent =
           cleanValue.toUpperCase();
-
 
         valueSpan.style.opacity =
           "1";
 
 
         termEl.appendChild(
-          document.createElement(
-            'br'
-          )
+          document.createElement("br")
         );
 
-
-        /*
-         * Alte Event Listener entfernen
-         */
-
-        matrixKeyboard
-          .querySelectorAll(
-            '.keyboard-key'
-          )
-          .forEach(key=>{
-
-            if(
-              key._matrixHandler
-            ){
-
-              key.removeEventListener(
-                'click',
-                key._matrixHandler
-              );
-
-              key._matrixHandler =
-                null;
-            }
-
-          });
-
-
-        /*
-         * Wert zurückgeben
-         */
 
         resolve(
           cleanValue
@@ -1902,93 +1815,60 @@ function promptInput(
       }
 
 
-      /*
-       * Alle Tastatur-Buttons
-       * aktivieren
-       */
-
       matrixKeyboard
-        .querySelectorAll(
-          '.keyboard-key'
-        )
-        .forEach(key=>{
+        .querySelectorAll(".keyboard-key")
+        .forEach(key => {
+
+          const handler = () => {
+
+            key.classList.add(
+              "pressed"
+            );
 
 
-          const handler =
-            ()=>{
+            setTimeout(
+              () =>
+                key.classList.remove(
+                  "pressed"
+                ),
+              100
+            );
 
 
-              /*
-               * Visuelles Feedback
-               */
+            const action =
+              key.dataset.action;
 
-              key.classList.add(
-                'pressed'
+            const character =
+              key.dataset.key;
+
+
+            if(
+              action === "backspace"
+            ){
+
+              deleteCharacter();
+
+            }
+
+            else if(
+              action === "enter"
+            ){
+
+              submit();
+
+            }
+
+            else if(
+              character !== undefined
+            ){
+
+              addCharacter(
+                character
               );
 
+            }
 
-              setTimeout(()=>{
-
-                key.classList.remove(
-                  'pressed'
-                );
-
-              },100);
-
-
-              const action =
-                key.dataset.action;
-
-
-              const character =
-                key.dataset.key;
-
-
-              /*
-               * DELETE
-               */
-
-              if(
-                action ===
-                'backspace'
-              ){
-
-                deleteCharacter();
-
-              }
-
-
-              /*
-               * ENTER
-               */
-
-              else if(
-                action ===
-                'enter'
-              ){
-
-                submit();
-
-              }
-
-
-              /*
-               * Buchstabe /
-               * Leerzeichen
-               */
-
-              else if(
-                character !==
-                undefined
-              ){
-
-                addCharacter(
-                  character
-                );
-
-              }
-
-            };
+          };
 
 
           key._matrixHandler =
@@ -1996,7 +1876,7 @@ function promptInput(
 
 
           key.addEventListener(
-            'click',
+            "click",
             handler
           );
 
@@ -2015,53 +1895,45 @@ function promptInput(
 
 function typePrompt(text){
 
-  return new Promise(
-    resolve=>{
+  return new Promise(resolve => {
 
-      const span =
-        document.createElement(
-          'span'
+    const span =
+      document.createElement("span");
+
+
+    termEl.appendChild(span);
+
+
+    let i = 0;
+
+
+    function step(){
+
+      if(i < text.length){
+
+        span.textContent +=
+          text[i];
+
+        i++;
+
+
+        setTimeout(
+          step,
+          16 + Math.random()*22
         );
 
+      }else{
 
-      termEl.appendChild(
-        span
-      );
-
-
-      let i = 0;
-
-
-      function step(){
-
-        if(
-          i < text.length
-        ){
-
-          span.textContent +=
-            text[i];
-
-          i++;
-
-
-          setTimeout(
-            step,
-            16 + Math.random()*22
-          );
-
-        }else{
-
-          resolve(span);
-
-        }
+        resolve(span);
 
       }
 
-
-      step();
-
     }
-  );
+
+
+    step();
+
+  });
 
 }
 
@@ -2075,7 +1947,7 @@ function promptYesNo(
 ){
 
   return new Promise(
-    async resolve=>{
+    async resolve => {
 
       await typePrompt(
         promptText + " "
@@ -2083,51 +1955,39 @@ function promptYesNo(
 
 
       const wrap =
-        document.createElement(
-          'span'
-        );
+        document.createElement("span");
 
 
       const yes =
-        document.createElement(
-          'span'
-        );
+        document.createElement("span");
 
       yes.textContent =
-        '[YES]';
+        "[YES]";
 
       yes.className =
-        'inline-option';
+        "inline-option";
 
 
       const no =
-        document.createElement(
-          'span'
-        );
+        document.createElement("span");
 
       no.textContent =
-        '[NO]';
+        "[NO]";
 
       no.className =
-        'inline-option';
+        "inline-option";
 
 
-      wrap.appendChild(
-        yes
-      );
+      wrap.appendChild(yes);
 
-      wrap.appendChild(
-        no
-      );
+      wrap.appendChild(no);
 
 
-      termEl.appendChild(
-        wrap
-      );
+      termEl.appendChild(wrap);
 
 
       function choose(
-        val,
+        value,
         label
       ){
 
@@ -2135,47 +1995,42 @@ function promptYesNo(
 
 
         const chosen =
-          document.createElement(
-            'span'
-          );
-
+          document.createElement("span");
 
         chosen.textContent =
           label;
 
 
-        termEl.appendChild(
-          chosen
-        );
+        termEl.appendChild(chosen);
 
 
         termEl.appendChild(
-          document.createElement(
-            'br'
-          )
+          document.createElement("br")
         );
 
 
-        resolve(val);
+        resolve(value);
 
       }
 
 
       yes.addEventListener(
-        'click',
-        ()=>choose(
-          true,
-          '[YES]'
-        )
+        "click",
+        () =>
+          choose(
+            true,
+            "[YES]"
+          )
       );
 
 
       no.addEventListener(
-        'click',
-        ()=>choose(
-          false,
-          '[NO]'
-        )
+        "click",
+        () =>
+          choose(
+            false,
+            "[NO]"
+          )
       );
 
     }
@@ -2185,54 +2040,44 @@ function promptYesNo(
 
 
 /* =========================================================
-   SUBMIT
+   SUBMIT BUTTON
    ========================================================= */
 
 function promptSubmit(){
 
-  return new Promise(
-    resolve=>{
+  return new Promise(resolve => {
 
-      termEl.appendChild(
-        document.createElement(
-          'br'
-        )
-      );
+    termEl.appendChild(
+      document.createElement("br")
+    );
 
 
-      const btn =
-        document.createElement(
-          'button'
-        );
+    const btn =
+      document.createElement("button");
 
 
-      btn.type =
-        'button';
+    btn.type =
+      "button";
 
 
-      btn.className =
-        'inline-submit';
+    btn.className =
+      "inline-submit";
 
 
-      btn.textContent =
-        '> SUBMIT';
+    btn.textContent =
+      "> SUBMIT";
 
 
-      termEl.appendChild(
-        btn
-      );
+    termEl.appendChild(btn);
 
 
-      btn.addEventListener(
-        'click',
-        ()=>resolve(btn),
-        {
-          once:true
-        }
-      );
+    btn.addEventListener(
+      "click",
+      () => resolve(btn),
+      { once:true }
+    );
 
-    }
-  );
+  });
 
 }
 
@@ -2241,30 +2086,94 @@ function promptSubmit(){
    STATUS
    ========================================================= */
 
-function appendStatus(
-  text
-){
+function appendStatus(text){
 
   const s =
-    document.createElement(
-      'div'
-    );
+    document.createElement("div");
 
 
   s.className =
-    'status-line';
+    "status-line";
 
 
   s.textContent =
     text;
 
 
-  termEl.appendChild(
-    s
-  );
+  termEl.appendChild(s);
 
 
   return s;
+
+}
+
+
+/* =========================================================
+   SEND TO GOOGLE SHEETS
+   ========================================================= */
+
+async function sendToSheet(payload){
+
+  if(
+    !CONFIG.sheetURL ||
+    !CONFIG.sheetURL.startsWith("http")
+  ){
+
+    console.error(
+      "sheetURL is missing"
+    );
+
+    return false;
+
+  }
+
+
+  console.log(
+    "Sending to Google Sheets:",
+    payload
+  );
+
+
+  try{
+
+    await fetch(
+      CONFIG.sheetURL,
+      {
+
+        method:"POST",
+
+        mode:"no-cors",
+
+        headers:{
+          "Content-Type":
+            "text/plain;charset=utf-8"
+        },
+
+        body:
+          JSON.stringify(payload)
+
+      }
+    );
+
+
+    console.log(
+      "POST request sent"
+    );
+
+
+    return true;
+
+  }catch(error){
+
+    console.error(
+      "Google Sheets transmission failed:",
+      error
+    );
+
+
+    return false;
+
+  }
 
 }
 
@@ -2275,177 +2184,111 @@ function appendStatus(
 
 async function runRsvpForm(){
 
-  const name =
-    await promptInput(
-      'NAME: '
-    );
-
-
-  const wantsPlusOne =
-    await promptYesNo(
-      'PLUS ONE?'
-    );
-
-
-  let plusOneName =
-    '';
-
-
-  if(wantsPlusOne){
-
-    plusOneName =
-      await promptInput(
-        'NAME PLUS ONE: '
-      );
-
-  }
-
-
-  const submitBtn =
-    await promptSubmit();
-
-
-  submitBtn.disabled =
-    true;
-
-
-  const statusEl =
-    appendStatus(
-      '> TRANSMITTING...'
-    );
-
-
-  const payload = {
-
-    name:
-      name,
-
-    rsvp:
-      rsvpChoice,
-
-    plusOne:
-      wantsPlusOne,
-
-    plusOneName:
-      plusOneName
-
-  };
-
-
   try{
 
-    if(
-      CONFIG.sheetURL &&
-      CONFIG.sheetURL.startsWith(
-        "http"
-      )
-    ){
-
-      await fetch(
-        CONFIG.sheetURL,
-        {
-
-          method:
-            "POST",
-
-          mode:
-            "no-cors",
-
-          headers:{
-            "Content-Type":
-              "text/plain;charset=utf-8"
-          },
-
-          body:
-            JSON.stringify(
-              payload
-            )
-
-        }
+    const name =
+      await promptInput(
+        "NAME:"
       );
+
+
+    const wantsPlusOne =
+      await promptYesNo(
+        "PLUS ONE?"
+      );
+
+
+    let plusOneName = "";
+
+
+    if(wantsPlusOne){
+
+      plusOneName =
+        await promptInput(
+          "NAME PLUS ONE:"
+        );
+
+    }
+
+
+    const submitBtn =
+      await promptSubmit();
+
+
+    submitBtn.disabled =
+      true;
+
+
+    const statusEl =
+      appendStatus(
+        "> TRANSMITTING..."
+      );
+
+
+    const payload = {
+
+      name:
+        name,
+
+      rsvp:
+        rsvpChoice,
+
+      plusOne:
+        wantsPlusOne,
+
+      plusOneName:
+        plusOneName
+
+    };
+
+
+    console.log(
+      "FINAL PAYLOAD:",
+      payload
+    );
+
+
+    const success =
+      await sendToSheet(
+        payload
+      );
+
+
+    if(!success){
+
+      statusEl.textContent =
+        "> TRANSMISSION FAILED — TRY AGAIN";
+
+      submitBtn.disabled =
+        false;
+
+      return;
 
     }
 
 
     statusEl.textContent =
-      "> welcome, " +
-      name.toUpperCase() +
-      ". see you there.";
+      "> TRANSMISSION COMPLETE";
 
 
     setTimeout(
-      ()=>{
+      () => {
+
         triggerClosingGlitch(
           startCountdown
         );
+
       },
       900
     );
 
 
-  }catch(err){
+  }catch(error){
 
-    statusEl.textContent =
-      "> transmission failed — try again";
-
-
-    submitBtn.disabled =
-      false;
-
-  }
-
-}
-
-
-/* =========================================================
-   OPTIONAL LOGGING
-   ========================================================= */
-
-async function sendToSheet(
-  payload
-){
-
-  if(
-    !(
-      CONFIG.sheetURL &&
-      CONFIG.sheetURL.startsWith(
-        "http"
-      )
-    )
-  )
-    return;
-
-
-  try{
-
-    await fetch(
-      CONFIG.sheetURL,
-      {
-
-        method:
-          "POST",
-
-        mode:
-          "no-cors",
-
-        headers:{
-          "Content-Type":
-            "text/plain;charset=utf-8"
-        },
-
-        body:
-          JSON.stringify(
-            payload
-          )
-
-      }
+    console.error(
+      "RSVP FORM ERROR:",
+      error
     );
-
-  }catch(err){
-
-    /*
-     * Stiller Fehlschlag
-     */
 
   }
 
@@ -2456,23 +2299,20 @@ async function sendToSheet(
    GLITCH → COUNTDOWN
    ========================================================= */
 
-function triggerClosingGlitch(
-  next
-){
+function triggerClosingGlitch(next){
 
   glitchEl.classList.add(
-    'active'
+    "active"
   );
 
 
   setTimeout(
-    ()=>{
+    () => {
 
-      termEl.innerHTML =
-        '';
+      termEl.innerHTML = "";
 
       choiceEl.classList.remove(
-        'visible'
+        "visible"
       );
 
     },
@@ -2481,10 +2321,10 @@ function triggerClosingGlitch(
 
 
   setTimeout(
-    ()=>{
+    () => {
 
       glitchEl.classList.remove(
-        'active'
+        "active"
       );
 
 
@@ -2501,12 +2341,6 @@ function triggerClosingGlitch(
    COUNTDOWN
    ========================================================= */
 
-const countdownEl =
-  document.getElementById(
-    'countdown'
-  );
-
-
 function getPartyDate(){
 
   const [
@@ -2515,7 +2349,7 @@ function getPartyDate(){
     y
   ] =
     CONFIG.date
-      .split('.')
+      .split(".")
       .map(Number);
 
 
@@ -2524,7 +2358,7 @@ function getPartyDate(){
     mm
   ] =
     CONFIG.time
-      .split(':')
+      .split(":")
       .map(Number);
 
 
@@ -2543,7 +2377,7 @@ function getPartyDate(){
 function pad(n){
 
   return String(n)
-    .padStart(2,'0');
+    .padStart(2,"0");
 
 }
 
@@ -2551,7 +2385,7 @@ function pad(n){
 function startCountdown(){
 
   countdownEl.classList.add(
-    'visible'
+    "visible"
   );
 
 
@@ -2562,8 +2396,7 @@ function startCountdown(){
   function tick(){
 
     const diff =
-      target -
-      new Date();
+      target - new Date();
 
 
     if(diff <= 0){
@@ -2580,10 +2413,7 @@ function startCountdown(){
         '</div>';
 
 
-      clearInterval(
-        timer
-      );
-
+      clearInterval(timer);
 
       return;
 
@@ -2604,15 +2434,13 @@ function startCountdown(){
 
     const hours =
       Math.floor(
-        (s % 86400) /
-        3600
+        (s % 86400) / 3600
       );
 
 
     const mins =
       Math.floor(
-        (s % 3600) /
-        60
+        (s % 3600) / 60
       );
 
 
@@ -2639,6 +2467,7 @@ function startCountdown(){
       'M ' +
 
       pad(secs) +
+
       'S' +
 
       '</div>';
