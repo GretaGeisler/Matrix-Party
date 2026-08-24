@@ -2519,151 +2519,90 @@ function appendStatus(
 /* =========================================================
    GOOGLE SHEETS
    ========================================================= */
-
-async function sendToSheet(
-  payload
-){
+async function sendToSheet(payload){
 
   if(
     !CONFIG.sheetURL ||
-    !CONFIG.sheetURL.startsWith(
-      "http"
-    )
+    !CONFIG.sheetURL.startsWith("http")
   ){
-
-    throw new Error(
-      "Keine gültige Web-App-URL."
-    );
-
+    throw new Error("Keine gültige Sheet URL.");
   }
 
+  const controller = new AbortController();
 
-  console.log(
-    "Sending payload:",
-    payload
-  );
-
-
-  const response =
-    await fetch(
-      CONFIG.sheetURL,
-      {
-
-        method:
-          "POST",
-
-        headers:{
-          "Content-Type":
-            "text/plain;charset=utf-8"
-        },
-
-        body:
-          JSON.stringify(
-            payload
-          ),
-
-        redirect:
-          "follow"
-
-      }
-    );
-
-
-  console.log(
-    "HTTP status:",
-    response.status
-  );
-
-
-  /*
-   * HTTP-Fehler
-   */
-
-  if(
-    !response.ok
-  ){
-
-    throw new Error(
-      "HTTP ERROR " +
-      response.status
-    );
-
-  }
-
-
-  /*
-   * Antwort als Text lesen.
-   *
-   * Nicht direkt response.json(),
-   * weil Apps Script bei Redirects/
-   * Web-App-Antworten gelegentlich
-   * keine saubere JSON-Antwort liefert.
-   */
-
-  const text =
-    await response.text();
-
-
-  console.log(
-    "Apps Script response:",
-    text
-  );
-
-
-  /*
-   * JSON versuchen
-   */
+  const timeout = setTimeout(() => {
+    controller.abort();
+  }, 10000);
 
   try{
 
-    const result =
-      JSON.parse(
-        text
+    const response = await fetch(
+      CONFIG.sheetURL,
+      {
+        method:"POST",
+
+        headers:{
+          "Content-Type":"text/plain;charset=utf-8"
+        },
+
+        body:JSON.stringify(payload),
+
+        signal:controller.signal
+      }
+    );
+
+    clearTimeout(timeout);
+
+    if(!response.ok){
+      throw new Error(
+        "HTTP Fehler: " + response.status
       );
+    }
 
+    const text = await response.text();
 
-    if(
-      result &&
-      result.success === false
-    ){
+    console.log(
+      "Google Apps Script response:",
+      text
+    );
 
+    let result;
+
+    try{
+      result = JSON.parse(text);
+    }catch(e){
+      throw new Error(
+        "Google Apps Script hat keine gültige JSON-Antwort gesendet."
+      );
+    }
+
+    if(!result.success){
       throw new Error(
         result.error ||
         "Google Sheets Fehler"
       );
-
     }
-
 
     return result;
 
-  }catch(parseError){
+  }catch(error){
 
-    /*
-     * Wenn Apps Script HTTP 200 geliefert
-     * hat, behandeln wir den POST als
-     * erfolgreich gesendet.
-     */
+    clearTimeout(timeout);
 
-    console.warn(
-      "Antwort war kein JSON. HTTP war OK.",
-      text
+    console.error(
+      "Transmission error:",
+      error
     );
 
+    if(error.name === "AbortError"){
+      throw new Error(
+        "Transmission timeout."
+      );
+    }
 
-    return {
-
-      success:true,
-
-      raw:text
-
-    };
-
+    throw error;
   }
-
 }
-
-
 /* =========================================================
    GLITCH
    ========================================================= */
