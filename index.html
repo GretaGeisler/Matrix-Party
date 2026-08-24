@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="de">
-
 <head>
 
 <meta charset="UTF-8">
@@ -31,13 +30,12 @@
 <style>
 
 /* =========================================================
-   VARIABLES
+   ROOT
    ========================================================= */
 
 :root{
 
   --green:#15cd96;
-
   --black:#020403;
 
   --font:
@@ -50,7 +48,7 @@
     'Courier New',
     monospace;
 
-  --matrix-font-size:16px;
+  --matrix-font-size:11px;
 
 }
 
@@ -63,7 +61,8 @@
 
   box-sizing:border-box;
 
-  -webkit-tap-highlight-color:transparent;
+  -webkit-tap-highlight-color:
+    transparent;
 
 }
 
@@ -72,20 +71,28 @@ html,
 body{
 
   margin:0;
-
   padding:0;
 
   width:100%;
-
   height:100%;
 
-  background:var(--black);
+  background:
+    var(--black);
 
   overflow:hidden;
 
-  font-family:var(--font);
+  font-family:
+    var(--font);
 
-  text-transform:uppercase;
+  text-transform:
+    uppercase;
+
+}
+
+
+body.keyboard-open{
+
+  overflow:hidden;
 
 }
 
@@ -100,13 +107,14 @@ body{
 
   height:100dvh;
 
-  background:var(--black);
+  background:
+    var(--black);
 
 }
 
 
 /* =========================================================
-   WHITE SCREEN
+   WHITE START SCREEN
    ========================================================= */
 
 #white{
@@ -127,14 +135,13 @@ body{
 
   padding-bottom:14dvh;
 
-  transition:opacity .15s linear;
-
 }
 
 
 #white span{
 
-  font-family:var(--start-font);
+  font-family:
+    var(--start-font);
 
   font-size:9px;
 
@@ -146,8 +153,6 @@ body{
 
   animation:
     fadein 1s ease forwards .9s;
-
-  text-transform:uppercase;
 
 }
 
@@ -344,7 +349,8 @@ body{
 
   z-index:10;
 
-  background:var(--black);
+  background:
+    var(--black);
 
   opacity:0;
 
@@ -365,7 +371,6 @@ canvas#rain{
   inset:0;
 
   width:100%;
-
   height:100%;
 
 }
@@ -381,9 +386,9 @@ canvas#rain{
 
     radial-gradient(
       ellipse at 50% 40%,
-      rgba(2,4,3,0.35) 0%,
-      rgba(2,4,3,0.82) 65%,
-      rgba(2,4,3,0.95) 100%
+      rgba(2,4,3,.35) 0%,
+      rgba(2,4,3,.82) 65%,
+      rgba(2,4,3,.95) 100%
     );
 
 }
@@ -405,21 +410,27 @@ canvas#rain{
 
   padding:7vh 6vw;
 
-  color:var(--green);
+  color:
+    var(--green);
 
   max-width:520px;
 
   margin:0 auto;
 
-  transition:
-    padding-bottom .25s ease;
+}
+
+
+body.keyboard-open #content{
+
+  padding-bottom:300px;
 
 }
 
 
 #term{
 
-  font-size:var(--matrix-font-size);
+  font-size:
+    var(--matrix-font-size);
 
   line-height:1.5;
 
@@ -427,7 +438,8 @@ canvas#rain{
 
   min-height:38vh;
 
-  color:var(--green);
+  color:
+    var(--green);
 
 }
 
@@ -440,7 +452,8 @@ canvas#rain{
 
   height:1em;
 
-  background:var(--green);
+  background:
+    var(--green);
 
   vertical-align:text-bottom;
 
@@ -462,13 +475,13 @@ canvas#rain{
 
 
 /* =========================================================
-   CHOICES
+   CHOICE
    ========================================================= */
 
 #choice{
 
   margin-top:
-    calc(var(--matrix-font-size) * 0.8);
+    calc(var(--matrix-font-size) * .8);
 
   display:none;
 
@@ -476,9 +489,6 @@ canvas#rain{
 
   gap:
     calc(var(--matrix-font-size) * 1.5);
-
-  animation:
-    riseIn .6s ease forwards;
 
 }
 
@@ -490,34 +500,13 @@ canvas#rain{
 }
 
 
-@keyframes riseIn{
-
-  from{
-
-    opacity:0;
-
-    transform:
-      translateY(10px);
-
-  }
-
-  to{
-
-    opacity:1;
-
-    transform:
-      translateY(0);
-
-  }
-
-}
-
-
 .code-choice-btn{
 
-  font-family:var(--font);
+  font-family:
+    var(--font);
 
-  font-size:var(--matrix-font-size);
+  font-size:
+    var(--matrix-font-size);
 
   letter-spacing:.05em;
 
@@ -527,13 +516,12 @@ canvas#rain{
 
   border:none;
 
-  color:var(--green);
+  color:
+    var(--green);
 
   text-align:left;
 
   cursor:pointer;
-
-  -webkit-appearance:none;
 
   text-transform:uppercase;
 
@@ -547,27 +535,48 @@ canvas#rain{
 }
 
 
-.code-choice-btn:focus-visible{
+/* =========================================================
+   INPUT
+   ========================================================= */
 
-  outline:
-    1px dashed var(--green);
+.virtual-input{
+
+  font-family:
+    var(--font);
+
+  font-size:
+    var(--matrix-font-size);
+
+  color:
+    var(--green);
+
+  letter-spacing:.05em;
+
+  cursor:pointer;
+
+  border-bottom:
+    1px dashed
+    rgba(21,205,150,.35);
+
+}
+
+
+.virtual-input:hover{
+
+  border-bottom:
+    1px solid
+    rgba(21,205,150,.8);
 
 }
 
 
 /* =========================================================
-   VIRTUAL INPUT
+   EDITABLE FIELD
    ========================================================= */
 
-.virtual-input{
+.editable-field{
 
-  font-family:var(--font);
-
-  font-size:var(--matrix-font-size);
-
-  color:var(--green);
-
-  letter-spacing:.05em;
+  cursor:pointer;
 
 }
 
@@ -578,25 +587,32 @@ canvas#rain{
 
 .inline-submit{
 
-  font-family:var(--font);
+  font-family:
+    var(--font);
 
-  font-size:var(--matrix-font-size);
+  font-size:
+    var(--matrix-font-size);
 
   letter-spacing:.1em;
 
   background:transparent;
 
-  color:var(--green);
+  color:
+    var(--green);
 
   border:
-    1px solid var(--green);
+    1px solid
+    var(--green);
 
   padding:
-    calc(var(--matrix-font-size)*0.5)
-    calc(var(--matrix-font-size)*0.9);
+
+    calc(var(--matrix-font-size)*.5)
+
+    calc(var(--matrix-font-size)*.9);
 
   margin-top:
-    calc(var(--matrix-font-size) * 1.5);
+
+    calc(var(--matrix-font-size)*1.5);
 
   cursor:pointer;
 
@@ -612,21 +628,17 @@ canvas#rain{
 }
 
 
-.inline-submit:active{
-
-  transform:scale(.98);
-
-}
-
-
 .status-line{
 
   margin-top:
-    calc(var(--matrix-font-size) * 0.9);
 
-  font-size:var(--matrix-font-size);
+    calc(var(--matrix-font-size)*.9);
 
-  color:var(--green);
+  font-size:
+    var(--matrix-font-size);
+
+  color:
+    var(--green);
 
   opacity:.85;
 
@@ -659,7 +671,7 @@ canvas#rain{
 #countdown .cd-label{
 
   font-size:
-    calc(var(--matrix-font-size) * 0.85);
+    calc(var(--matrix-font-size)*.85);
 
   letter-spacing:.1em;
 
@@ -673,7 +685,7 @@ canvas#rain{
 #countdown .cd-time{
 
   font-size:
-    calc(var(--matrix-font-size) * 1.7);
+    calc(var(--matrix-font-size)*1.7);
 
   letter-spacing:.04em;
 
@@ -682,8 +694,31 @@ canvas#rain{
 }
 
 
+@keyframes riseIn{
+
+  from{
+
+    opacity:0;
+
+    transform:
+      translateY(10px);
+
+  }
+
+  to{
+
+    opacity:1;
+
+    transform:
+      translateY(0);
+
+  }
+
+}
+
+
 /* =========================================================
-   KEYBOARD
+   VIRTUAL KEYBOARD
    ========================================================= */
 
 .matrix-keyboard{
@@ -691,9 +726,7 @@ canvas#rain{
   position:fixed;
 
   left:0;
-
   right:0;
-
   bottom:0;
 
   z-index:100;
@@ -709,14 +742,15 @@ canvas#rain{
     rgba(2,4,3,.98);
 
   border-top:
-    1px solid rgba(21,205,150,.45);
+    1px solid
+    rgba(21,205,150,.45);
 
   box-shadow:
-    0 -8px 30px rgba(0,0,0,.65);
+    0 -8px 30px
+    rgba(0,0,0,.65);
 
-  font-family:var(--font);
-
-  text-transform:uppercase;
+  font-family:
+    var(--font);
 
 }
 
@@ -724,23 +758,6 @@ canvas#rain{
 .matrix-keyboard.visible{
 
   display:block;
-
-}
-
-
-.keyboard-label{
-
-  color:var(--green);
-
-  opacity:.45;
-
-  font-size:8px;
-
-  letter-spacing:.12em;
-
-  text-align:center;
-
-  margin-bottom:6px;
 
 }
 
@@ -767,19 +784,20 @@ canvas#rain{
   padding:0;
 
   border:
-    1px solid rgba(21,205,150,.45);
+    1px solid
+    rgba(21,205,150,.45);
 
   background:#020403;
 
-  color:var(--green);
+  color:
+    var(--green);
 
-  font-family:var(--font);
+  font-family:
+    var(--font);
 
   font-size:15px;
 
   line-height:1;
-
-  -webkit-appearance:none;
 
   appearance:none;
 
@@ -789,20 +807,20 @@ canvas#rain{
 
   user-select:none;
 
-  -webkit-user-select:none;
-
 }
 
 
 .keyboard-key:active,
 .keyboard-key.pressed{
 
-  background:var(--green);
+  background:
+    var(--green);
 
   color:#020403;
 
   box-shadow:
-    0 0 12px rgba(21,205,150,.8);
+    0 0 12px
+    rgba(21,205,150,.8);
 
 }
 
@@ -828,14 +846,7 @@ canvas#rain{
 }
 
 
-body.keyboard-open #content{
-
-  padding-bottom:300px;
-
-}
-
-
-@media (max-width:380px){
+@media(max-width:380px){
 
   .keyboard-key{
 
@@ -845,7 +856,6 @@ body.keyboard-open #content{
 
   }
 
-
   body.keyboard-open #content{
 
     padding-bottom:275px;
@@ -854,18 +864,6 @@ body.keyboard-open #content{
 
 }
 
-
-@media (prefers-reduced-motion:reduce){
-
-  *{
-
-    animation-duration:.01ms !important;
-
-    animation-iteration-count:1 !important;
-
-  }
-
-}
 
 </style>
 
@@ -892,23 +890,29 @@ body.keyboard-open #content{
 
   <div id="matrix">
 
+
     <canvas id="rain"></canvas>
+
 
     <div id="scrim"></div>
 
 
     <div id="content">
 
+
       <div id="term"></div>
 
 
       <div id="choice">
 
+
         <button
           class="code-choice-btn"
           id="opt-red"
         >
+
           &gt; RED PILL — JOIN THE MATRIX
+
         </button>
 
 
@@ -916,19 +920,26 @@ body.keyboard-open #content{
           class="code-choice-btn"
           id="opt-blue"
         >
+
           &gt; BLUE PILL — REFUSE THE MATRIX
+
         </button>
+
 
       </div>
 
 
       <div id="countdown"></div>
 
+
     </div>
+
 
   </div>
 
+
 </div>
+
 
 
 <!-- =========================================================
@@ -939,10 +950,6 @@ body.keyboard-open #content{
   id="matrixKeyboard"
   class="matrix-keyboard"
 >
-
-  <div class="keyboard-label">
-    SECURE INPUT TERMINAL
-  </div>
 
 
   <div class="keyboard-row">
@@ -1019,19 +1026,21 @@ body.keyboard-open #content{
 
   </div>
 
+
 </div>
+
 
 
 <script>
 
 /* =========================================================
-   CONFIGURATION
+   CONFIG
    ========================================================= */
 
 const CONFIG = {
 
   sheetURL:
-    "https://script.google.com/macros/s/AKfycbzIxhO184zUCnZiiXuUejnvceABSvxqMi2i4yHsN2dsw1Qogop5b5ksqEgeeSkOz7l80Q/exec",
+    "DEINE-AKTUELLE-WEB-APP-URL-HIER",
 
   eventName:
     "HG_GG_HALLOWEEN",
@@ -1048,37 +1057,51 @@ const CONFIG = {
   dresscode:
     "Science Fiction",
 
+
   startScreenText:
     "TAP TO CONTINUE",
 
-  startScreenFont:
-    "'Share Tech Mono', 'Courier New', monospace",
 
   matrixFontSize:
     "11px",
 
+
   pillPromptDelay:
     1600,
 
+
   pillQuestion:
-    "WILL YOU CHOOSE THE RED PILL OR THE BLUE PILL?"
+    "WILL YOU CHOOSE THE RED PILL OR THE BLUE PILL?",
+
+
+  /* =====================================================
+     TIMING
+     ===================================================== */
+
+  transmittingDuration:
+    2000,
+
+  welcomeDuration:
+    2000,
+
+  typeSpeedMin:
+    16,
+
+  typeSpeedRandom:
+    22
 
 };
 
 
 /* =========================================================
-   CONFIG → CSS
+   CSS CONFIG
    ========================================================= */
-
-document.documentElement.style.setProperty(
-  "--start-font",
-  CONFIG.startScreenFont
-);
 
 document.documentElement.style.setProperty(
   "--matrix-font-size",
   CONFIG.matrixFontSize
 );
+
 
 document.querySelector(
   "#white span"
@@ -1105,12 +1128,6 @@ const termEl =
 const choiceEl =
   document.getElementById("choice");
 
-const optRed =
-  document.getElementById("opt-red");
-
-const optBlue =
-  document.getElementById("opt-blue");
-
 const countdownEl =
   document.getElementById("countdown");
 
@@ -1118,12 +1135,12 @@ const matrixKeyboard =
   document.getElementById("matrixKeyboard");
 
 
+let started = false;
+
+
 /* =========================================================
    START
    ========================================================= */
-
-let started = false;
-
 
 function startSequence(){
 
@@ -1131,6 +1148,7 @@ function startSequence(){
     return;
 
   started = true;
+
 
   glitchEl.classList.add(
     "active"
@@ -1182,7 +1200,9 @@ function startSequence(){
 document.body.addEventListener(
   "click",
   startSequence,
-  { once:true }
+  {
+    once:true
+  }
 );
 
 
@@ -1195,6 +1215,7 @@ const canvas =
 
 const ctx =
   canvas.getContext("2d");
+
 
 let columns;
 let drops;
@@ -1230,7 +1251,7 @@ function resizeCanvas(){
       .map(
         () =>
           Math.floor(
-            Math.random() * -40
+            Math.random()*-40
           )
       );
 
@@ -1246,7 +1267,8 @@ window.addEventListener(
 resizeCanvas();
 
 
-let rainRunning = false;
+let rainRunning =
+  false;
 
 
 function startRain(){
@@ -1259,9 +1281,6 @@ function startRain(){
 
   const fontSize =
     16;
-
-  const frameDelay =
-    110;
 
 
   function draw(){
@@ -1285,8 +1304,8 @@ function startRain(){
 
 
     for(
-      let i = 0;
-      i < drops.length;
+      let i=0;
+      i<drops.length;
       i++
     ){
 
@@ -1304,11 +1323,12 @@ function startRain(){
 
 
       const y =
-        drops[i] * fontSize;
+        drops[i] *
+        fontSize;
 
 
       if(
-        Math.random() > 0.965
+        Math.random() > .965
       ){
 
         ctx.fillStyle =
@@ -1319,8 +1339,8 @@ function startRain(){
         ctx.fillStyle =
           "rgba(25,221,97," +
           (
-            0.35 +
-            Math.random() * 0.5
+            .35 +
+            Math.random()*.5
           ) +
           ")";
 
@@ -1336,7 +1356,7 @@ function startRain(){
 
       if(
         y > canvas.height &&
-        Math.random() > 0.975
+        Math.random() > .975
       ){
 
         drops[i] = 0;
@@ -1352,7 +1372,7 @@ function startRain(){
     setTimeout(
       () =>
         requestAnimationFrame(draw),
-      frameDelay
+      110
     );
 
   }
@@ -1367,92 +1387,6 @@ function startRain(){
    TYPEWRITER
    ========================================================= */
 
-const introLines = [
-
-  {
-    text:
-      "> initiating secure channel...",
-    pause:
-      550
-  },
-
-  {
-    text:
-      "> access granted",
-    pause:
-      550
-  },
-
-  {
-    text:
-      "",
-    pause:
-      250
-  },
-
-  {
-    text:
-      "> EVENT: " +
-      CONFIG.eventName,
-    pause:
-      120
-  },
-
-  {
-    text:
-      "> DATE:  " +
-      CONFIG.date,
-    pause:
-      120
-  },
-
-  {
-    text:
-      "> TIME:  " +
-      CONFIG.time,
-    pause:
-      120
-  },
-
-  {
-    text:
-      "> LOCATION: " +
-      CONFIG.location,
-    pause:
-      120
-  },
-
-  {
-    text:
-      "> DRESS CODE: " +
-      CONFIG.dresscode,
-    pause:
-      120
-  },
-
-  {
-    text:
-      "",
-    pause:
-      200
-  }
-
-];
-
-
-function delay(ms){
-
-  return new Promise(
-    resolve =>
-      setTimeout(
-        resolve,
-        ms
-      )
-  );
-
-}
-
-
 function typeLine(
   line,
   container
@@ -1465,6 +1399,7 @@ function typeLine(
         document.createElement(
           "span"
         );
+
 
       container.appendChild(
         span
@@ -1488,8 +1423,9 @@ function typeLine(
 
           setTimeout(
             step,
-            16 +
-            Math.random() * 22
+            CONFIG.typeSpeedMin +
+            Math.random() *
+            CONFIG.typeSpeedRandom
           );
 
         }else{
@@ -1519,12 +1455,92 @@ function typeLine(
 }
 
 
+function delay(ms){
+
+  return new Promise(
+    resolve =>
+      setTimeout(
+        resolve,
+        ms
+      )
+  );
+
+}
+
+
+/* =========================================================
+   INTRO
+   ========================================================= */
+
+const introLines = [
+
+  {
+    text:
+      "> initiating secure channel...",
+    pause:550
+  },
+
+  {
+    text:
+      "> access granted",
+    pause:550
+  },
+
+  {
+    text:"",
+    pause:250
+  },
+
+  {
+    text:
+      "> EVENT: " +
+      CONFIG.eventName,
+    pause:120
+  },
+
+  {
+    text:
+      "> DATE: " +
+      CONFIG.date,
+    pause:120
+  },
+
+  {
+    text:
+      "> TIME: " +
+      CONFIG.time,
+    pause:120
+  },
+
+  {
+    text:
+      "> LOCATION: " +
+      CONFIG.location,
+    pause:120
+  },
+
+  {
+    text:
+      "> DRESS CODE: " +
+      CONFIG.dresscode,
+    pause:120
+  },
+
+  {
+    text:"",
+    pause:200
+  }
+
+];
+
+
 async function runTerminal(){
 
   const cursor =
     document.createElement(
       "span"
     );
+
 
   cursor.className =
     "cursor";
@@ -1567,8 +1583,8 @@ async function runTerminal(){
     {
       text:
         CONFIG.pillQuestion,
-      pause:
-        200
+
+      pause:200
     },
     termEl
   );
@@ -1582,11 +1598,58 @@ async function runTerminal(){
 
 
 /* =========================================================
-   PILL CHOICE
+   RSVP STATE
    ========================================================= */
 
 let rsvpChoice =
   null;
+
+
+/*
+ * Alle aktuellen Formularwerte
+ */
+
+const formData = {
+
+  name:"",
+  plusOne:false,
+  plusOneName:""
+
+};
+
+
+/* =========================================================
+   RED / BLUE
+   ========================================================= */
+
+document
+  .getElementById("opt-red")
+  .addEventListener(
+    "click",
+    () => {
+
+      selectPill(
+        "kommt",
+        "RED PILL — JOIN THE MATRIX"
+      );
+
+    }
+  );
+
+
+document
+  .getElementById("opt-blue")
+  .addEventListener(
+    "click",
+    () => {
+
+      selectPill(
+        "kommt nicht",
+        "BLUE PILL — REFUSE THE MATRIX"
+      );
+
+    }
+  );
 
 
 async function selectPill(
@@ -1603,42 +1666,25 @@ async function selectPill(
   );
 
 
-  const cursor =
-    document.createElement(
-      "span"
-    );
-
-  cursor.className =
-    "cursor";
-
-
-  termEl.appendChild(
-    cursor
-  );
-
-
   await typeLine(
     {
       text:
         "> " + label,
-      pause:
-        250
+      pause:250
     },
     termEl
   );
 
 
-  cursor.remove();
-
-
-  if(choice === "kommt"){
+  if(
+    choice === "kommt"
+  ){
 
     await typeLine(
       {
         text:
           "> enter your details below",
-        pause:
-          300
+        pause:300
       },
       termEl
     );
@@ -1647,7 +1693,8 @@ async function selectPill(
     await delay(150);
 
 
-    await runRsvpForm();
+    runRsvpForm();
+
 
   }else{
 
@@ -1655,26 +1702,18 @@ async function selectPill(
       {
         text:
           "> entry logged. maybe next time.",
-        pause:
-          500
+        pause:500
       },
       termEl
     );
 
 
-    sendToSheet({
+    await sendToSheet({
 
-      name:
-        "",
-
-      rsvp:
-        "kommt nicht",
-
-      plusOne:
-        false,
-
-      plusOneName:
-        ""
+      name:"",
+      rsvp:"kommt nicht",
+      plusOne:false,
+      plusOneName:""
 
     });
 
@@ -1688,33 +1727,50 @@ async function selectPill(
 }
 
 
-optRed.addEventListener(
-  "click",
-  () =>
-    selectPill(
-      "kommt",
-      "RED PILL — JOIN THE MATRIX"
-    )
-);
+/* =========================================================
+   KEYBOARD
+   ========================================================= */
+
+let activeInput = null;
 
 
-optBlue.addEventListener(
-  "click",
-  () =>
-    selectPill(
-      "kommt nicht",
-      "BLUE PILL — REFUSE THE MATRIX"
+function removeKeyboardListeners(){
+
+  matrixKeyboard
+    .querySelectorAll(
+      ".keyboard-key"
     )
-);
+    .forEach(
+      key => {
+
+        if(
+          key._matrixHandler
+        ){
+
+          key.removeEventListener(
+            "click",
+            key._matrixHandler
+          );
+
+          key._matrixHandler =
+            null;
+
+        }
+
+      }
+    );
+
+}
 
 
 /* =========================================================
-   INPUT
+   PROMPT INPUT
    ========================================================= */
 
 function promptInput(
   promptText,
-  placeholder
+  existingValue = "",
+  onSave = null
 ){
 
   return new Promise(
@@ -1730,22 +1786,27 @@ function promptInput(
           "span"
         );
 
+
       valueSpan.className =
         "virtual-input";
 
 
       let value =
-        "";
+        existingValue || "";
 
 
-      valueSpan.textContent =
-        placeholder || "";
+      function updateDisplay(){
+
+        valueSpan.textContent =
+          value || "________";
+
+        valueSpan.style.opacity =
+          value ? "1" : ".25";
+
+      }
 
 
-      valueSpan.style.opacity =
-        placeholder
-          ? "0.25"
-          : "1";
+      updateDisplay();
 
 
       termEl.appendChild(
@@ -1758,6 +1819,7 @@ function promptInput(
           "span"
         );
 
+
       cursor.className =
         "cursor";
 
@@ -1765,43 +1827,6 @@ function promptInput(
       termEl.appendChild(
         cursor
       );
-
-
-      matrixKeyboard.classList.add(
-        "visible"
-      );
-
-
-      document.body.classList.add(
-        "keyboard-open"
-      );
-
-
-      function updateDisplay(){
-
-        if(
-          value.length === 0
-        ){
-
-          valueSpan.textContent =
-            placeholder || "";
-
-          valueSpan.style.opacity =
-            placeholder
-              ? "0.25"
-              : "1";
-
-        }else{
-
-          valueSpan.textContent =
-            value.toUpperCase();
-
-          valueSpan.style.opacity =
-            "1";
-
-        }
-
-      }
 
 
       function addCharacter(
@@ -1818,18 +1843,11 @@ function promptInput(
 
       function deleteCharacter(){
 
-        if(
-          value.length === 0
-        )
-          return;
-
-
         value =
           value.slice(
             0,
             -1
           );
-
 
         updateDisplay();
 
@@ -1838,33 +1856,25 @@ function promptInput(
 
       function submit(){
 
-        const cleanValue =
+        const clean =
           value.trim();
 
 
-        if(!cleanValue)
+        if(!clean)
           return;
 
 
-        matrixKeyboard.classList.remove(
-          "visible"
-        );
-
-
-        document.body.classList.remove(
-          "keyboard-open"
-        );
+        closeKeyboard();
 
 
         cursor.remove();
 
 
-        valueSpan.textContent =
-          cleanValue.toUpperCase();
+        value =
+          clean;
 
 
-        valueSpan.style.opacity =
-          "1";
+        updateDisplay();
 
 
         termEl.appendChild(
@@ -1874,6 +1884,59 @@ function promptInput(
         );
 
 
+        if(onSave)
+          onSave(clean);
+
+
+        resolve(clean);
+
+      }
+
+
+      function closeKeyboard(){
+
+        matrixKeyboard.classList.remove(
+          "visible"
+        );
+
+        document.body.classList.remove(
+          "keyboard-open"
+        );
+
+        removeKeyboardListeners();
+
+        activeInput = null;
+
+      }
+
+
+      function openKeyboard(){
+
+        activeInput = {
+          getValue:() => value,
+          setValue:(v) => {
+
+            value = v;
+
+            updateDisplay();
+
+          }
+        };
+
+
+        matrixKeyboard.classList.add(
+          "visible"
+        );
+
+
+        document.body.classList.add(
+          "keyboard-open"
+        );
+
+
+        removeKeyboardListeners();
+
+
         matrixKeyboard
           .querySelectorAll(
             ".keyboard-key"
@@ -1881,102 +1944,94 @@ function promptInput(
           .forEach(
             key => {
 
-              if(
-                key._matrixHandler
-              ){
+              const handler =
+                () => {
 
-                key.removeEventListener(
-                  "click",
-                  key._matrixHandler
-                );
+                  key.classList.add(
+                    "pressed"
+                  );
 
-                key._matrixHandler =
-                  null;
 
-              }
+                  setTimeout(
+                    () =>
+                      key.classList.remove(
+                        "pressed"
+                      ),
+                    100
+                  );
+
+
+                  const action =
+                    key.dataset.action;
+
+
+                  const character =
+                    key.dataset.key;
+
+
+                  if(
+                    action ===
+                    "backspace"
+                  ){
+
+                    deleteCharacter();
+
+                  }
+
+                  else if(
+                    action ===
+                    "enter"
+                  ){
+
+                    submit();
+
+                  }
+
+                  else if(
+                    character !==
+                    undefined
+                  ){
+
+                    addCharacter(
+                      character
+                    );
+
+                  }
+
+                };
+
+
+              key._matrixHandler =
+                handler;
+
+
+              key.addEventListener(
+                "click",
+                handler
+              );
 
             }
           );
 
-
-        resolve(
-          cleanValue
-        );
-
       }
 
 
-      matrixKeyboard
-        .querySelectorAll(
-          ".keyboard-key"
-        )
-        .forEach(
-          key => {
+      /*
+       * Feld anklickbar
+       */
 
-            const handler =
-              () => {
-
-                key.classList.add(
-                  "pressed"
-                );
+      valueSpan.addEventListener(
+        "click",
+        openKeyboard
+      );
 
 
-                setTimeout(
-                  () =>
-                    key.classList.remove(
-                      "pressed"
-                    ),
-                  100
-                );
+      /*
+       * Beim ersten Aufruf
+       * Tastatur automatisch öffnen
+       */
 
-
-                const action =
-                  key.dataset.action;
-
-
-                const character =
-                  key.dataset.key;
-
-
-                if(
-                  action ===
-                  "backspace"
-                ){
-
-                  deleteCharacter();
-
-                }else if(
-                  action ===
-                  "enter"
-                ){
-
-                  submit();
-
-                }else if(
-                  character !==
-                  undefined
-                ){
-
-                  addCharacter(
-                    character
-                  );
-
-                }
-
-              };
-
-
-            key._matrixHandler =
-              handler;
-
-
-            key.addEventListener(
-              "click",
-              handler
-            );
-
-          }
-        );
+      openKeyboard();
 
     }
   );
@@ -1988,7 +2043,9 @@ function promptInput(
    TYPE PROMPT
    ========================================================= */
 
-function typePrompt(text){
+function typePrompt(
+  text
+){
 
   return new Promise(
     resolve => {
@@ -2004,7 +2061,7 @@ function typePrompt(text){
       );
 
 
-      let i = 0;
+      let i=0;
 
 
       function step(){
@@ -2021,13 +2078,14 @@ function typePrompt(text){
 
           setTimeout(
             step,
-            16 +
-            Math.random() * 22
+            CONFIG.typeSpeedMin +
+            Math.random() *
+            CONFIG.typeSpeedRandom
           );
 
         }else{
 
-          resolve(span);
+          resolve();
 
         }
 
@@ -2047,7 +2105,8 @@ function typePrompt(text){
    ========================================================= */
 
 function promptYesNo(
-  promptText
+  promptText,
+  currentValue = false
 ){
 
   return new Promise(
@@ -2069,22 +2128,42 @@ function promptYesNo(
           "span"
         );
 
-      yes.textContent =
-        "[YES]";
-
 
       const no =
         document.createElement(
           "span"
         );
 
+
+      yes.textContent =
+        currentValue
+          ? "[YES]"
+          : "[YES]";
+
+
       no.textContent =
         "[NO]";
+
+
+      yes.className =
+        "virtual-input";
+
+
+      no.className =
+        "virtual-input";
 
 
       wrap.appendChild(
         yes
       );
+
+
+      wrap.appendChild(
+        document.createTextNode(
+          " "
+        )
+      );
+
 
       wrap.appendChild(
         no
@@ -2110,6 +2189,10 @@ function promptYesNo(
           );
 
 
+        chosen.className =
+          "virtual-input";
+
+
         chosen.textContent =
           label;
 
@@ -2126,9 +2209,7 @@ function promptYesNo(
         );
 
 
-        resolve(
-          val
-        );
+        resolve(val);
 
       }
 
@@ -2159,10 +2240,69 @@ function promptYesNo(
 
 
 /* =========================================================
-   SUBMIT
+   RSVP FORM
    ========================================================= */
 
-function promptSubmit(){
+async function runRsvpForm(){
+
+  /*
+   * NAME
+   */
+
+  formData.name =
+    await promptInput(
+      "NAME: ",
+      formData.name
+    );
+
+
+  /*
+   * PLUS ONE
+   */
+
+  formData.plusOne =
+    await promptYesNo(
+      "PLUS ONE?",
+      formData.plusOne
+    );
+
+
+  /*
+   * PLUS ONE NAME
+   */
+
+  if(
+    formData.plusOne
+  ){
+
+    formData.plusOneName =
+      await promptInput(
+        "NAME PLUS ONE: ",
+        formData.plusOneName
+      );
+
+  }else{
+
+    formData.plusOneName =
+      "";
+
+  }
+
+
+  /*
+   * SUBMIT
+   */
+
+  await showFinalSubmit();
+
+}
+
+
+/* =========================================================
+   FINAL SUBMIT
+   ========================================================= */
+
+function showFinalSubmit(){
 
   return new Promise(
     resolve => {
@@ -2199,8 +2339,114 @@ function promptSubmit(){
 
       btn.addEventListener(
         "click",
-        () =>
-          resolve(btn),
+        async () => {
+
+          btn.disabled =
+            true;
+
+
+          const statusEl =
+            appendStatus(
+              "> TRANSMITTING DATA"
+            );
+
+
+          const payload = {
+
+            name:
+              formData.name,
+
+            rsvp:
+              rsvpChoice,
+
+            plusOne:
+              formData.plusOne,
+
+            plusOneName:
+              formData.plusOneName
+
+          };
+
+
+          try{
+
+            await sendToSheet(
+              payload
+            );
+
+
+            statusEl.textContent =
+              "> TRANSMITTING DATA";
+
+
+            /*
+             * 2 Sekunden warten
+             */
+
+            await delay(
+              CONFIG.transmittingDuration
+            );
+
+
+            /*
+             * Begrüßung
+             */
+
+            statusEl.textContent =
+              "";
+
+
+            await typeLine(
+              {
+                text:
+                  "HELLO " +
+                  formData.name.toUpperCase() +
+                  ". WELCOME TO THE MATRIX.",
+
+                pause:0
+
+              },
+              termEl
+            );
+
+
+            /*
+             * Begrüßung stehen lassen
+             */
+
+            await delay(
+              CONFIG.welcomeDuration
+            );
+
+
+            /*
+             * Glitch
+             */
+
+            triggerClosingGlitch(
+              startCountdown
+            );
+
+
+            resolve();
+
+          }catch(error){
+
+            console.error(
+              error
+            );
+
+
+            statusEl.textContent =
+              "> TRANSMISSION FAILED";
+
+
+            btn.disabled =
+              false;
+
+          }
+
+        },
         {
           once:true
         }
@@ -2245,17 +2491,10 @@ function appendStatus(
 
 
 /* =========================================================
-   SEND TO GOOGLE SHEETS
-   =========================================================
-   
-   WICHTIG:
-   KEIN await.
-   
-   Dadurch wartet die UI nicht auf Google.
-   
+   GOOGLE SHEETS
    ========================================================= */
 
-function sendToSheet(
+async function sendToSheet(
   payload
 ){
 
@@ -2266,177 +2505,58 @@ function sendToSheet(
     )
   ){
 
-    console.error(
+    throw new Error(
       "Keine gültige Sheet URL."
     );
 
-    return;
+  }
+
+
+  const response =
+    await fetch(
+      CONFIG.sheetURL,
+      {
+
+        method:
+          "POST",
+
+        headers:{
+          "Content-Type":
+            "text/plain;charset=utf-8"
+        },
+
+        body:
+          JSON.stringify(
+            payload
+          )
+
+      }
+    );
+
+
+  const result =
+    await response.json();
+
+
+  if(
+    !result.success
+  ){
+
+    throw new Error(
+      result.error ||
+      "Google Sheets Fehler"
+    );
 
   }
 
 
-  console.log(
-    "Sending to Sheet:",
-    payload
-  );
-
-
-  fetch(
-    CONFIG.sheetURL,
-    {
-
-      method:
-        "POST",
-
-      mode:
-        "no-cors",
-
-      headers:{
-
-        "Content-Type":
-          "text/plain;charset=utf-8"
-
-      },
-
-      body:
-        JSON.stringify(
-          payload
-        )
-
-    }
-  )
-  .then(
-    () => {
-
-      console.log(
-        "Transmission sent."
-      );
-
-    }
-  )
-  .catch(
-    error => {
-
-      console.error(
-        "Transmission error:",
-        error
-      );
-
-    }
-  );
+  return result;
 
 }
 
 
 /* =========================================================
-   RSVP FORM
-   ========================================================= */
-
-async function runRsvpForm(){
-
-  const name =
-    await promptInput(
-      "NAME: "
-    );
-
-
-  const wantsPlusOne =
-    await promptYesNo(
-      "PLUS ONE?"
-    );
-
-
-  let plusOneName =
-    "";
-
-
-  if(wantsPlusOne){
-
-    plusOneName =
-      await promptInput(
-        "NAME PLUS ONE: "
-      );
-
-  }
-
-
-  const submitBtn =
-    await promptSubmit();
-
-
-  submitBtn.disabled =
-    true;
-
-
-  const statusEl =
-    appendStatus(
-      "> TRANSMITTING..."
-    );
-
-
-  const payload = {
-
-    name:
-      name,
-
-    rsvp:
-      rsvpChoice,
-
-    plusOne:
-      wantsPlusOne,
-
-    plusOneName:
-      plusOneName
-
-  };
-
-
-  /*
-   * Request abschicken,
-   * aber NICHT darauf warten.
-   */
-
-  sendToSheet(
-    payload
-  );
-
-
-  /*
-   * Sofort UI aktualisieren.
-   */
-
-statusEl.textContent =
-  "> TRANSMITTING DATA";
-
-
-setTimeout(
-  () => {
-
-    statusEl.textContent =
-      "HELLO " +
-      name.toUpperCase() +
-      ". WELCOME TO THE MATRIX.";
-
-    setTimeout(
-      () => {
-
-        triggerClosingGlitch(
-          startCountdown
-        );
-
-      },
-      2000
-    );
-
-  },
-  2000
-);
-
-}
-
-
-/* =========================================================
-   GLITCH → COUNTDOWN
+   GLITCH
    ========================================================= */
 
 function triggerClosingGlitch(
@@ -2507,7 +2627,7 @@ function getPartyDate(){
 
   return new Date(
     y,
-    m - 1,
+    m-1,
     d,
     hh,
     mm,
@@ -2551,13 +2671,13 @@ function startCountdown(){
       countdownEl.innerHTML =
 
         '<div class="cd-label">' +
-        "&gt; status" +
-        "</div>" +
+        '&gt; status' +
+        '</div>' +
 
         '<div class="cd-time">' +
         CONFIG.eventName.toLowerCase() +
-        " is live" +
-        "</div>";
+        ' is live' +
+        '</div>';
 
 
       clearInterval(
@@ -2603,25 +2723,26 @@ function startCountdown(){
     countdownEl.innerHTML =
 
       '<div class="cd-label">' +
-      "&gt; countdown to " +
+      '&gt; countdown to ' +
       CONFIG.eventName.toLowerCase() +
-      "</div>" +
+      '</div>' +
 
       '<div class="cd-time">' +
 
       pad(days) +
-      "D " +
+      'D ' +
 
       pad(hours) +
-      "H " +
+      'H ' +
 
       pad(mins) +
-      "M " +
+      'M ' +
 
       pad(secs) +
-      "S" +
 
-      "</div>";
+      'S' +
+
+      '</div>';
 
   }
 
@@ -2637,8 +2758,8 @@ function startCountdown(){
 
 }
 
+
 </script>
 
 </body>
-
 </html>
