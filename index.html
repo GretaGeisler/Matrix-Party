@@ -26,7 +26,6 @@
   rel="stylesheet"
 >
 
-
 <style>
 
 /* =========================================================
@@ -571,17 +570,6 @@ body.keyboard-open #content{
 
 
 /* =========================================================
-   EDITABLE FIELD
-   ========================================================= */
-
-.editable-field{
-
-  cursor:pointer;
-
-}
-
-
-/* =========================================================
    SUBMIT
    ========================================================= */
 
@@ -864,7 +852,6 @@ body.keyboard-open #content{
 
 }
 
-
 </style>
 
 </head>
@@ -874,7 +861,6 @@ body.keyboard-open #content{
 
 
 <div id="app">
-
 
   <div id="white">
 
@@ -890,60 +876,49 @@ body.keyboard-open #content{
 
   <div id="matrix">
 
-
     <canvas id="rain"></canvas>
-
 
     <div id="scrim"></div>
 
 
     <div id="content">
 
-
       <div id="term"></div>
 
 
       <div id="choice">
 
-
         <button
           class="code-choice-btn"
           id="opt-red"
+          type="button"
         >
-
           &gt; RED PILL — JOIN THE MATRIX
-
         </button>
 
 
         <button
           class="code-choice-btn"
           id="opt-blue"
+          type="button"
         >
-
           &gt; BLUE PILL — REFUSE THE MATRIX
-
         </button>
-
 
       </div>
 
 
       <div id="countdown"></div>
 
-
     </div>
 
-
   </div>
-
 
 </div>
 
 
-
 <!-- =========================================================
-     KEYBOARD
+     VIRTUAL KEYBOARD
      ========================================================= -->
 
 <div
@@ -951,50 +926,49 @@ body.keyboard-open #content{
   class="matrix-keyboard"
 >
 
-
   <div class="keyboard-row">
 
-    <button class="keyboard-key" data-key="Q">Q</button>
-    <button class="keyboard-key" data-key="W">W</button>
-    <button class="keyboard-key" data-key="E">E</button>
-    <button class="keyboard-key" data-key="R">R</button>
-    <button class="keyboard-key" data-key="T">T</button>
-    <button class="keyboard-key" data-key="Z">Z</button>
-    <button class="keyboard-key" data-key="U">U</button>
-    <button class="keyboard-key" data-key="I">I</button>
-    <button class="keyboard-key" data-key="O">O</button>
-    <button class="keyboard-key" data-key="P">P</button>
+    <button class="keyboard-key" data-key="Q" type="button">Q</button>
+    <button class="keyboard-key" data-key="W" type="button">W</button>
+    <button class="keyboard-key" data-key="E" type="button">E</button>
+    <button class="keyboard-key" data-key="R" type="button">R</button>
+    <button class="keyboard-key" data-key="T" type="button">T</button>
+    <button class="keyboard-key" data-key="Z" type="button">Z</button>
+    <button class="keyboard-key" data-key="U" type="button">U</button>
+    <button class="keyboard-key" data-key="I" type="button">I</button>
+    <button class="keyboard-key" data-key="O" type="button">O</button>
+    <button class="keyboard-key" data-key="P" type="button">P</button>
 
   </div>
 
 
   <div class="keyboard-row">
 
-    <button class="keyboard-key" data-key="A">A</button>
-    <button class="keyboard-key" data-key="S">S</button>
-    <button class="keyboard-key" data-key="D">D</button>
-    <button class="keyboard-key" data-key="F">F</button>
-    <button class="keyboard-key" data-key="G">G</button>
-    <button class="keyboard-key" data-key="H">H</button>
-    <button class="keyboard-key" data-key="J">J</button>
-    <button class="keyboard-key" data-key="K">K</button>
-    <button class="keyboard-key" data-key="L">L</button>
+    <button class="keyboard-key" data-key="A" type="button">A</button>
+    <button class="keyboard-key" data-key="S" type="button">S</button>
+    <button class="keyboard-key" data-key="D" type="button">D</button>
+    <button class="keyboard-key" data-key="F" type="button">F</button>
+    <button class="keyboard-key" data-key="G" type="button">G</button>
+    <button class="keyboard-key" data-key="H" type="button">H</button>
+    <button class="keyboard-key" data-key="J" type="button">J</button>
+    <button class="keyboard-key" data-key="K" type="button">K</button>
+    <button class="keyboard-key" data-key="L" type="button">L</button>
 
   </div>
 
 
   <div class="keyboard-row">
 
-    <button class="keyboard-key" data-key="Y">Y</button>
-    <button class="keyboard-key" data-key="X">X</button>
-    <button class="keyboard-key" data-key="C">C</button>
-    <button class="keyboard-key" data-key="V">V</button>
-    <button class="keyboard-key" data-key="B">B</button>
-    <button class="keyboard-key" data-key="N">N</button>
-    <button class="keyboard-key" data-key="M">M</button>
-    <button class="keyboard-key" data-key="Ä">Ä</button>
-    <button class="keyboard-key" data-key="Ö">Ö</button>
-    <button class="keyboard-key" data-key="Ü">Ü</button>
+    <button class="keyboard-key" data-key="Y" type="button">Y</button>
+    <button class="keyboard-key" data-key="X" type="button">X</button>
+    <button class="keyboard-key" data-key="C" type="button">C</button>
+    <button class="keyboard-key" data-key="V" type="button">V</button>
+    <button class="keyboard-key" data-key="B" type="button">B</button>
+    <button class="keyboard-key" data-key="N" type="button">N</button>
+    <button class="keyboard-key" data-key="M" type="button">M</button>
+    <button class="keyboard-key" data-key="Ä" type="button">Ä</button>
+    <button class="keyboard-key" data-key="Ö" type="button">Ö</button>
+    <button class="keyboard-key" data-key="Ü" type="button">Ü</button>
 
   </div>
 
@@ -1004,6 +978,7 @@ body.keyboard-open #content{
     <button
       class="keyboard-key wide"
       data-action="backspace"
+      type="button"
     >
       ⌫
     </button>
@@ -1012,6 +987,7 @@ body.keyboard-open #content{
     <button
       class="keyboard-key space"
       data-key=" "
+      type="button"
     >
       SPACE
     </button>
@@ -1020,15 +996,14 @@ body.keyboard-open #content{
     <button
       class="keyboard-key enter"
       data-action="enter"
+      type="button"
     >
       ✓
     </button>
 
   </div>
 
-
 </div>
-
 
 
 <script>
@@ -1039,20 +1014,29 @@ body.keyboard-open #content{
 
 const CONFIG = {
 
+  /*
+   * HIER DEINE AKTUELLE /exec WEB-APP-URL EINTRAGEN
+   */
+
   sheetURL:
-    "DEINE-AKTUELLE-WEB-APP-URL-HIER",
+    "https://script.google.com/macros/s/AKfycbzIxhO184zUCnZiiXuUejnvceABSvxqMi2i4yHsN2dsw1Qogop5b5ksqEgeeSkOz7l80Q/exec",
+
 
   eventName:
     "HG_GG_HALLOWEEN",
 
+
   date:
     "31.10.2026",
+
 
   time:
     "19:00",
 
+
   location:
     "48.122047424316406,11.604446411132812",
+
 
   dresscode:
     "Science Fiction",
@@ -1078,14 +1062,35 @@ const CONFIG = {
      TIMING
      ===================================================== */
 
+  /*
+   * Zeit zwischen TRANSMITTING DATA
+   * und HELLO NAME
+   *
+   * 2000 = 2 Sekunden
+   */
+
   transmittingDuration:
     2000,
+
+
+  /*
+   * Wie lange HELLO NAME stehen bleibt,
+   * bevor der Glitch startet.
+   *
+   * 2000 = 2 Sekunden
+   */
 
   welcomeDuration:
     2000,
 
+
+  /*
+   * Geschwindigkeit des Typewriters
+   */
+
   typeSpeedMin:
     16,
+
 
   typeSpeedRandom:
     22
@@ -1605,10 +1610,6 @@ let rsvpChoice =
   null;
 
 
-/*
- * Alle aktuellen Formularwerte
- */
-
 const formData = {
 
   name:"",
@@ -1695,7 +1696,6 @@ async function selectPill(
 
     runRsvpForm();
 
-
   }else{
 
     await typeLine(
@@ -1708,14 +1708,25 @@ async function selectPill(
     );
 
 
-    await sendToSheet({
+    try{
 
-      name:"",
-      rsvp:"kommt nicht",
-      plusOne:false,
-      plusOneName:""
+      await sendToSheet({
 
-    });
+        name:"",
+        rsvp:"kommt nicht",
+        plusOne:false,
+        plusOneName:""
+
+      });
+
+    }catch(error){
+
+      console.error(
+        "Transmission error:",
+        error
+      );
+
+    }
 
 
     triggerClosingGlitch(
@@ -1854,6 +1865,23 @@ function promptInput(
       }
 
 
+      function closeKeyboard(){
+
+        matrixKeyboard.classList.remove(
+          "visible"
+        );
+
+        document.body.classList.remove(
+          "keyboard-open"
+        );
+
+        removeKeyboardListeners();
+
+        activeInput = null;
+
+      }
+
+
       function submit(){
 
         const clean =
@@ -1864,17 +1892,17 @@ function promptInput(
           return;
 
 
-        closeKeyboard();
-
-
-        cursor.remove();
-
-
         value =
           clean;
 
 
         updateDisplay();
+
+
+        closeKeyboard();
+
+
+        cursor.remove();
 
 
         termEl.appendChild(
@@ -1893,34 +1921,23 @@ function promptInput(
       }
 
 
-      function closeKeyboard(){
-
-        matrixKeyboard.classList.remove(
-          "visible"
-        );
-
-        document.body.classList.remove(
-          "keyboard-open"
-        );
-
-        removeKeyboardListeners();
-
-        activeInput = null;
-
-      }
-
-
       function openKeyboard(){
 
         activeInput = {
-          getValue:() => value,
-          setValue:(v) => {
 
-            value = v;
+          getValue:
+            () => value,
 
-            updateDisplay();
+          setValue:
+            v => {
 
-          }
+              value =
+                v;
+
+              updateDisplay();
+
+            }
+
         };
 
 
@@ -2017,7 +2034,10 @@ function promptInput(
 
 
       /*
-       * Feld anklickbar
+       * Feld bleibt anklickbar.
+       *
+       * Dadurch kann der bereits eingegebene
+       * Name später wieder bearbeitet werden.
        */
 
       valueSpan.addEventListener(
@@ -2027,8 +2047,7 @@ function promptInput(
 
 
       /*
-       * Beim ersten Aufruf
-       * Tastatur automatisch öffnen
+       * Beim ersten Aufruf Tastatur öffnen.
        */
 
       openKeyboard();
@@ -2136,9 +2155,7 @@ function promptYesNo(
 
 
       yes.textContent =
-        currentValue
-          ? "[YES]"
-          : "[YES]";
+        "[YES]";
 
 
       no.textContent =
@@ -2245,10 +2262,6 @@ function promptYesNo(
 
 async function runRsvpForm(){
 
-  /*
-   * NAME
-   */
-
   formData.name =
     await promptInput(
       "NAME: ",
@@ -2256,20 +2269,12 @@ async function runRsvpForm(){
     );
 
 
-  /*
-   * PLUS ONE
-   */
-
   formData.plusOne =
     await promptYesNo(
       "PLUS ONE?",
       formData.plusOne
     );
 
-
-  /*
-   * PLUS ONE NAME
-   */
 
   if(
     formData.plusOne
@@ -2288,10 +2293,6 @@ async function runRsvpForm(){
 
   }
 
-
-  /*
-   * SUBMIT
-   */
 
   await showFinalSubmit();
 
@@ -2370,18 +2371,38 @@ function showFinalSubmit(){
 
           try{
 
+            /*
+             * Keyboard sicher schließen
+             */
+
+            matrixKeyboard.classList.remove(
+              "visible"
+            );
+
+
+            document.body.classList.remove(
+              "keyboard-open"
+            );
+
+
+            /*
+             * Daten übertragen
+             */
+
             await sendToSheet(
               payload
             );
 
 
+            /*
+             * TRANSMITTING DATA
+             * bleibt für die konfigurierte
+             * Dauer sichtbar.
+             */
+
             statusEl.textContent =
               "> TRANSMITTING DATA";
 
-
-            /*
-             * 2 Sekunden warten
-             */
 
             await delay(
               CONFIG.transmittingDuration
@@ -2389,12 +2410,16 @@ function showFinalSubmit(){
 
 
             /*
-             * Begrüßung
+             * Status entfernen
              */
 
             statusEl.textContent =
               "";
 
+
+            /*
+             * Begrüßung
+             */
 
             await typeLine(
               {
@@ -2433,6 +2458,7 @@ function showFinalSubmit(){
           }catch(error){
 
             console.error(
+              "TRANSMISSION FAILED:",
               error
             );
 
@@ -2506,10 +2532,16 @@ async function sendToSheet(
   ){
 
     throw new Error(
-      "Keine gültige Sheet URL."
+      "Keine gültige Web-App-URL."
     );
 
   }
+
+
+  console.log(
+    "Sending payload:",
+    payload
+  );
 
 
   const response =
@@ -2528,29 +2560,106 @@ async function sendToSheet(
         body:
           JSON.stringify(
             payload
-          )
+          ),
+
+        redirect:
+          "follow"
 
       }
     );
 
 
-  const result =
-    await response.json();
+  console.log(
+    "HTTP status:",
+    response.status
+  );
 
+
+  /*
+   * HTTP-Fehler
+   */
 
   if(
-    !result.success
+    !response.ok
   ){
 
     throw new Error(
-      result.error ||
-      "Google Sheets Fehler"
+      "HTTP ERROR " +
+      response.status
     );
 
   }
 
 
-  return result;
+  /*
+   * Antwort als Text lesen.
+   *
+   * Nicht direkt response.json(),
+   * weil Apps Script bei Redirects/
+   * Web-App-Antworten gelegentlich
+   * keine saubere JSON-Antwort liefert.
+   */
+
+  const text =
+    await response.text();
+
+
+  console.log(
+    "Apps Script response:",
+    text
+  );
+
+
+  /*
+   * JSON versuchen
+   */
+
+  try{
+
+    const result =
+      JSON.parse(
+        text
+      );
+
+
+    if(
+      result &&
+      result.success === false
+    ){
+
+      throw new Error(
+        result.error ||
+        "Google Sheets Fehler"
+      );
+
+    }
+
+
+    return result;
+
+  }catch(parseError){
+
+    /*
+     * Wenn Apps Script HTTP 200 geliefert
+     * hat, behandeln wir den POST als
+     * erfolgreich gesendet.
+     */
+
+    console.warn(
+      "Antwort war kein JSON. HTTP war OK.",
+      text
+    );
+
+
+    return {
+
+      success:true,
+
+      raw:text
+
+    };
+
+  }
 
 }
 
@@ -2757,7 +2866,6 @@ function startCountdown(){
     );
 
 }
-
 
 </script>
 
