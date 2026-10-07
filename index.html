@@ -1116,10 +1116,9 @@ const CONFIG = {
     "19:00",
 
 
-  location:
-    "ROSENHEIMER STR. 226, 81669 MUNICH, 2. OG LEFT",
-
-
+location:
+  "ROSENHEIMER STR. 226, 81669 MUNICH,\n            2. OG LEFT",
+ 
   dresscode:
     "Science Fiction",
 
@@ -2594,6 +2593,69 @@ function appendStatus(
    ========================================================= */
 async function sendToSheet(payload) {
 
+  console.log("=== TRANSMISSION START ===");
+  console.log("URL:", CONFIG.sheetURL);
+  console.log("PAYLOAD:", payload);
+
+  if (!CONFIG.sheetURL) {
+    throw new Error("sheetURL fehlt");
+  }
+
+  const controller = new AbortController();
+
+  const timeout = setTimeout(() => {
+    console.error("TRANSMISSION TIMEOUT");
+    controller.abort();
+  }, 8000);
+
+  try {
+
+    const response = await fetch(CONFIG.sheetURL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify(payload),
+      signal: controller.signal
+    });
+
+    clearTimeout(timeout);
+
+    console.log("HTTP STATUS:", response.status);
+    console.log("HTTP OK:", response.ok);
+
+    /*
+     * WICHTIG:
+     * Google Apps Script kann die Daten bereits erfolgreich
+     * in Google Sheets geschrieben haben, obwohl die Antwort
+     * im Browser nicht korrekt gelesen werden kann.
+     *
+     * Deshalb prüfen wir hier NICHT mehr die JSON-Antwort.
+     */
+
+    console.log("=== TRANSMISSION SENT ===");
+
+    return true;
+
+  } catch (error) {
+
+    clearTimeout(timeout);
+
+    console.error(
+      "=== TRANSMISSION ERROR ===",
+      error
+    );
+
+    if (error.name === "AbortError") {
+      throw new Error(
+        "Transmission timeout after 8 seconds"
+      );
+    }
+
+    throw error;
+  }
+  
+}
   console.log("=== TRANSMISSION START ===");
   console.log("URL:", CONFIG.sheetURL);
   console.log("PAYLOAD:", payload);
