@@ -2610,139 +2610,37 @@ async function sendToSheet(payload) {
 
   try {
 
-    const response = await fetch(CONFIG.sheetURL, {
+    /*
+     * Google Apps Script kann die POST-Anfrage korrekt
+     * verarbeiten und die Zeile in Google Sheets schreiben,
+     * obwohl der Browser die Antwort wegen CORS/Redirects
+     * nicht auslesen darf.
+     *
+     * no-cors verhindert genau diesen falschen Fehler.
+     * Die Anfrage wird gesendet, aber die Antwort ist absichtlich
+     * nicht lesbar. Für diesen Ablauf brauchen wir die Antwort
+     * nicht – wichtig ist, dass der POST abgeschickt wird.
+     */
+
+    await fetch(CONFIG.sheetURL, {
       method: "POST",
+
+      mode: "no-cors",
+
       headers: {
         "Content-Type": "text/plain;charset=utf-8"
       },
+
       body: JSON.stringify(payload),
+
       signal: controller.signal
     });
 
     clearTimeout(timeout);
-
-    console.log("HTTP STATUS:", response.status);
-    console.log("HTTP OK:", response.ok);
-
-    /*
-     * WICHTIG:
-     * Google Apps Script kann die Daten bereits erfolgreich
-     * in Google Sheets geschrieben haben, obwohl die Antwort
-     * im Browser nicht korrekt gelesen werden kann.
-     *
-     * Deshalb prüfen wir hier NICHT mehr die JSON-Antwort.
-     */
 
     console.log("=== TRANSMISSION SENT ===");
 
     return true;
-
-  } catch (error) {
-
-    clearTimeout(timeout);
-
-    console.error(
-      "=== TRANSMISSION ERROR ===",
-      error
-    );
-
-    if (error.name === "AbortError") {
-      throw new Error(
-        "Transmission timeout after 8 seconds"
-      );
-    }
-
-    throw error;
-  }
-
-}
-  console.log("=== TRANSMISSION START ===");
-  console.log("URL:", CONFIG.sheetURL);
-  console.log("PAYLOAD:", payload);
-
-  if (!CONFIG.sheetURL) {
-    throw new Error("sheetURL fehlt");
-  }
-
-  const controller = new AbortController();
-
-  const timeout = setTimeout(() => {
-    console.error("TRANSMISSION TIMEOUT");
-    controller.abort();
-  }, 8000);
-
-  try {
-
-    const response = await fetch(CONFIG.sheetURL, {
-      method: "POST",
-
-      headers: {
-        "Content-Type": "text/plain;charset=utf-8"
-      },
-
-      body: JSON.stringify(payload),
-
-      signal: controller.signal
-    });
-
-    clearTimeout(timeout);
-
-    console.log("HTTP STATUS:", response.status);
-    console.log("HTTP OK:", response.ok);
-
-    const text = await response.text();
-
-    console.log("RAW RESPONSE:", text);
-
-    if (!response.ok) {
-      throw new Error(
-        "HTTP ERROR " + response.status
-      );
-    }
-
-    let result;
-
-    try {
-
-      result = JSON.parse(text);
-
-    } catch (e) {
-
-      throw new Error(
-        "Apps Script returned invalid JSON: " + text
-      );
-
-    }
-
-    console.log(
-      "PARSED RESPONSE:",
-      result
-    );
-
-    /*
-     * Dein Apps Script antwortet mit:
-     *
-     * {"result":"success"}
-     *
-     * Deshalb prüfen wir result.result
-     */
-
-    if (
-      result.result !== "success"
-    ) {
-
-      throw new Error(
-        result.error ||
-        "Apps Script returned an unsuccessful result"
-      );
-
-    }
-
-    console.log(
-      "=== TRANSMISSION SUCCESS ==="
-    );
-
-    return result;
 
   } catch (error) {
 
@@ -2767,6 +2665,7 @@ async function sendToSheet(payload) {
 
   }
 
+}
 /* =========================================================
    GLITCH
    ========================================================= */
