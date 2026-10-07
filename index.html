@@ -2598,71 +2598,64 @@ async function sendToSheet(payload) {
   console.log("PAYLOAD:", payload);
 
   if (!CONFIG.sheetURL) {
-    throw new Error("sheetURL fehlt");
+    console.error("sheetURL fehlt");
+    return;
   }
 
-  const controller = new AbortController();
-
-  const timeout = setTimeout(() => {
-    console.error("TRANSMISSION TIMEOUT");
-    controller.abort();
-  }, 8000);
+  /*
+   * Google Apps Script kann den POST korrekt verarbeiten,
+   * obwohl der Browser die Antwort wegen CORS/Redirects
+   * nicht auslesen kann.
+   *
+   * Deshalb wird hier nur das Absenden gestartet.
+   * Die Antwort wird NICHT geprüft und ein Browser-CORS-Fehler
+   * darf den RSVP-Ablauf nicht mehr stoppen.
+   */
 
   try {
 
-    /*
-     * Google Apps Script kann die POST-Anfrage korrekt
-     * verarbeiten und die Zeile in Google Sheets schreiben,
-     * obwohl der Browser die Antwort wegen CORS/Redirects
-     * nicht auslesen darf.
-     *
-     * no-cors verhindert genau diesen falschen Fehler.
-     * Die Anfrage wird gesendet, aber die Antwort ist absichtlich
-     * nicht lesbar. Für diesen Ablauf brauchen wir die Antwort
-     * nicht – wichtig ist, dass der POST abgeschickt wird.
-     */
-
-    await fetch(CONFIG.sheetURL, {
+    fetch(CONFIG.sheetURL, {
       method: "POST",
-
       mode: "no-cors",
-
       headers: {
         "Content-Type": "text/plain;charset=utf-8"
       },
-
       body: JSON.stringify(payload),
-
-      signal: controller.signal
+      keepalive: true
+    })
+    .then(() => {
+      console.log("=== TRANSMISSION SENT ===");
+    })
+    .catch((error) => {
+      /*
+       * Wichtig:
+       * Auch wenn der Browser die Antwort nicht lesen kann
+       * oder fetch einen Netzwerkfehler meldet, darf die
+       * Matrix-Sequenz nicht bei TRANSMISSION FAILED hängen bleiben.
+       */
+      console.warn("TRANSMISSION RESPONSE NOT READ:", error);
     });
 
-    clearTimeout(timeout);
-
-    console.log("=== TRANSMISSION SENT ===");
-
+    /*
+     * Sofort als erfolgreich behandelt:
+     * Der POST wurde an den Browser-Fetch übergeben.
+     * Der restliche Ablauf (HELLO -> GLITCH -> COUNTDOWN)
+     * läuft unabhängig von der Antwort weiter.
+     */
     return true;
 
   } catch (error) {
 
-    clearTimeout(timeout);
-
-    console.error(
-      "=== TRANSMISSION ERROR ===",
+    console.warn(
+      "TRANSMISSION COULD NOT BE VERIFIED:",
       error
     );
 
-    if (
-      error.name === "AbortError"
-    ) {
-
-      throw new Error(
-        "Transmission timeout after 8 seconds"
-      );
-
-    }
-
-    throw error;
-
+    /*
+     * Kein throw!
+     * Dadurch bleibt der RSVP-Ablauf aktiv.
+     */
+    return true;
   }
 
 }
